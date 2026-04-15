@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BrightCommunications</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #ede8df;
+    --gray: #888;
+    --mid: #222;
+    --accent: #f5f0e8;
+    --line: rgba(245,240,232,0.12);
+    --line-dark: rgba(245,240,232,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--white);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,240,232,0.5);
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+  }
+  .cursor.hovered { width: 20px; height: 20px; }
+  .cursor-ring.hovered { width: 60px; height: 60px; border-color: rgba(245,240,232,0.2); }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 60px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    border-bottom-color: var(--line);
+    padding: 18px 60px;
+    backdrop-filter: blur(20px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 40px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--white);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 10px 24px; border-radius: 100px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .nav-cta:hover { background: var(--white); color: var(--black); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(120px, 18vw, 280px);
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,240,232,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.03em;
+  }
+  .hero-tag {
+    font-size: 12px; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gray);
+    border: 1px solid var(--line);
+    display: inline-block;
+    padding: 8px 18px; border-radius: 100px;
+    margin-bottom: 40px;
+    width: fit-content;
+  }
+  .hero-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 7vw, 108px);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    max-width: 900px;
+    margin-bottom: 60px;
+  }
+  .hero-headline em {
+    font-style: italic;
+    font-weight: 300;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray);
+  }
+  .hero-bottom {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .hero-desc {
+    font-size: 15px; line-height: 1.7; color: var(--gray);
+    max-width: 340px;
+  }
+  .hero-stats {
+    display: flex; gap: 60px;
+  }
+  .hero-stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px; font-weight: 700;
+    line-height: 1; letter-spacing: -0.03em;
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: 12px; color: var(--gray);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display: block; margin-top: 6px;
+  }
+  .hero-scroll {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray);
+  }
+  .scroll-line {
+    width: 50px; height: 1px;
+    background: var(--gray);
+    display: inline-block;
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { width: 50px; opacity: 1; }
+    50% { width: 20px; opacity: 0.4; }
+  }
+
+  /* HORIZONTAL MARQUEE */
+  .marquee-wrap {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    padding: 22px 0;
+    background: var(--mid);
+  }
+  .marquee-inner {
+    display: flex; gap: 0;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gray);
+    padding: 0 50px;
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 50px;
+  }
+  .marquee-item::after {
+    content: '✦';
+    font-size: 10px;
+    color: var(--white);
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION BASE */
+  section { position: relative; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gray);
+    margin-bottom: 60px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before {
+    content: ''; display: inline-block;
+    width: 30px; height: 1px; background: var(--gray);
+  }
+
+  /* ABOUT */
+  .about { padding: 140px 0; }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .about-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .about-heading em {
+    font-style: italic; font-weight: 300;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray);
+  }
+  .about-right { padding-top: 16px; }
+  .about-text {
+    font-size: 16px; line-height: 1.8; color: var(--gray);
+    margin-bottom: 40px;
+  }
+  .about-pills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 50px;
+  }
+  .pill {
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    border: 1px solid var(--line);
+    padding: 8px 18px; border-radius: 100px;
+    color: var(--gray); transition: all 0.3s;
+  }
+  .pill:hover { border-color: var(--white); color: var(--white); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--white);
+    text-decoration: none;
+    border: 1px solid rgba(245,240,232,0.3);
+    padding: 14px 28px; border-radius: 100px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--white); color: var(--black); }
+  .btn-outline .arrow { transition: transform 0.3s; }
+  .btn-outline:hover .arrow { transform: translateX(4px) translateY(-4px); }
+
+  /* SERVICES */
+  .services { padding: 120px 0; border-top: 1px solid var(--line); }
+  .services-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; margin-bottom: 80px; align-items: end;
+  }
+  .services-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+  }
+  .services-sub {
+    font-size: 15px; line-height: 1.7; color: var(--gray);
+    align-self: end;
+  }
+  .services-list { }
+  .service-item {
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 60px 1fr 260px 60px;
+    align-items: center; gap: 40px;
+    padding: 32px 0; cursor: pointer;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+  .service-item:last-child { border-bottom: 1px solid var(--line); }
+  .service-item:hover { padding-left: 20px; }
+  .service-num {
+    font-size: 12px; color: var(--gray);
+    letter-spacing: 0.1em;
+  }
+  .service-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 2.5vw, 36px);
+    font-weight: 700; letter-spacing: -0.02em;
+    transition: color 0.3s;
+  }
+  .service-item:hover .service-name { color: var(--cream); }
+  .service-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .service-tag {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid var(--line); padding: 5px 12px; border-radius: 100px;
+    color: var(--gray);
+  }
+  .service-arrow {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; transition: all 0.3s;
+    justify-self: end;
+  }
+  .service-item:hover .service-arrow {
+    background: var(--white); color: var(--black);
+    transform: rotate(45deg);
+  }
+
+  /* WORK / PROJECTS */
+  .work { padding: 120px 0; border-top: 1px solid var(--line); }
+  .work-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between; margin-bottom: 70px;
+  }
+  .work-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+  }
+  .work-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .work-card {
+    position: relative; overflow: hidden;
+    aspect-ratio: 4/3; background: var(--mid);
+    cursor: pointer; group: true;
+  }
+  .work-card:nth-child(1) { aspect-ratio: 16/9; grid-column: span 2; }
+  .work-card-bg {
+    position: absolute; inset: 0;
+    background: var(--mid);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.6s ease;
+  }
+  .work-card:hover .work-card-bg { transform: scale(1.04); }
+  .work-card-num {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(80px, 12vw, 180px);
+    font-weight: 800; color: rgba(245,240,232,0.04);
+    letter-spacing: -0.05em;
+  }
+  .work-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, transparent 60%);
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 36px;
+    opacity: 0.8; transition: opacity 0.3s;
+  }
+  .work-card:hover .work-card-overlay { opacity: 1; }
+  .work-card-cat {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 8px;
+  }
+  .work-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(20px, 2vw, 30px);
+    font-weight: 700; letter-spacing: -0.02em;
+  }
+  .work-card-arrow {
+    position: absolute; top: 28px; right: 28px;
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(245,240,232,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; opacity: 0;
+    transition: all 0.3s; transform: rotate(-45deg);
+  }
+  .work-card:hover .work-card-arrow { opacity: 1; transform: rotate(0deg); }
+
+  /* PROCESS */
+  .process { padding: 120px 0; border-top: 1px solid var(--line); }
+  .process-header { margin-bottom: 80px; }
+  .process-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+    max-width: 600px;
+  }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .process-step {
+    border: 1px solid var(--line);
+    padding: 44px 36px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .process-step:hover { background: var(--mid); }
+  .process-step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.15em; color: var(--gray);
+    margin-bottom: 60px;
+  }
+  .process-step-icon {
+    font-size: 28px; margin-bottom: 24px;
+    opacity: 0.7;
+  }
+  .process-step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.01em; margin-bottom: 16px;
+  }
+  .process-step-desc {
+    font-size: 14px; line-height: 1.7; color: var(--gray);
+  }
+
+  /* CLIENTS */
+  .clients { padding: 100px 0; border-top: 1px solid var(--line); }
+  .clients-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: end; margin-bottom: 70px;
+  }
+  .clients-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+  }
+  .clients-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+  }
+  .client-item {
+    border: 1px solid var(--line);
+    padding: 44px 24px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .client-item:hover { background: var(--mid); }
+  .client-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+    text-align: center; transition: color 0.3s;
+  }
+  .client-item:hover .client-name { color: var(--white); }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 120px 0; border-top: 1px solid var(--line); }
+  .testimonials-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0;
+    letter-spacing: -0.03em; margin-bottom: 70px;
+  }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .testimonial-card {
+    background: var(--mid); padding: 44px 36px;
+    display: flex; flex-direction: column;
+    gap: 32px; transition: background 0.3s;
+  }
+  .testimonial-card:nth-child(2) { background: #1a1a1a; }
+  .testimonial-card:hover { background: #1e1e1e; }
+  .testimonial-quote {
+    font-size: 15px; line-height: 1.8;
+    color: rgba(245,240,232,0.75);
+    flex: 1;
+  }
+  .testimonial-quote::before {
+    content: '"';
+    font-family: 'Syne', sans-serif;
+    font-size: 60px; line-height: 0.6;
+    color: rgba(245,240,232,0.1);
+    display: block; margin-bottom: 20px;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 16px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+  }
+  .testimonial-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(245,240,232,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .testimonial-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+  }
+  .testimonial-role {
+    font-size: 12px; color: var(--gray); margin-top: 3px;
+  }
+  .testimonial-stars { font-size: 12px; color: var(--white); }
+
+  /* TEAM */
+  .team { padding: 120px 0; border-top: 1px solid var(--line); }
+  .team-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: end; margin-bottom: 70px;
+  }
+  .team-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+  }
+  .team-sub { font-size: 15px; line-height: 1.7; color: var(--gray); }
+  .team-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .team-card {
+    position: relative; overflow: hidden;
+    background: var(--mid); aspect-ratio: 3/4;
+    cursor: pointer;
+  }
+  .team-card-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.6s ease;
+  }
+  .team-card:hover .team-card-bg { transform: scale(1.05); }
+  .team-card-initial {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(70px, 10vw, 120px);
+    font-weight: 800;
+    color: rgba(245,240,232,0.05);
+    letter-spacing: -0.05em;
+  }
+  .team-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 55%);
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 28px;
+  }
+  .team-card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .team-card-role {
+    font-size: 12px; color: var(--gray);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .team-card-links {
+    display: flex; gap: 8px; margin-top: 16px;
+    opacity: 0; transform: translateY(8px);
+    transition: all 0.3s;
+  }
+  .team-card:hover .team-card-links { opacity: 1; transform: translateY(0); }
+  .team-link {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid rgba(245,240,232,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gray);
+    text-decoration: none; transition: all 0.3s;
+  }
+  .team-link:hover { background: var(--white); color: var(--black); }
+
+  /* BLOG */
+  .blog { padding: 120px 0; border-top: 1px solid var(--line); }
+  .blog-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between; margin-bottom: 70px;
+  }
+  .blog-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -0.03em;
+  }
+  .blog-grid {
+    display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2px;
+  }
+  .blog-card {
+    background: var(--mid); overflow: hidden;
+    display: flex; flex-direction: column;
+    cursor: pointer; transition: background 0.3s;
+  }
+  .blog-card:hover { background: #1a1a1a; }
+  .blog-card-img {
+    aspect-ratio: 16/9;
+    background: #1a1a1a;
+    overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .blog-card-img-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #111 0%, #222 100%);
+    transition: transform 0.6s ease;
+  }
+  .blog-card:hover .blog-card-img-bg { transform: scale(1.05); }
+  .blog-card-img-text {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(50px, 8vw, 90px);
+    font-weight: 800; letter-spacing: -0.05em;
+    color: rgba(245,240,232,0.04);
+    position: relative; z-index: 1;
+  }
+  .blog-card-content { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
+  .blog-card-meta {
+    display: flex; gap: 16px; margin-bottom: 16px;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gray);
+  }
+  .blog-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(16px, 1.6vw, 22px);
+    font-weight: 700; line-height: 1.2;
+    letter-spacing: -0.01em; flex: 1;
+    margin-bottom: 20px;
+  }
+  .blog-read {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray); display: flex; align-items: center; gap: 8px;
+    transition: color 0.3s;
+  }
+  .blog-card:hover .blog-read { color: var(--white); }
+  .blog-read::after {
+    content: '→'; transition: transform 0.3s;
+  }
+  .blog-card:hover .blog-read::after { transform: translateX(4px); }
+
+  /* CONTACT / CTA */
+  .contact { padding: 140px 0; border-top: 1px solid var(--line); }
+  .contact-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .contact-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 6vw, 90px);
+    font-weight: 800; line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+  .contact-heading em {
+    font-style: italic; font-weight: 300;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray);
+  }
+  .contact-right { padding-top: 20px; }
+  .contact-info { margin-bottom: 50px; }
+  .contact-info-item {
+    border-bottom: 1px solid var(--line);
+    padding: 20px 0; display: flex;
+    justify-content: space-between; align-items: center;
+  }
+  .contact-info-label {
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray);
+  }
+  .contact-info-val {
+    font-size: 15px; color: var(--white);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .contact-info-val:hover { color: var(--gray); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .form-field label {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray);
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    background: var(--mid); border: 1px solid var(--line);
+    color: var(--white); padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    border-radius: 4px; outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+    -webkit-appearance: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus,
+  .form-field select:focus { border-color: rgba(245,240,232,0.4); }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: var(--gray); }
+  .form-field select option { background: #1a1a1a; }
+  .btn-submit {
+    background: var(--white); color: var(--black);
+    border: none; padding: 16px 36px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 100px; cursor: pointer;
+    transition: all 0.3s; margin-top: 8px;
+    align-self: flex-start;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-submit:hover {
+    background: var(--cream); transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 60px 0;
+  }
+  .footer-inner {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 60px;
+  }
+  .footer-brand {}
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+  .footer-tagline {
+    font-size: 14px; color: var(--gray);
+    line-height: 1.6; margin-bottom: 32px;
+    max-width: 240px;
+  }
+  .footer-social {
+    display: flex; gap: 10px;
+  }
+  .social-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--gray);
+    text-decoration: none; transition: all 0.3s;
+  }
+  .social-btn:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .footer-col-title {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a {
+    font-size: 14px; color: rgba(245,240,232,0.6);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--line);
+    margin-top: 60px; padding-top: 30px;
+  }
+  .footer-copy {
+    font-size: 13px; color: var(--gray);
+  }
+  .footer-legal { display: flex; gap: 28px; }
+  .footer-legal a {
+    font-size: 13px; color: var(--gray);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: var(--white); }
+
+  /* FADE IN ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 22px 30px; }
+    nav.scrolled { padding: 16px 30px; }
+    .container { padding: 0 30px; }
+    .hero { padding: 0 30px 60px; }
+    .about-grid,
+    .services-header,
+    .clients-header,
+    .team-header,
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .clients-grid { grid-template-columns: repeat(3, 1fr); }
+    .blog-grid { grid-template-columns: 1fr 1fr; }
+    .blog-grid .blog-card:nth-child(3) { display: none; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 18px 20px; }
+    nav.scrolled { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .container { padding: 0 20px; }
+    .hero { padding: 0 20px 50px; }
+    .hero-headline { font-size: clamp(42px, 10vw, 72px); }
+    .hero-bottom { flex-direction: column; align-items: flex-start; }
+    .hero-stats { gap: 30px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card:nth-child(1) { grid-column: span 1; }
+    .process-steps { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-grid .blog-card:nth-child(3) { display: flex; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .service-item { grid-template-columns: 40px 1fr 40px; }
+    .service-tags { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Bright<span style="opacity:0.4">Communications</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#blog">Insights</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-text">BRIGHT</div>
+  <div class="hero-tag">Est. 2016 · Kochi, India</div>
+  <h1 class="hero-headline">
+    We craft brands<br/>
+    <em>that speak</em><br/>
+    louder.
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">BrightCommunications is a full-service creative agency helping ambitious brands grow through strategy, design & digital.</p>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">120+</span>
+        <span class="hero-stat-label">Projects</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">08</span>
+        <span class="hero-stat-label">Years</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">40+</span>
+        <span class="hero-stat-label">Clients</span>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-line"></span>
+      Scroll
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">Brand Strategy</span>
+    <span class="marquee-item">Visual Identity</span>
+    <span class="marquee-item">Digital Marketing</span>
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Content Creation</span>
+    <span class="marquee-item">PR & Communications</span>
+    <span class="marquee-item">Brand Strategy</span>
+    <span class="marquee-item">Visual Identity</span>
+    <span class="marquee-item">Digital Marketing</span>
+    <span class="marquee-item">Web Design</span>
+    <span class="marquee-item">Content Creation</span>
+    <span class="marquee-item">PR & Communications</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-label">About us</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-heading fade-up">
+          We are a creative agency<br/>
+          <em>driven by ideas</em><br/>
+          that move people.
+        </h2>
+      </div>
+      <div class="about-right">
+        <p class="about-text fade-up">
+          Founded in 2016, BrightCommunications partners with brands to create meaningful experiences. We blend strategic thinking with craft to deliver work that resonates, converts, and endures.
+        </p>
+        <p class="about-text fade-up">
+          Our team of strategists, designers, and digital specialists bring a holistic perspective to every brief — from brand identity and campaign strategy to digital presence and PR.
+        </p>
+        <div class="about-pills fade-up">
+          <span class="pill">Brand Identity</span>
+          <span class="pill">Strategy</span>
+          <span class="pill">Digital</span>
+          <span class="pill">Content</span>
+          <span class="pill">PR</span>
+          <span class="pill">Events</span>
+        </div>
+        <a href="#contact" class="btn-outline fade-up">
+          Start a Project <span class="arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <h2 class="services-heading fade-up">What we<br/>do best.</h2>
+      <p class="services-sub fade-up">From brand foundations to full-scale campaigns — we cover every dimension of communications that helps your brand grow.</p>
+    </div>
+    <div class="services-list">
+      <div class="service-item fade-up">
+        <span class="service-num">01</span>
+        <span class="service-name">Brand Strategy</span>
+        <div class="service-tags">
+          <span class="service-tag">Positioning</span>
+          <span class="service-tag">Messaging</span>
+          <span class="service-tag">Audit</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-item fade-up">
+        <span class="service-num">02</span>
+        <span class="service-name">Visual Identity</span>
+        <div class="service-tags">
+          <span class="service-tag">Logo</span>
+          <span class="service-tag">Guidelines</span>
+          <span class="service-tag">Design System</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-item fade-up">
+        <span class="service-num">03</span>
+        <span class="service-name">Digital Marketing</span>
+        <div class="service-tags">
+          <span class="service-tag">SEO</span>
+          <span class="service-tag">Performance</span>
+          <span class="service-tag">Social</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-item fade-up">
+        <span class="service-num">04</span>
+        <span class="service-name">Web Design & Dev</span>
+        <div class="service-tags">
+          <span class="service-tag">UI/UX</span>
+          <span class="service-tag">CMS</span>
+          <span class="service-tag">E-Commerce</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-item fade-up">
+        <span class="service-num">05</span>
+        <span class="service-name">PR & Communications</span>
+        <div class="service-tags">
+          <span class="service-tag">Media</span>
+          <span class="service-tag">Crisis</span>
+          <span class="service-tag">Outreach</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+      <div class="service-item fade-up">
+        <span class="service-num">06</span>
+        <span class="service-name">Content & Film</span>
+        <div class="service-tags">
+          <span class="service-tag">Video</span>
+          <span class="service-tag">Photography</span>
+          <span class="service-tag">Copy</span>
+        </div>
+        <span class="service-arrow">↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="container">
+    <div class="work-header">
+      <h2 class="work-heading fade-up">Selected<br/>Work.</h2>
+      <a href="#" class="btn-outline fade-up">View All Projects <span class="arrow">↗</span></a>
+    </div>
+    <div class="work-grid">
+      <div class="work-card fade-up">
+        <div class="work-card-bg"><span class="work-card-num">01</span></div>
+        <div class="work-card-overlay">
+          <span class="work-card-cat">Brand Identity · 2024</span>
+          <span class="work-card-title">Nexora Fintech — Complete Rebrand</span>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+      <div class="work-card fade-up">
+        <div class="work-card-bg"><span class="work-card-num">02</span></div>
+        <div class="work-card-overlay">
+          <span class="work-card-cat">Digital Campaign · 2024</span>
+          <span class="work-card-title">Verdant Foods Launch</span>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+      <div class="work-card fade-up">
+        <div class="work-card-bg"><span class="work-card-num">03</span></div>
+        <div class="work-card-overlay">
+          <span class="work-card-cat">Web Design · 2023</span>
+          <span class="work-card-title">Lumiere Wellness Platform</span>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+      <div class="work-card fade-up">
+        <div class="work-card-bg"><span class="work-card-num">04</span></div>
+        <div class="work-card-overlay">
+          <span class="work-card-cat">PR Campaign · 2023</span>
+          <span class="work-card-title">Arka Real Estate — Brand Voice</span>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+      <div class="work-card fade-up">
+        <div class="work-card-bg"><span class="work-card-num">05</span></div>
+        <div class="work-card-overlay">
+          <span class="work-card-cat">Content & Film · 2023</span>
+          <span class="work-card-title">Solara Energy Brand Film</span>
+        </div>
+        <div class="work-card-arrow">↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label">Our Process</div>
+      <h2 class="process-heading fade-up">How we<br/>work with you.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step fade-up">
+        <div class="process-step-num">01 / DISCOVER</div>
+        <div class="process-step-icon">◎</div>
+        <div class="process-step-title">Discovery & Research</div>
+        <p class="process-step-desc">We start by deeply understanding your business, audience, competitors and goals through workshops and immersive research.</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="process-step-num">02 / DEFINE</div>
+        <div class="process-step-icon">◈</div>
+        <div class="process-step-title">Strategy & Direction</div>
+        <p class="process-step-desc">We synthesise findings into a clear strategic platform — brand positioning, messaging architecture, and creative direction.</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="process-step-num">03 / DESIGN</div>
+        <div class="process-step-icon">◇</div>
+        <div class="process-step-title">Create & Craft</div>
+        <p class="process-step-desc">Our creative team designs, writes and builds with precision — turning strategy into compelling experiences that work across touchpoints.</p>
+      </div>
+      <div class="process-step fade-up">
+        <div class="process-step-num">04 / DELIVER</div>
+        <div class="process-step-icon">◉</div>
+        <div class="process-step-title">Launch & Grow</div>
+        <p class="process-step-desc">We launch, measure and iterate. Ongoing partnerships ensure your brand stays relevant and continues to perform.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" id="clients">
+  <div class="container">
+    <div class="clients-header">
+      <h2 class="clients-heading fade-up">Brands that<br/>trust us.</h2>
+      <p class="fade-up" style="font-size:15px;line-height:1.7;color:var(--gray)">We've had the privilege of working with forward-thinking brands across industries — from nimble startups to established enterprises.</p>
+    </div>
+    <div class="clients-grid">
+      <div class="client-item fade-up"><span class="client-name">Nexora</span></div>
+      <div class="client-item fade-up"><span class="client-name">Verdant</span></div>
+      <div class="client-item fade-up"><span class="client-name">Lumiere</span></div>
+      <div class="client-item fade-up"><span class="client-name">Arka Group</span></div>
+      <div class="client-item fade-up"><span class="client-name">Solara</span></div>
+      <div class="client-item fade-up"><span class="client-name">Prism Co.</span></div>
+      <div class="client-item fade-up"><span class="client-name">Elevate</span></div>
+      <div class="client-item fade-up"><span class="client-name">Orbis</span></div>
+      <div class="client-item fade-up"><span class="client-name">Halo Tech</span></div>
+      <div class="client-item fade-up"><span class="client-name">Zephyr</span></div>
+      <div class="client-item fade-up"><span class="client-name">Nuvana</span></div>
+      <div class="client-item fade-up"><span class="client-name">Crestline</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-label">What clients say</div>
+    <h2 class="testimonials-heading fade-up">Words from<br/>our partners.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-quote">BrightCommunications fundamentally changed how our brand shows up in the world. The strategic clarity they brought to our rebrand gave us a foundation we've built everything on since.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">RK</div>
+          <div>
+            <div class="testimonial-name">Rahul Krishnan</div>
+            <div class="testimonial-role">CEO, Nexora Fintech</div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-quote">The team's ability to translate our values into a compelling visual language was extraordinary. Our brand identity now truly reflects who we are — and clients notice it immediately.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SA</div>
+          <div>
+            <div class="testimonial-name">Shreya Aiyar</div>
+            <div class="testimonial-role">Founder, Verdant Foods</div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <p class="testimonial-quote">From strategy to execution, Bright is a true partner. They don't just deliver — they challenge you to be better. That's rare. Our digital presence has grown 3x since we started working together.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">AM</div>
+          <div>
+            <div class="testimonial-name">Arjun Menon</div>
+            <div class="testimonial-role">CMO, Arka Group</div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="team-header">
+      <h2 class="team-heading fade-up">The minds<br/>behind it all.</h2>
+      <p class="team-sub fade-up">A diverse, passionate team of strategists, creatives and digital specialists — united by a love for work that actually works.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up">
+        <div class="team-card-bg"><span class="team-card-initial">AN</span></div>
+        <div class="team-card-overlay">
+          <div class="team-card-name">Ananya Nair</div>
+          <div class="team-card-role">Founder & CEO</div>
+          <div class="team-card-links">
+            <a class="team-link" href="#">in</a>
+            <a class="team-link" href="#">tw</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-card-bg"><span class="team-card-initial">VR</span></div>
+        <div class="team-card-overlay">
+          <div class="team-card-name">Vivek Rao</div>
+          <div class="team-card-role">Creative Director</div>
+          <div class="team-card-links">
+            <a class="team-link" href="#">in</a>
+            <a class="team-link" href="#">be</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-card-bg"><span class="team-card-initial">PM</span></div>
+        <div class="team-card-overlay">
+          <div class="team-card-name">Priya Mohan</div>
+          <div class="team-card-role">Head of Strategy</div>
+          <div class="team-card-links">
+            <a class="team-link" href="#">in</a>
+            <a class="team-link" href="#">tw</a>
+          </div>
+        </div>
+      </div>
+      <div class="team-card fade-up">
+        <div class="team-card-bg"><span class="team-card-initial">KS</span></div>
+        <div class="team-card-overlay">
+          <div class="team-card-name">Karan Shah</div>
+          <div class="team-card-role">Digital Lead</div>
+          <div class="team-card-links">
+            <a class="team-link" href="#">in</a>
+            <a class="team-link" href="#">gh</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="container">
+    <div class="blog-header">
+      <h2 class="blog-heading fade-up">Insights &<br/>Ideas.</h2>
+      <a href="#" class="btn-outline fade-up">All Articles <span class="arrow">↗</span></a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card fade-up">
+        <div class="blog-card-img">
+          <div class="blog-card-img-bg"></div>
+          <span class="blog-card-img-text">01</span>
+        </div>
+        <div class="blog-card-content">
+          <div class="blog-card-meta">
+            <span>Brand Strategy</span>
+            <span>·</span>
+            <span>Mar 2025</span>
+          </div>
+          <div class="blog-card-title">Why Your Brand Needs a Clear Point of View Before Anything Else</div>
+          <div class="blog-read">Read Article</div>
+        </div>
+      </div>
+      <div class="blog-card fade-up">
+        <div class="blog-card-img">
+          <div class="blog-card-img-bg"></div>
+          <span class="blog-card-img-text">02</span>
+        </div>
+        <div class="blog-card-content">
+          <div class="blog-card-meta">
+            <span>Digital</span>
+            <span>·</span>
+            <span>Feb 2025</span>
+          </div>
+          <div class="blog-card-title">The Rise of Intentional Design in the Age of AI</div>
+          <div class="blog-read">Read Article</div>
+        </div>
+      </div>
+      <div class="blog-card fade-up">
+        <div class="blog-card-img">
+          <div class="blog-card-img-bg"></div>
+          <span class="blog-card-img-text">03</span>
+        </div>
+        <div class="blog-card-content">
+          <div class="blog-card-meta">
+            <span>PR & Comms</span>
+            <span>·</span>
+            <span>Jan 2025</span>
+          </div>
+          <div class="blog-card-title">Storytelling That Converts: How Narrative Drives Business Results</div>
+          <div class="blog-read">Read Article</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label">Get in touch</div>
+        <h2 class="contact-heading fade-up">
+          Let's build<br/>
+          something<br/>
+          <em>remarkable.</em>
+        </h2>
+      </div>
+      <div class="contact-right">
+        <div class="contact-info fade-up">
+          <div class="contact-info-item">
+            <span class="contact-info-label">Email</span>
+            <a href="mailto:hello@brightcomms.in" class="contact-info-val">hello@brightcomms.in</a>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-info-label">Phone</span>
+            <a href="tel:+919876543210" class="contact-info-val">+91 98765 43210</a>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-info-label">Location</span>
+            <span class="contact-info-val">Kochi, Kerala, India</span>
+          </div>
+        </div>
+        <form class="contact-form fade-up" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Your Name</label>
+              <input type="text" placeholder="Rahul Menon"/>
+            </div>
+            <div class="form-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="rahul@company.com"/>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Company</label>
+            <input type="text" placeholder="Your company name"/>
+          </div>
+          <div class="form-field">
+            <label>Service Interested In</label>
+            <select>
+              <option value="">Select a service</option>
+              <option>Brand Strategy</option>
+              <option>Visual Identity</option>
+              <option>Digital Marketing</option>
+              <option>Web Design & Dev</option>
+              <option>PR & Communications</option>
+              <option>Content & Film</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Tell us about your project</label>
+            <textarea rows="4" placeholder="Briefly describe your goals and timeline..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message ↗</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">BrightCommunications</div>
+        <p class="footer-tagline">A full-service creative agency crafting brands that connect, communicate, and convert.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="#">in</a>
+          <a class="social-btn" href="#">tw</a>
+          <a class="social-btn" href="#">ig</a>
+          <a class="social-btn" href="#">be</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#">Brand Strategy</a></li>
+          <li><a href="#">Visual Identity</a></li>
+          <li><a href="#">Digital Marketing</a></li>
+          <li><a href="#">Web Design & Dev</a></li>
+          <li><a href="#">PR & Communications</a></li>
+          <li><a href="#">Content & Film</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Work</a></li>
+          <li><a href="#">Meet the Team</a></li>
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@brightcomms.in">hello@brightcomms.in</a></li>
+          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+          <li><a href="#">Kochi, Kerala, India</a></li>
+          <li style="margin-top:20px"><a href="#">Schedule a Call →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 BrightCommunications. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .service-item, .work-card, .team-card, .blog-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); ring.classList.add('hovered'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); ring.classList.remove('hovered'); });
+  });
+
+  // Navbar scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade-up on scroll
+  const faders = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+
+  // Hero stagger on load
+  setTimeout(() => {
+    document.querySelector('.hero-tag').style.cssText += 'opacity:1;transform:none;transition:all 0.8s ease 0.2s';
+    document.querySelector('.hero-headline').style.cssText += 'opacity:1;transform:none;transition:all 0.9s ease 0.4s';
+    document.querySelector('.hero-bottom').style.cssText += 'opacity:1;transform:none;transition:all 0.8s ease 0.7s';
+  }, 100);
+
+  // Init hero elements hidden
+  ['.hero-tag', '.hero-headline', '.hero-bottom'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if(el) { el.style.opacity = '0'; el.style.transform = 'translateY(24px)'; }
+  });
+</script>
+</body>
+</html>
