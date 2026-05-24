@@ -9,14 +9,11 @@ const navItems = [
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
   { href: "#work", label: "Work" },
-  { href: "#team", label: "Team" },
-  { href: "#blog", label: "Insights" },
-  { href: "#contact", label: "Let's Talk" },
+  { href: "#contact", label: "Contact" },
 ] as const;
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
-
   const closeMenu = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
@@ -34,76 +31,73 @@ export function SiteNav() {
 
   return (
     <>
-      <nav id="navbar" className={open ? "nav-menu-open" : undefined}>
-        <a href="#" className="nav-logo" onClick={closeMenu}>
-          <Image
-            src={logo}
-            alt="Bright Communications"
-            width={260}
-            height={80}
-            className="nav-logo-img"
-            priority
-            sizes="(max-width: 768px) 200px, 250px"
-          />
-        </a>
-
-        <div className="nav-actions">
-          <a href="#contact" className="nav-cta" onClick={closeMenu}>
-            Let&apos;s Talk
-          </a>
-          <button
-            type="button"
-            className={`nav-toggle${open ? " is-open" : ""}`}
-            aria-expanded={open}
-            aria-controls="nav-menu-panel"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className="nav-toggle-bar" />
-            <span className="nav-toggle-bar" />
-            <span className="nav-toggle-bar" />
-          </button>
-        </div>
-      </nav>
-
-      <div
-        id="nav-menu-panel"
-        className={`nav-menu-overlay${open ? " is-open" : ""}`}
-        aria-hidden={!open}
-        role="dialog"
-        aria-modal="true"
-        onClick={closeMenu}
-      >
-        <div className="nav-menu-panel" onClick={(e) => e.stopPropagation()}>
-          <div className="nav-menu-head">
+      <header className="site-nav" id="navbar">
+        <div className="site-nav__inner">
+          <a href="#home" className="site-nav__logo" onClick={closeMenu}>
             <Image
               src={logo}
-              alt="Bright Communications"
-              width={220}
-              height={68}
-              className="nav-menu-brand-logo"
-              sizes="(max-width: 768px) 180px, 220px"
+              alt="BrightCommunications"
+              width={180}
+              height={48}
+              className="site-nav__logo-img"
+              priority
             />
-            <button
-              type="button"
-              className="nav-menu-close"
-              onClick={closeMenu}
-              aria-label="Close menu"
-            >
-              <span className="nav-menu-close-text">Close</span>
-              <span className="nav-menu-close-x">×</span>
-            </button>
-          </div>
-          <ul className="nav-menu-links">
+          </a>
+
+          <ul className="site-nav__links">
             {navItems.map(({ href, label }) => (
               <li key={href}>
-                <a href={href} className="nav-menu-link" onClick={closeMenu}>
-                  {label}
-                </a>
+                <a href={href}>{label}</a>
               </li>
             ))}
           </ul>
+
+          <div className="site-nav__actions">
+            <a href="#contact" className="site-nav__cta" onClick={closeMenu}>
+              Let&apos;s Talk
+            </a>
+            <button
+              type="button"
+              className={`site-nav__toggle${open ? " is-open" : ""}`}
+              aria-expanded={open}
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          </div>
         </div>
+      </header>
+
+      <div
+        className={`nav-overlay${open ? " is-open" : ""}`}
+        aria-hidden={!open}
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          type="button"
+          className="nav-overlay__close"
+          onClick={closeMenu}
+          aria-label="Close menu"
+        >
+          ×
+        </button>
+        <ul className="nav-overlay__links">
+          {[
+            ...navItems,
+            { href: "#team", label: "Team" },
+            { href: "#blog", label: "Insights" },
+          ].map(({ href, label }) => (
+            <li key={href}>
+              <a href={href} onClick={closeMenu}>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );

@@ -1,344 +1,472 @@
-import { HeroStatNumbers } from "@/components/HeroStatNumbers";
+import Image from "next/image";
+
+import { portfolioItems } from "@/app/assets/portfolio/data";
+import { HeroSection } from "@/components/HeroSection";
+import { HighlightWord } from "@/components/HighlightWord";
 import { SiteNav } from "@/components/SiteNav";
+import { StatsBar } from "@/components/StatsBar";
 import { WorkPortfolioGrid } from "@/components/WorkPortfolioGrid";
-import BorderGlow from "@/components/BorderGlow";
+
+const services = [
+  {
+    num: "01",
+    name: "Brand Strategy",
+    tags: ["Positioning", "Messaging", "Audit"],
+  },
+  {
+    num: "02",
+    name: "Visual Identity",
+    tags: ["Logo", "Guidelines", "Design System"],
+  },
+  {
+    num: "03",
+    name: "Digital Marketing",
+    tags: ["SEO", "Performance", "Social"],
+  },
+  {
+    num: "04",
+    name: "Web Design & Dev",
+    tags: ["UI/UX", "CMS", "E-Commerce"],
+  },
+  {
+    num: "05",
+    name: "PR & Communications",
+    tags: ["Media", "Crisis", "Outreach"],
+  },
+  {
+    num: "06",
+    name: "Content & Film",
+    tags: ["Video", "Photography", "Copy"],
+  },
+] as const;
+
+const clients = [
+  "Nexora",
+  "Verdant",
+  "Lumiere",
+  "Arka Group",
+  "Solara",
+  "Prism Co.",
+  "Elevate",
+  "Orbis",
+  "Halo Tech",
+  "Zephyr",
+  "Nuvana",
+  "Crestline",
+];
+
+const processSteps = [
+  {
+    num: "01 / DISCOVER",
+    title: "Discovery & Research",
+    desc: "We start by deeply understanding your business, audience, competitors and goals through workshops and immersive research.",
+  },
+  {
+    num: "02 / DEFINE",
+    title: "Strategy & Direction",
+    desc: "We synthesise findings into a clear strategic platform — brand positioning, messaging architecture, and creative direction.",
+  },
+  {
+    num: "03 / DESIGN",
+    title: "Create & Craft",
+    desc: "Our creative team designs, writes and builds with precision — turning strategy into compelling experiences that work across touchpoints.",
+  },
+  {
+    num: "04 / DELIVER",
+    title: "Launch & Grow",
+    desc: "We launch, measure and iterate. Ongoing partnerships ensure your brand stays relevant and continues to perform.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "BrightCommunications fundamentally changed how our brand shows up in the world. The strategic clarity they brought to our rebrand gave us a foundation we've built everything on since.",
+    initials: "RK",
+    name: "Rahul Krishnan",
+    role: "CEO, Nexora Fintech",
+  },
+  {
+    quote:
+      "The team's ability to translate our values into a compelling visual language was extraordinary. Our brand identity now truly reflects who we are — and clients notice it immediately.",
+    initials: "SA",
+    name: "Shreya Aiyar",
+    role: "Founder, Verdant Foods",
+  },
+  {
+    quote:
+      "From strategy to execution, Bright is a true partner. They don't just deliver — they challenge you to be better. Our digital presence has grown 3x since we started working together.",
+    initials: "AM",
+    name: "Arjun Menon",
+    role: "CMO, Arka Group",
+  },
+];
+
+const team = [
+  { initials: "AN", name: "Ananya Nair", role: "Founder & CEO" },
+  { initials: "VR", name: "Vivek Rao", role: "Creative Director" },
+  { initials: "PM", name: "Priya Mohan", role: "Head of Strategy" },
+  { initials: "KS", name: "Karan Shah", role: "Digital Lead" },
+];
+
+const blogPosts = [
+  {
+    num: "01",
+    category: "Brand Strategy",
+    date: "Mar 2025",
+    title:
+      "Why Your Brand Needs a Clear Point of View Before Anything Else",
+  },
+  {
+    num: "02",
+    category: "Digital",
+    date: "Feb 2025",
+    title: "The Rise of Intentional Design in the Age of AI",
+  },
+  {
+    num: "03",
+    category: "PR & Comms",
+    date: "Jan 2025",
+    title: "Storytelling That Converts: How Narrative Drives Business Results",
+  },
+];
 
 export function LandingPage() {
   return (
     <>
-      <div className="cursor" id="cursor" />
-      <div className="cursor-ring" id="cursorRing" />
-
       <SiteNav />
 
-      <section className="hero" id="home">
-        <div className="hero-video-bg" aria-hidden="true">
-          <video
-            className="hero-video"
-            src="/assets/video.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="hero-video-overlay" aria-hidden="true" />
-        <div className="hero-bg-text">BRIGHT</div>
-        <div className="hero-content">
-          <div className="hero-tag ">Est. 2016 · Kochi, India</div>
-          <h1 className="hero-headline">
-            We craft brands
-            <br />
-            <em>that speak</em>
-            <br />
-            louder.
-          </h1>
-          <div className="hero-bottom">
-            <p className="hero-desc">
-              BrightCommunications is a full-service creative agency helping
-              ambitious brands grow through strategy, design & digital.
-            </p>
-            <div className="hero-stats">
-              <HeroStatNumbers />
-            </div>
-            <div className="hero-scroll">
-              <span className="scroll-line" />
-              Scroll
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
-      <div className="marquee-wrap">
-        <div className="marquee-inner">
-          <span className="marquee-item">Brand Strategy</span>
-          <span className="marquee-item">Visual Identity</span>
-          <span className="marquee-item">Digital Marketing</span>
-          <span className="marquee-item">Web Design</span>
-          <span className="marquee-item">Content Creation</span>
-          <span className="marquee-item">PR & Communications</span>
-          <span className="marquee-item">Brand Strategy</span>
-          <span className="marquee-item">Visual Identity</span>
-          <span className="marquee-item">Digital Marketing</span>
-          <span className="marquee-item">Web Design</span>
-          <span className="marquee-item">Content Creation</span>
-          <span className="marquee-item">PR & Communications</span>
+      {/* Marquee */}
+      <div className="marquee" aria-hidden="true">
+        <div className="marquee__track">
+          {[
+            "Brand Strategy",
+            "Visual Identity",
+            "Digital Marketing",
+            "Web Design",
+            "Content Creation",
+            "PR & Communications",
+            "Brand Strategy",
+            "Visual Identity",
+            "Digital Marketing",
+            "Web Design",
+            "Content Creation",
+            "PR & Communications",
+          ].map((label, i) => (
+            <span key={`${label}-${i}`} className="marquee__item">
+              {label}
+            </span>
+          ))}
         </div>
       </div>
 
-      <section className="about" id="about">
+      {/* About */}
+      <section className="section" id="about">
         <div className="container">
-          <div className="section-label">About us</div>
           <div className="about-grid">
             <div>
-              <h2 className="about-heading fade-up">
-                We are a creative agency
-                <br />
-                <em>driven by ideas</em>
-                <br />
-                that move people.
+              <p className="section-eyebrow fade-up">About us</p>
+              <h2 className="heading-display heading-lg reveal-heading">
+                We are a creative agency driven by ideas that{" "}
+                <HighlightWord>move</HighlightWord> people.
               </h2>
-            </div>
-            <div className="about-right">
-              <p className="about-text fade-up">
+              <p className="body-lg fade-up" style={{ marginTop: 24 }}>
                 Founded in 2016, BrightCommunications partners with brands to
                 create meaningful experiences. We blend strategic thinking with
                 craft to deliver work that resonates, converts, and endures.
               </p>
-              <p className="about-text fade-up">
+              <p className="body-md fade-up" style={{ marginTop: 16 }}>
                 Our team of strategists, designers, and digital specialists
                 bring a holistic perspective to every brief — from brand
                 identity and campaign strategy to digital presence and PR.
               </p>
               <div className="about-pills fade-up">
-                <span className="pill">Brand Identity</span>
-                <span className="pill">Strategy</span>
-                <span className="pill">Digital</span>
-                <span className="pill">Content</span>
-                <span className="pill">PR</span>
-                <span className="pill">Events</span>
+                {[
+                  "Brand Identity",
+                  "Strategy",
+                  "Digital",
+                  "Content",
+                  "PR",
+                  "Events",
+                ].map((pill) => (
+                  <span key={pill} className="pill">
+                    {pill}
+                  </span>
+                ))}
               </div>
-              <a href="#contact" className="btn-outline fade-up">
-                Start a Project <span className="arrow">↗</span>
+              <a href="#contact" className="btn-outline fade-up magnetic-btn">
+                Start a Project →
               </a>
+            </div>
+
+            <div className="about-cards" data-stagger="0.15">
+              <article className="about-card tilt-card">
+                <div className="about-card__img">
+                  <Image
+                    src={portfolioItems[0].src}
+                    alt="Brand strategy work"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 280px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div className="about-card__body">
+                  <h3 className="about-card__title">Strategy that sticks</h3>
+                  <p className="body-md">
+                    Positioning, messaging, and brand foundations built to last.
+                  </p>
+                </div>
+              </article>
+              <article className="about-card tilt-card">
+                <div className="about-card__img">
+                  <Image
+                    src={portfolioItems[2].src}
+                    alt="Digital marketing work"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 280px"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <div className="about-card__body">
+                  <h3 className="about-card__title">Design that converts</h3>
+                  <p className="body-md">
+                    Visual identity and digital experiences that drive growth.
+                  </p>
+                </div>
+              </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="services" id="services">
+      {/* Services mosaic */}
+      <section className="section section--gray" id="services">
         <div className="container">
-          <div className="services-header">
-            <h2 className="services-heading fade-up">
-              What we
-              <br />
-              do best.
+          <div className="services-grid-header">
+            <p className="section-eyebrow fade-up">What we do</p>
+            <h2 className="heading-display heading-lg reveal-heading">
+              What we <HighlightWord>do</HighlightWord> best.
             </h2>
-            <p className="services-sub fade-up">
+            <p className="body-lg fade-up" style={{ marginTop: 16 }}>
               From brand foundations to full-scale campaigns — we cover every
               dimension of communications that helps your brand grow.
             </p>
           </div>
-          <div className="services-list">
-            <div className="service-item fade-up">
-              <span className="service-num">01</span>
-              <span className="service-name">Brand Strategy</span>
-              <div className="service-tags">
-                <span className="service-tag">Positioning</span>
-                <span className="service-tag">Messaging</span>
-                <span className="service-tag">Audit</span>
-              </div>
-              <span className="service-arrow">↗</span>
+
+          <div className="services-list" data-stagger="0.12">
+            {services.map((service, i) => {
+              const img = portfolioItems[i % portfolioItems.length];
+              const isPeach = i % 2 === 0;
+              return (
+                <article
+                  key={service.num}
+                  className={`service-card service-card--${isPeach ? "peach" : "gray"} tilt-card`}
+                >
+                  <div className="service-card__img">
+                    <Image
+                      src={img.src}
+                      alt={service.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
+                  <div className="service-card__body">
+                    <span className="service-card__num">{service.num}</span>
+                    <h3 className="service-card__title">{service.name}</h3>
+                    <div className="mosaic-card__tags">
+                      {service.tags.map((tag) => (
+                        <span key={tag} className="mosaic-tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a href="#contact" className="link-arrow">
+                      Learn more →
+                    </a>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Quote + stats */}
+      <section className="section">
+        <div className="container">
+          <div className="quote-stats">
+            <blockquote className="quote-block reveal-blur fade-up">
+              <p className="quote-block__text">
+                &ldquo;{testimonials[0].quote}&rdquo;
+              </p>
+              <footer className="quote-block__author">
+                <span className="quote-avatar">{testimonials[0].initials}</span>
+                <div>
+                  <div className="quote-name">{testimonials[0].name}</div>
+                  <div className="quote-role">{testimonials[0].role}</div>
+                </div>
+              </footer>
+            </blockquote>
+            <div className="quote-image" data-parallax="0.15">
+              <Image
+                src={portfolioItems[4].src}
+                alt="Team collaboration"
+                fill
+                sizes="(max-width: 900px) 100vw, 50vw"
+                style={{ objectFit: "cover" }}
+              />
             </div>
-            <div className="service-item fade-up">
-              <span className="service-num">02</span>
-              <span className="service-name">Visual Identity</span>
-              <div className="service-tags">
-                <span className="service-tag">Logo</span>
-                <span className="service-tag">Guidelines</span>
-                <span className="service-tag">Design System</span>
+          </div>
+          <StatsBar />
+        </div>
+      </section>
+
+      {/* Featured services */}
+      <section className="section section--dark">
+        <div className="container">
+          <p className="section-eyebrow fade-up" style={{ color: "rgba(255,255,255,0.5)" }}>
+            Our expertise
+          </p>
+          <h2 className="heading-display heading-lg reveal-heading" style={{ color: "#fff", marginBottom: 48 }}>
+            The services we offer for your <HighlightWord>business</HighlightWord>
+          </h2>
+
+          <div className="featured-services">
+            <article className="featured-card featured-card--wide">
+              <div>
+                <h3 className="featured-card__title">
+                  Turn your ideas into show-stopping brand experiences full of
+                  eye-catching visuals.
+                </h3>
+                <p className="featured-card__desc">
+                  Brand Strategy — positioning, messaging, and audits that give
+                  your brand a clear voice in a crowded market.
+                </p>
+                <a href="#contact" className="btn-primary magnetic-btn">
+                  Start a Project
+                </a>
               </div>
-              <span className="service-arrow">↗</span>
-            </div>
-            <div className="service-item fade-up">
-              <span className="service-num">03</span>
-              <span className="service-name">Digital Marketing</span>
-              <div className="service-tags">
-                <span className="service-tag">SEO</span>
-                <span className="service-tag">Performance</span>
-                <span className="service-tag">Social</span>
+              <div className="featured-card__visual">
+                <Image
+                  src={portfolioItems[0].src}
+                  alt="Brand strategy"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 45vw"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
-              <span className="service-arrow">↗</span>
-            </div>
-            <div className="service-item fade-up">
-              <span className="service-num">04</span>
-              <span className="service-name">Web Design & Dev</span>
-              <div className="service-tags">
-                <span className="service-tag">UI/UX</span>
-                <span className="service-tag">CMS</span>
-                <span className="service-tag">E-Commerce</span>
-              </div>
-              <span className="service-arrow">↗</span>
-            </div>
-            <div className="service-item fade-up">
-              <span className="service-num">05</span>
-              <span className="service-name">PR & Communications</span>
-              <div className="service-tags">
-                <span className="service-tag">Media</span>
-                <span className="service-tag">Crisis</span>
-                <span className="service-tag">Outreach</span>
-              </div>
-              <span className="service-arrow">↗</span>
-            </div>
-            <div className="service-item fade-up">
-              <span className="service-num">06</span>
-              <span className="service-name">Content & Film</span>
-              <div className="service-tags">
-                <span className="service-tag">Video</span>
-                <span className="service-tag">Photography</span>
-                <span className="service-tag">Copy</span>
-              </div>
-              <span className="service-arrow">↗</span>
+            </article>
+
+            <div className="featured-row">
+              <article className="featured-card">
+                <div>
+                  <h3 className="featured-card__title">
+                    Visual identity that sells more, worldwide.
+                  </h3>
+                  <p className="featured-card__desc">
+                    Logo, guidelines, and design systems that make your brand
+                    instantly recognisable.
+                  </p>
+                  <a href="#contact" className="btn-primary magnetic-btn">
+                    Start a Project
+                  </a>
+                </div>
+                <div className="featured-card__visual">
+                  <Image
+                    src={portfolioItems[1].src}
+                    alt="Visual identity"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              </article>
+              <article className="featured-card">
+                <div>
+                  <h3 className="featured-card__title">
+                    Digital marketing without the jargon.
+                  </h3>
+                  <p className="featured-card__desc">
+                    SEO, performance, and social — clear strategies that grow
+                    your presence and your revenue.
+                  </p>
+                  <a href="#contact" className="btn-primary magnetic-btn">
+                    Start a Project
+                  </a>
+                </div>
+                <div className="featured-card__visual">
+                  <Image
+                    src={portfolioItems[3].src}
+                    alt="Digital marketing"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 45vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="work" id="work">
+      {/* Work */}
+      <section className="section" id="work">
         <div className="container">
           <div className="work-header">
-            <h2 className="work-heading fade-up">
-              Selected
-              <br />
-              Work.
-            </h2>
+            <div>
+              <p className="section-eyebrow fade-up">Portfolio</p>
+              <h2 className="heading-display heading-lg reveal-heading">
+                Selected <HighlightWord>work</HighlightWord>.
+              </h2>
+            </div>
             <a href="#" className="btn-outline fade-up">
-              View All Projects <span className="arrow">↗</span>
+              View All Projects →
             </a>
           </div>
-          <div className="work-grid">
+          <div className="work-grid" data-stagger="0.1">
             <WorkPortfolioGrid />
           </div>
         </div>
       </section>
 
-      <section className="process" id="process">
+      {/* Process */}
+      <section className="section section--peach" id="process">
         <div className="container">
-          <div className="process-header">
-            <div className="section-label">Our Process</div>
-            <h2 className="process-heading fade-up">
-              How we
-              <br />
-              work with you.
-            </h2>
+          <p className="section-eyebrow fade-up">Our process</p>
+          <h2 className="heading-display heading-lg reveal-heading" style={{ marginBottom: 48 }}>
+            How we <HighlightWord>work</HighlightWord> with you.
+          </h2>
+          <div className="process-grid" data-stagger="0.14">
+            {processSteps.map((step) => (
+              <article key={step.num} className="process-card">
+                <p className="process-card__num">{step.num}</p>
+                <h3 className="process-card__title">{step.title}</h3>
+                <p className="process-card__desc">{step.desc}</p>
+              </article>
+            ))}
           </div>
-
-          <div className="process-steps">
-            <BorderGlow
-              edgeSensitivity={16}
-              glowColor="40 80 80"
-              backgroundColor="#00000"
-              borderRadius={28}
-              glowRadius={40}
-              glowIntensity={1}
-              coneSpread={25}
-              animated={false}
-              colors={['#c084fc', '#f472b6', '#38bdf8']}
-              className="process-step fade-up"
-            >
-              <div className="process-step-num">01 / DISCOVER</div>
-              <div className="process-step-icon">◎</div>
-              <div className="process-step-title">Discovery & Research</div>
-              <p className="process-step-desc">
-                We start by deeply understanding your business, audience,
-                competitors and goals through workshops and immersive research.
-              </p>
-            </BorderGlow>
-            <BorderGlow
-              edgeSensitivity={16}
-              glowColor="40 80 80"
-              backgroundColor="#00000"
-              borderRadius={28}
-              glowRadius={40}
-              glowIntensity={1}
-              coneSpread={25}
-              animated={false}
-              colors={['#c084fc', '#f472b6', '#38bdf8']}
-              className="process-step fade-up"
-            >
-              <div className="process-step-num">02 / DEFINE</div>
-              <div className="process-step-icon">◈</div>
-              <div className="process-step-title">Strategy & Direction</div>
-              <p className="process-step-desc">
-                We synthesise findings into a clear strategic platform — brand
-                positioning, messaging architecture, and creative direction.
-              </p>
-            </BorderGlow>
-            <BorderGlow
-              edgeSensitivity={16}
-              glowColor="40 80 80"
-              backgroundColor="#00000"
-              borderRadius={28}
-              glowRadius={40}
-              glowIntensity={1}
-              coneSpread={25}
-              animated={false}
-              colors={['#c084fc', '#f472b6', '#38bdf8']}
-              className="process-step fade-up"
-            >
-              <div className="process-step-num">03 / DESIGN</div>
-              <div className="process-step-icon">◇</div>
-              <div className="process-step-title">Create & Craft</div>
-              <p className="process-step-desc">
-                Our creative team designs, writes and builds with precision —
-                turning strategy into compelling experiences that work across
-                touchpoints.
-              </p>
-            </BorderGlow>
-            <BorderGlow
-              edgeSensitivity={16}
-              glowColor="40 80 80"
-              backgroundColor="#00000"
-              borderRadius={28}
-              glowRadius={40}
-              glowIntensity={1}
-              coneSpread={25}
-              animated={false}
-              colors={['#c084fc', '#f472b6', '#38bdf8']}
-              className="process-step fade-up"
-            >
-              <div className="process-step-num">04 / DELIVER</div>
-              <div className="process-step-icon">◉</div>
-              <div className="process-step-title">Launch & Grow</div>
-              <p className="process-step-desc">
-                We launch, measure and iterate. Ongoing partnerships ensure
-                your brand stays relevant and continues to perform.
-              </p>
-            </BorderGlow>
-          </div>
-
         </div>
       </section>
 
-      <section className="clients" id="clients">
+      {/* Clients */}
+      <section className="section" id="clients">
         <div className="container">
-          <div className="clients-header">
-            <h2 className="clients-heading fade-up">
-              Brands that
-              <br />
-              trust us.
+          <div className="about-grid" style={{ marginBottom: 48 }}>
+            <h2 className="heading-display heading-md reveal-heading">
+              Brands that <HighlightWord>trust</HighlightWord> us.
             </h2>
-            <p
-              className="fade-up"
-              style={{
-                fontSize: "15px",
-                lineHeight: 1.7,
-                color: "var(--gray)",
-              }}
-            >
-              We&apos;ve had the privilege of working with forward-thinking
-              brands across industries — from nimble startups to established
+            <p className="body-lg fade-up">
+              We&apos;ve had the privilege of working with forward-thinking brands
+              across industries — from nimble startups to established
               enterprises.
             </p>
           </div>
-          <div className="clients-grid">
-            {[
-              "Nexora",
-              "Verdant",
-              "Lumiere",
-              "Arka Group",
-              "Solara",
-              "Prism Co.",
-              "Elevate",
-              "Orbis",
-              "Halo Tech",
-              "Zephyr",
-              "Nuvana",
-              "Crestline",
-            ].map((name) => (
-              <div key={name} className="client-item fade-up">
+          <div className="clients-grid" data-stagger="0.05">
+            {clients.map((name) => (
+              <div key={name} className="client-item">
                 <span className="client-name">{name}</span>
               </div>
             ))}
@@ -346,392 +474,206 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="testimonials" id="testimonials">
+      {/* Testimonials */}
+      <section className="section section--gray" id="testimonials">
         <div className="container">
-          <div className="section-label">What clients say</div>
-          <h2 className="testimonials-heading fade-up">
-            Words from
-            <br />
-            our partners.
-          </h2>
-          <div className="testimonials-grid">
-            <div className="testimonial-card fade-up">
-              <p className="testimonial-quote">
-                BrightCommunications fundamentally changed how our brand shows
-                up in the world. The strategic clarity they brought to our
-                rebrand gave us a foundation we&apos;ve built everything on
-                since.
+          <div className="testimonials-layout">
+            <div>
+              <p className="section-eyebrow fade-up">What clients say</p>
+              <h2 className="heading-display heading-lg reveal-heading">
+                Words from our <HighlightWord>partners</HighlightWord>.
+              </h2>
+              <p className="body-md fade-up" style={{ marginTop: 16 }}>
+                Real feedback from brands we&apos;ve helped grow — strategy to
+                execution, every step of the way.
               </p>
-              <div className="testimonial-author">
-                <div className="testimonial-avatar">RK</div>
-                <div>
-                  <div className="testimonial-name">Rahul Krishnan</div>
-                  <div className="testimonial-role">CEO, Nexora Fintech</div>
-                  <div className="testimonial-stars">★★★★★</div>
-                </div>
-              </div>
             </div>
-            <div className="testimonial-card fade-up">
-              <p className="testimonial-quote">
-                The team&apos;s ability to translate our values into a
-                compelling visual language was extraordinary. Our brand
-                identity now truly reflects who we are — and clients notice it
-                immediately.
-              </p>
-              <div className="testimonial-author">
-                <div className="testimonial-avatar">SA</div>
-                <div>
-                  <div className="testimonial-name">Shreya Aiyar</div>
-                  <div className="testimonial-role">Founder, Verdant Foods</div>
-                  <div className="testimonial-stars">★★★★★</div>
-                </div>
-              </div>
-            </div>
-            <div className="testimonial-card fade-up">
-              <p className="testimonial-quote">
-                From strategy to execution, Bright is a true partner. They
-                don&apos;t just deliver — they challenge you to be better.
-                That&apos;s rare. Our digital presence has grown 3x since we
-                started working together.
-              </p>
-              <div className="testimonial-author">
-                <div className="testimonial-avatar">AM</div>
-                <div>
-                  <div className="testimonial-name">Arjun Menon</div>
-                  <div className="testimonial-role">CMO, Arka Group</div>
-                  <div className="testimonial-stars">★★★★★</div>
-                </div>
-              </div>
+            <div className="testimonial-cards" data-stagger="0.12">
+              {testimonials.map((t) => (
+                <article key={t.name} className="testimonial-card">
+                  <p className="testimonial-card__quote">{t.quote}</p>
+                  <footer className="testimonial-author">
+                    <span className="testimonial-avatar">{t.initials}</span>
+                    <div>
+                      <div className="testimonial-name">{t.name}</div>
+                      <div className="testimonial-role">{t.role}</div>
+                      <div className="testimonial-stars">★★★★★</div>
+                    </div>
+                  </footer>
+                </article>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="team" id="team">
+      {/* Team */}
+      <section className="section" id="team">
         <div className="container">
-          <div className="team-header">
-            <h2 className="team-heading fade-up">
-              The minds
-              <br />
-              behind it all.
+          <div className="about-grid" style={{ marginBottom: 48 }}>
+            <h2 className="heading-display heading-lg reveal-heading">
+              The minds behind it <HighlightWord>all</HighlightWord>.
             </h2>
-            <p className="team-sub fade-up">
+            <p className="body-lg fade-up">
               A diverse, passionate team of strategists, creatives and digital
               specialists — united by a love for work that actually works.
             </p>
           </div>
-          <div className="team-grid">
-            <div className="team-card fade-up">
-              <div className="team-card-bg">
-                <span className="team-card-initial">AN</span>
-              </div>
-              <div className="team-card-overlay">
-                <div className="team-card-name">Ananya Nair</div>
-                <div className="team-card-role">Founder & CEO</div>
-                <div className="team-card-links">
-                  <a className="team-link" href="#">
-                    in
-                  </a>
-                  <a className="team-link" href="#">
-                    tw
-                  </a>
+          <div className="team-grid" data-stagger="0.1">
+            {team.map((member) => (
+              <article key={member.name} className="team-card tilt-card">
+                <span className="team-card__initial">{member.initials}</span>
+                <div className="team-card__overlay">
+                  <div className="team-card__name">{member.name}</div>
+                  <div className="team-card__role">{member.role}</div>
                 </div>
-              </div>
-            </div>
-            <div className="team-card fade-up">
-              <div className="team-card-bg">
-                <span className="team-card-initial">VR</span>
-              </div>
-              <div className="team-card-overlay">
-                <div className="team-card-name">Vivek Rao</div>
-                <div className="team-card-role">Creative Director</div>
-                <div className="team-card-links">
-                  <a className="team-link" href="#">
-                    in
-                  </a>
-                  <a className="team-link" href="#">
-                    be
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="team-card fade-up">
-              <div className="team-card-bg">
-                <span className="team-card-initial">PM</span>
-              </div>
-              <div className="team-card-overlay">
-                <div className="team-card-name">Priya Mohan</div>
-                <div className="team-card-role">Head of Strategy</div>
-                <div className="team-card-links">
-                  <a className="team-link" href="#">
-                    in
-                  </a>
-                  <a className="team-link" href="#">
-                    tw
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="team-card fade-up">
-              <div className="team-card-bg">
-                <span className="team-card-initial">KS</span>
-              </div>
-              <div className="team-card-overlay">
-                <div className="team-card-name">Karan Shah</div>
-                <div className="team-card-role">Digital Lead</div>
-                <div className="team-card-links">
-                  <a className="team-link" href="#">
-                    in
-                  </a>
-                  <a className="team-link" href="#">
-                    gh
-                  </a>
-                </div>
-              </div>
-            </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="blog" id="blog">
+      {/* Blog */}
+      <section className="section section--gray" id="blog">
         <div className="container">
-          <div className="blog-header">
-            <h2 className="blog-heading fade-up">
-              Insights &
-              <br />
-              Ideas.
+          <div className="work-header">
+            <h2 className="heading-display heading-lg reveal-heading">
+              Insights &amp; <HighlightWord>ideas</HighlightWord>.
             </h2>
             <a href="#" className="btn-outline fade-up">
-              All Articles <span className="arrow">↗</span>
+              All Articles →
             </a>
           </div>
-          <div className="blog-grid">
-            <div className="blog-card fade-up">
-              <div className="blog-card-img">
-                <div className="blog-card-img-bg" />
-                <span className="blog-card-img-text">01</span>
-              </div>
-              <div className="blog-card-content">
-                <div className="blog-card-meta">
-                  <span>Brand Strategy</span>
-                  <span>·</span>
-                  <span>Mar 2025</span>
+          <div className="blog-grid" data-stagger="0.12">
+            {blogPosts.map((post) => (
+              <article key={post.num} className="blog-card tilt-card">
+                <div className="blog-card__thumb">{post.num}</div>
+                <div className="blog-card__body">
+                  <p className="blog-card__meta">
+                    {post.category} · {post.date}
+                  </p>
+                  <h3 className="blog-card__title">{post.title}</h3>
+                  <span className="blog-card__read">Read Article →</span>
                 </div>
-                <div className="blog-card-title">
-                  Why Your Brand Needs a Clear Point of View Before Anything
-                  Else
-                </div>
-                <div className="blog-read">Read Article</div>
-              </div>
-            </div>
-            <div className="blog-card fade-up">
-              <div className="blog-card-img">
-                <div className="blog-card-img-bg" />
-                <span className="blog-card-img-text">02</span>
-              </div>
-              <div className="blog-card-content">
-                <div className="blog-card-meta">
-                  <span>Digital</span>
-                  <span>·</span>
-                  <span>Feb 2025</span>
-                </div>
-                <div className="blog-card-title">
-                  The Rise of Intentional Design in the Age of AI
-                </div>
-                <div className="blog-read">Read Article</div>
-              </div>
-            </div>
-            <div className="blog-card fade-up">
-              <div className="blog-card-img">
-                <div className="blog-card-img-bg" />
-                <span className="blog-card-img-text">03</span>
-              </div>
-              <div className="blog-card-content">
-                <div className="blog-card-meta">
-                  <span>PR & Comms</span>
-                  <span>·</span>
-                  <span>Jan 2025</span>
-                </div>
-                <div className="blog-card-title">
-                  Storytelling That Converts: How Narrative Drives Business
-                  Results
-                </div>
-                <div className="blog-read">Read Article</div>
-              </div>
-            </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="contact" id="contact">
+      {/* Contact CTA */}
+      <section className="cta-section" id="contact">
         <div className="container">
-          <div className="contact-inner">
+          <div className="cta-grid">
             <div>
-              <div className="section-label">Get in touch</div>
-              <h2 className="contact-heading fade-up">
-                Let&apos;s build
-                <br />
-                something
-                <br />
-                <em>remarkable.</em>
+              <h2 className="heading-display heading-lg reveal-heading">
+                Let&apos;s build something remarkable.
               </h2>
-            </div>
-            <div className="contact-right">
-              <div className="contact-info fade-up">
-                <div className="contact-info-item">
-                  <span className="contact-info-label">Email</span>
-                  <a
-                    href="mailto:hello@brightcomms.in"
-                    className="contact-info-val"
-                  >
-                    hello@brightcomms.in
-                  </a>
-                </div>
-                <div className="contact-info-item">
-                  <span className="contact-info-label">Phone</span>
-                  <a href="tel:+919876543210" className="contact-info-val">
-                    +91 98765 43210
-                  </a>
-                </div>
-                <div className="contact-info-item">
-                  <span className="contact-info-label">Location</span>
-                  <span className="contact-info-val">
-                    Kochi, Kerala, India
-                  </span>
-                </div>
+              <p className="body-lg fade-up" style={{ marginTop: 16 }}>
+                Tell us about your project — we&apos;ll get back within one
+                business day.
+              </p>
+              <div className="cta-contact-info fade-up">
+                <a href="mailto:hello@brightcomms.in">hello@brightcomms.in</a>
+                <a href="tel:+919876543210">+91 98765 43210</a>
+                <span>Kochi, Kerala, India</span>
               </div>
-              <form className="contact-form fade-up">
-                <div className="form-row">
-                  <div className="form-field">
-                    <label htmlFor="name">Your Name</label>
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Rahul Menon"
-                      name="name"
-                    />
-                  </div>
-                  <div className="form-field">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                      id="email"
-                      type="email"
-                      placeholder="rahul@company.com"
-                      name="email"
-                    />
-                  </div>
-                </div>
-                <div className="form-field">
-                  <label htmlFor="company">Company</label>
-                  <input
-                    id="company"
-                    type="text"
-                    placeholder="Your company name"
-                    name="company"
-                  />
-                </div>
-                <div className="form-field">
-                  <label htmlFor="service">Service Interested In</label>
-                  <select id="service" name="service" defaultValue="">
-                    <option value="">Select a service</option>
-                    <option>Brand Strategy</option>
-                    <option>Visual Identity</option>
-                    <option>Digital Marketing</option>
-                    <option>Web Design & Dev</option>
-                    <option>PR & Communications</option>
-                    <option>Content & Film</option>
-                  </select>
-                </div>
-                <div className="form-field">
-                  <label htmlFor="message">Tell us about your project</label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    placeholder="Briefly describe your goals and timeline..."
-                    name="message"
-                  />
-                </div>
-                <button type="submit" className="btn-submit">
-                  Send Message ↗
-                </button>
-              </form>
             </div>
+
+            <form className="cta-form">
+              <div className="form-row">
+                <input id="name" name="name" type="text" placeholder="Your Name" />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                />
+              </div>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                placeholder="Company"
+              />
+              <select id="service" name="service" defaultValue="">
+                <option value="">Service interested in</option>
+                {services.map((s) => (
+                  <option key={s.num} value={s.name}>
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+              <textarea
+                id="message"
+                name="message"
+                rows={4}
+                placeholder="Tell us about your project..."
+              />
+              <button type="submit" className="btn-dark magnetic-btn">
+                Send Message →
+              </button>
+            </form>
           </div>
         </div>
       </section>
 
-      <footer>
+      {/* Footer */}
+      <footer className="site-footer">
         <div className="container">
-          <div className="footer-inner">
-            <div className="footer-brand">
-              <div className="footer-logo">BrightCommunications</div>
-              <p className="footer-tagline">
-                A full-service creative agency crafting brands that connect,
-                communicate, and convert.
-              </p>
-              <div className="footer-social">
-                <a className="social-btn" href="#">
-                  in
-                </a>
-                <a className="social-btn" href="#">
-                  tw
-                </a>
-                <a className="social-btn" href="#">
-                  ig
-                </a>
-                <a className="social-btn" href="#">
-                  be
-                </a>
-              </div>
+          <div className="footer-top">
+            <a href="#home" className="footer-logo">
+              BrightCommunications
+            </a>
+            <ul className="footer-nav">
+              <li>
+                <a href="#services">Services</a>
+              </li>
+              <li>
+                <a href="#work">Work</a>
+              </li>
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+            </ul>
+            <a href="#contact" className="btn-primary magnetic-btn">
+              Let&apos;s Talk
+            </a>
+          </div>
+
+          <div className="footer-columns">
+            <div>
+              <p className="footer-col-title">Services</p>
+              <ul className="footer-links">
+                {services.map((s) => (
+                  <li key={s.num}>
+                    <a href="#services">{s.name}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
-              <div className="footer-col-title">Services</div>
+              <p className="footer-col-title">Company</p>
               <ul className="footer-links">
                 <li>
-                  <a href="#">Brand Strategy</a>
+                  <a href="#about">About Us</a>
                 </li>
                 <li>
-                  <a href="#">Visual Identity</a>
+                  <a href="#work">Our Work</a>
                 </li>
                 <li>
-                  <a href="#">Digital Marketing</a>
+                  <a href="#team">Meet the Team</a>
                 </li>
                 <li>
-                  <a href="#">Web Design & Dev</a>
+                  <a href="#blog">Insights</a>
                 </li>
                 <li>
-                  <a href="#">PR & Communications</a>
-                </li>
-                <li>
-                  <a href="#">Content & Film</a>
+                  <a href="#contact">Contact</a>
                 </li>
               </ul>
             </div>
             <div>
-              <div className="footer-col-title">Company</div>
-              <ul className="footer-links">
-                <li>
-                  <a href="#">About Us</a>
-                </li>
-                <li>
-                  <a href="#">Our Work</a>
-                </li>
-                <li>
-                  <a href="#">Meet the Team</a>
-                </li>
-                <li>
-                  <a href="#">Insights</a>
-                </li>
-                <li>
-                  <a href="#">Careers</a>
-                </li>
-                <li>
-                  <a href="#">Contact</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <div className="footer-col-title">Contact</div>
+              <p className="footer-col-title">Contact</p>
               <ul className="footer-links">
                 <li>
                   <a href="mailto:hello@brightcomms.in">hello@brightcomms.in</a>
@@ -740,22 +682,30 @@ export function LandingPage() {
                   <a href="tel:+919876543210">+91 98765 43210</a>
                 </li>
                 <li>
-                  <a href="#">Kochi, Kerala, India</a>
-                </li>
-                <li style={{ marginTop: "20px" }}>
-                  <a href="#">Schedule a Call →</a>
+                  <a href="#contact">Kochi, Kerala, India</a>
                 </li>
               </ul>
             </div>
           </div>
+
           <div className="footer-bottom">
             <p className="footer-copy">
               © 2025 BrightCommunications. All rights reserved.
             </p>
+            <div className="footer-social">
+              <a href="#" className="social-icon" aria-label="LinkedIn">
+                in
+              </a>
+              <a href="#" className="social-icon" aria-label="Twitter">
+                tw
+              </a>
+              <a href="#" className="social-icon" aria-label="Instagram">
+                ig
+              </a>
+            </div>
             <div className="footer-legal">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-              <a href="#">Cookie Policy</a>
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
             </div>
           </div>
         </div>

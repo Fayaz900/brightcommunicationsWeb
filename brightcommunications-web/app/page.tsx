@@ -1,10 +1,12 @@
 import { LandingPage } from "@/components/LandingPage";
-import { SiteEffects } from "@/components/SiteEffects";
+import { PageLoader } from "@/components/PageLoader";
+import { SiteAnimations } from "@/components/SiteAnimations";
 
 export default function Home() {
   return (
     <>
-      <SiteEffects />
+      <PageLoader />
+      <SiteAnimations />
       <LandingPage />
     </>
   );

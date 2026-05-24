@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
-import { Outfit, Source_Sans_3, Geist } from "next/font/google";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-/** Body copy, forms, nav links, descriptions */
-const sourceSans = Source_Sans_3({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
 });
 
-/** Headlines, marquee, stats numerals, buttons */
-const outfit = Outfit({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-display",
 });
 
@@ -32,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className={`${sourceSans.variable} ${outfit.variable}`}>
+    <html lang="en">
+      <body className={`${plusJakarta.variable} ${cormorant.variable}`}>
         {children}
       </body>
     </html>
