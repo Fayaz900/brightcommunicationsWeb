@@ -345,7 +345,7 @@ export function LandingPage() {
                   Brand Strategy — positioning, messaging, and audits that give
                   your brand a clear voice in a crowded market.
                 </p>
-                <a href="#contact" className="btn-primary magnetic-btn">
+                <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
                   Start a Project
                 </a>
               </div>
@@ -370,7 +370,7 @@ export function LandingPage() {
                     Logo, guidelines, and design systems that make your brand
                     instantly recognisable.
                   </p>
-                  <a href="#contact" className="btn-primary magnetic-btn">
+                  <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
                     Start a Project
                   </a>
                 </div>
@@ -393,7 +393,7 @@ export function LandingPage() {
                     SEO, performance, and social — clear strategies that grow
                     your presence and your revenue.
                   </p>
-                  <a href="#contact" className="btn-primary magnetic-btn">
+                  <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
                     Start a Project
                   </a>
                 </div>
@@ -636,7 +636,7 @@ export function LandingPage() {
                 <a href="#contact">Contact</a>
               </li>
             </ul>
-            <a href="#contact" className="btn-primary magnetic-btn">
+            <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
               Let&apos;s Talk
             </a>
           </div>

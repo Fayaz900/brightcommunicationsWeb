@@ -24,9 +24,6 @@ function revealHeroCopy(root: HTMLElement) {
   gsap.set(root.querySelectorAll(".hero__copy > *"), {
     clearProps: "all",
   });
-  gsap.set(root.querySelectorAll(".hl-circle"), {
-    clearProps: "all",
-  });
 }
 
 export function HeroSection() {
@@ -97,11 +94,6 @@ export function HeroSection() {
               stagger: 0.1,
               ease: "power4.out",
             },
-            "-=0.35"
-          )
-          .from(
-            ".hl-circle",
-            { scale: 0, duration: 0.4, ease: "back.out(2.5)" },
             "-=0.35"
           )
           .from(
@@ -228,7 +220,10 @@ export function HeroSection() {
           </p>
 
           <div className="hero__cta-row">
-            <a href="#contact" className="btn-primary hero__cta magnetic-btn">
+            <a
+              href="#contact"
+              className="btn-outline btn-outline--light hero__cta magnetic-btn"
+            >
               Let&apos;s Talk
             </a>
             <a href="#work" className="hero__link">
