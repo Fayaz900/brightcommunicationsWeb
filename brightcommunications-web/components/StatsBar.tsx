@@ -68,9 +68,9 @@ function StatItem({ end, suffix, label, pad }: StatItemProps) {
 export function StatsBar() {
   return (
     <div className="stats-bar">
-      <StatItem end={120} suffix="+" label="Projects delivered" />
-      <StatItem end={8} suffix="" label="Years of experience" pad />
-      <StatItem end={40} suffix="+" label="Happy clients" />
+      <StatItem end={29} suffix="+" label="Years of excellence" />
+      <StatItem end={40} suffix="+" label="Creative professionals" />
+      <StatItem end={360} suffix="°" label="Integrated solutions" />
     </div>
   );
 }

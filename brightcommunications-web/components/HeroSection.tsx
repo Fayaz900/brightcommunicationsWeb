@@ -5,7 +5,6 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 import { portfolioItems } from "@/app/assets/portfolio/data";
-import { HighlightWord } from "@/components/HighlightWord";
 
 const HERO_INTRO_FLAG = "data-hero-intro-fired";
 
@@ -204,19 +203,28 @@ export function HeroSection() {
 
       <div className="container hero__inner">
         <div className="hero__copy">
-          <p className="hero__tag">Est. 2016 · Kochi, India</p>
+          <p className="hero__tag">Building Brands Since 1996</p>
 
-          <h1 className="hero__title">
-            We craft brands
+          <h1 className="hero__title hero__title--long">
+            Ideas That Inspire.
             <br />
-            that <HighlightWord>speak</HighlightWord>
+            Strategies That Deliver.
             <br />
-            <em>louder.</em>
+            <em>Brands That Endure.</em>
           </h1>
 
           <p className="hero__desc">
-            Bright Communications is a full-service creative agency helping
-            ambitious brands grow through strategy, design &amp; digital.
+            For nearly three decades, Bright Communications has helped businesses
+            build meaningful connections, create lasting impressions, and achieve
+            sustainable growth through strategic communication.
+          </p>
+
+          <p className="hero__desc hero__desc--secondary">
+            Founded by K.V. Shaji in 1996, Bright has evolved from a traditional
+            advertising agency into a fully integrated communications partner
+            delivering branding, advertising, digital marketing, content
+            production, performance marketing, website development, and digital
+            experiences for brands across industries.
           </p>
 
           <div className="hero__cta-row">
@@ -224,10 +232,10 @@ export function HeroSection() {
               href="#contact"
               className="btn-outline btn-outline--light hero__cta magnetic-btn"
             >
-              Let&apos;s Talk
+              Start Your Project
             </a>
             <a href="#work" className="hero__link">
-              View our work →
+              Explore Our Work →
             </a>
           </div>
         </div>

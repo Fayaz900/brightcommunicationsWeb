@@ -5,12 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import logo from "@/app/assets/logo.png";
 
-const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#work", label: "Work" },
-  { href: "#contact", label: "Contact" },
-] as const;
+import { navItems } from "@/lib/site-content";
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
@@ -54,7 +49,7 @@ export function SiteNav() {
 
           <div className="site-nav__actions">
             <a href="#contact" className="site-nav__cta" onClick={closeMenu}>
-              Let&apos;s Talk
+              Start Your Project
             </a>
             <button
               type="button"
@@ -86,11 +81,7 @@ export function SiteNav() {
           ×
         </button>
         <ul className="nav-overlay__links">
-          {[
-            ...navItems,
-            { href: "#team", label: "Team" },
-            { href: "#blog", label: "Insights" },
-          ].map(({ href, label }) => (
+          {navItems.map(({ href, label }) => (
             <li key={href}>
               <a href={href} onClick={closeMenu}>
                 {label}
