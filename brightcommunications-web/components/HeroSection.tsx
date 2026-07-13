@@ -94,9 +94,12 @@ export function HeroSection() {
               ease: "power4.out",
             },
             "-=0.35"
-          )
-          .from(
-            ".hero__film-item",
+          );
+
+        const filmItems = root.querySelectorAll(".hero__film-item");
+        if (filmItems.length > 0) {
+          tl.from(
+            filmItems,
             {
               y: 70,
               opacity: 0,
@@ -106,12 +109,14 @@ export function HeroSection() {
               ease: "power3.out",
             },
             "-=0.2"
-          )
-          .from(
-            ".hero__scroll-hint",
-            { opacity: 0, y: 8, duration: 0.4 },
-            "-=0.15"
           );
+        }
+
+        tl.from(
+          ".hero__scroll-hint",
+          { opacity: 0, y: 8, duration: 0.4 },
+          "-=0.15"
+        );
 
         gsap.to(".hero__decor--1", {
           y: -14,
@@ -213,20 +218,6 @@ export function HeroSection() {
             <em>Brands That Endure.</em>
           </h1>
 
-          <p className="hero__desc">
-            For nearly three decades, Bright Communications has helped businesses
-            build meaningful connections, create lasting impressions, and achieve
-            sustainable growth through strategic communication.
-          </p>
-
-          <p className="hero__desc hero__desc--secondary">
-            Founded by K.V. Shaji in 1996, Bright has evolved from a traditional
-            advertising agency into a fully integrated communications partner
-            delivering branding, advertising, digital marketing, content
-            production, performance marketing, website development, and digital
-            experiences for brands across industries.
-          </p>
-
           <div className="hero__cta-row">
             <a
               href="#contact"
@@ -241,7 +232,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="hero__filmstrip-wrap" aria-label="Selected work">
+      {/* <div className="hero__filmstrip-wrap" aria-label="Selected work">
         <div className="hero__filmstrip">
           <div className="hero__filmstrip-track">
             {stripItems.map((item, i) => (
@@ -269,7 +260,7 @@ export function HeroSection() {
           className="hero__filmstrip-fade hero__filmstrip-fade--right"
           aria-hidden="true"
         />
-      </div>
+      </div> */}
 
       <div className="hero__scroll-hint" aria-hidden="true">
         <span className="hero__scroll-line" />

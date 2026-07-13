@@ -138,16 +138,18 @@ export function SiteAnimations() {
     document.body.classList.add("animations-ready");
 
     const ctx = gsap.context(() => {
-      gsap.to(".hero__filmstrip-wrap", {
-        yPercent: 18,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.2,
-        },
-      });
+      if (document.querySelector(".hero__filmstrip-wrap")) {
+        gsap.to(".hero__filmstrip-wrap", {
+          yPercent: 18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      }
 
       gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
         const speed = Number(el.dataset.parallax) || 0.2;
