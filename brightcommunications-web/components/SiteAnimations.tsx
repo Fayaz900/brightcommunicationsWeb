@@ -33,7 +33,9 @@ function initMagneticButtons() {
 }
 
 function initTiltCards() {
-  const cards = gsap.utils.toArray<HTMLElement>(".tilt-card");
+  const cards = gsap.utils.toArray<HTMLElement>(".tilt-card").filter(
+    (card) => !card.parentElement?.hasAttribute("data-stagger")
+  );
 
   cards.forEach((card) => {
     const onMove = (e: MouseEvent) => {
@@ -91,6 +93,66 @@ const revealOnce = {
   once: true,
 } as const;
 
+function initStaggerReveals() {
+  gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((container) => {
+    const children = gsap.utils.toArray<HTMLElement>(
+      container.querySelectorAll(":scope > *")
+    );
+    if (children.length === 0) return;
+
+    const stagger = Number(container.dataset.stagger) || 0.1;
+
+    gsap.to(children, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.7,
+      stagger,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: container,
+        start: revealOnce.start,
+        once: true,
+      },
+    });
+  });
+}
+
+function initFadeUpReveals() {
+  gsap.utils.toArray<HTMLElement>(".fade-up").forEach((el) => {
+    if (el.parentElement?.hasAttribute("data-stagger")) return;
+
+    gsap.to(el, {
+      autoAlpha: 1,
+      y: 0,
+      x: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      duration: el.dataset.revealDuration ? Number(el.dataset.revealDuration) : 0.85,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: el.dataset.revealStart || revealOnce.start,
+        once: true,
+      },
+    });
+  });
+}
+
+function initHeadingReveals() {
+  gsap.utils.toArray<HTMLElement>(".reveal-heading").forEach((heading) => {
+    gsap.set(heading, { clipPath: "inset(100% 0% 0% 0%)" });
+
+    gsap.to(heading, {
+      autoAlpha: 1,
+      y: 0,
+      clipPath: "inset(0% 0% 0% 0%)",
+      duration: 1,
+      ease: "power4.out",
+      scrollTrigger: { trigger: heading, ...revealOnce },
+    });
+  });
+}
+
 export function SiteAnimations() {
   useLayoutEffect(() => {
     const nav = document.getElementById("navbar");
@@ -118,12 +180,20 @@ export function SiteAnimations() {
     const preventSubmit = (e: Event) => e.preventDefault();
     form?.addEventListener("submit", preventSubmit);
 
-    const refreshScroll = () => ScrollTrigger.refresh();
+    let refreshPending = false;
+    const refreshScroll = () => {
+      if (refreshPending) return;
+      refreshPending = true;
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        refreshPending = false;
+      });
+    };
 
     if (prefersReducedMotion()) {
       gsap.set(".fade-up, .reveal-heading, [data-stagger] > *", {
         clearProps: "all",
-        opacity: 1,
+        autoAlpha: 1,
         y: 0,
         scale: 1,
         filter: "none",
@@ -165,57 +235,16 @@ export function SiteAnimations() {
         });
       });
 
-      gsap.utils.toArray<HTMLElement>(".reveal-heading").forEach((heading) => {
-        gsap.from(heading, {
-          y: 48,
-          opacity: 0,
-          clipPath: "inset(100% 0% 0% 0%)",
-          duration: 1,
-          ease: "power4.out",
-          scrollTrigger: { trigger: heading, ...revealOnce },
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>(".fade-up").forEach((el) => {
-        const y = el.dataset.revealY ? Number(el.dataset.revealY) : 40;
-        const x = el.dataset.revealX ? Number(el.dataset.revealX) : 0;
-        const scale = el.dataset.revealScale ? Number(el.dataset.revealScale) : 1;
-
-        gsap.from(el, {
-          y,
-          x,
-          scale,
-          opacity: 0,
-          filter: el.classList.contains("reveal-blur") ? "blur(8px)" : "blur(0px)",
-          duration: el.dataset.revealDuration ? Number(el.dataset.revealDuration) : 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: el.dataset.revealStart || revealOnce.start,
-            once: true,
-          },
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-stagger]").forEach((container) => {
-        const children = container.querySelectorAll(":scope > *");
-        const stagger = Number(container.dataset.stagger) || 0.1;
-
-        gsap.from(children, {
-          y: 40,
-          opacity: 0,
-          scale: 0.96,
-          duration: 0.8,
-          stagger,
-          ease: "power3.out",
-          scrollTrigger: { trigger: container, ...revealOnce },
-        });
-      });
+      initHeadingReveals();
+      initFadeUpReveals();
+      initStaggerReveals();
 
       gsap.utils.toArray<HTMLElement>(".featured-card").forEach((card, i) => {
-        gsap.from(card, {
-          x: i % 2 === 0 ? -60 : 60,
-          opacity: 0,
+        gsap.set(card, { autoAlpha: 0, x: i % 2 === 0 ? -60 : 60 });
+
+        gsap.to(card, {
+          autoAlpha: 1,
+          x: 0,
           duration: 1,
           ease: "power4.out",
           scrollTrigger: { trigger: card, ...revealOnce },
@@ -223,8 +252,9 @@ export function SiteAnimations() {
 
         const visual = card.querySelector(".featured-card__visual");
         if (visual) {
-          gsap.from(visual, {
-            scale: 1.12,
+          gsap.set(visual, { scale: 1.12 });
+          gsap.to(visual, {
+            scale: 1,
             duration: 1.2,
             ease: "power2.out",
             scrollTrigger: { trigger: card, ...revealOnce },
@@ -232,19 +262,21 @@ export function SiteAnimations() {
         }
       });
 
-      gsap.from(".stats-bar .stat-item", {
-        y: 28,
-        opacity: 0,
-        scale: 0.92,
+      gsap.set(".stats-bar .stat-item", { autoAlpha: 0, y: 28, scale: 0.92 });
+      gsap.to(".stats-bar .stat-item", {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
         duration: 0.75,
         stagger: 0.12,
         ease: "back.out(1.6)",
         scrollTrigger: { trigger: ".stats-bar", ...revealOnce },
       });
 
-      gsap.from(".cta-form > *", {
-        y: 24,
-        opacity: 0,
+      gsap.set(".cta-form > *", { autoAlpha: 0, y: 24 });
+      gsap.to(".cta-form > *", {
+        autoAlpha: 1,
+        y: 0,
         duration: 0.65,
         stagger: 0.07,
         ease: "power3.out",

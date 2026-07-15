@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
-import { portfolioItems } from "@/app/assets/portfolio/data";
+import { AboutVideoPlayer } from "@/components/AboutVideoPlayer";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroSection } from "@/components/HeroSection";
 import { HighlightWord } from "@/components/HighlightWord";
@@ -82,23 +81,16 @@ export function LandingPage() {
               Built On Advertising. Evolved Through Innovation.
             </p>
           </div>
-          <div className="legacy-grid" data-stagger="0.1">
-            {legacyHighlights.map((item) => (
-              <article key={item.label} className="legacy-card">
-                <div className="legacy-card__value">{item.value}</div>
-                <div className="legacy-card__label">{item.label}</div>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
       {/* Who We Are */}
       <section className="section" id="about">
         <div className="container">
-          <div className="about-grid">
-            <div>
-              <p className="section-eyebrow fade-up">Who We Are</p>
+          <div className="about-intro">
+            <p className="section-eyebrow fade-up">Who We Are</p>
+
+            <div className="about-copy">
               <h2 className="heading-display heading-lg reveal-heading">
                 A Creative Force Since <HighlightWord>1996</HighlightWord>
               </h2>
@@ -124,108 +116,51 @@ export function LandingPage() {
                 <span className="pill">Brands need trust.</span>
                 <span className="pill">Brands need growth.</span>
               </div>
-              <p className="body-md fade-up" style={{ marginTop: 16 }}>
-                And that&apos;s where Bright creates value.
-              </p>
-              <a href="#about-founder" className="btn-outline fade-up magnetic-btn">
-                Learn More About Bright →
-              </a>
             </div>
 
-            <div className="about-cards" data-stagger="0.15">
-              <article className="about-card tilt-card" id="about-founder">
-                <div className="about-card__img">
-                  <PlaceholderSlot label="Founder Photo" className="asset-slot--fill" />
-                </div>
-                <div className="about-card__body">
-                  <h3 className="about-card__title">Founder Story</h3>
-                  <p className="body-md">
-                    <strong>K. V. Shaji</strong> — Founded Bright Communications
-                    in 1996 with a vision to help businesses build brands that
-                    endure. Our journey since 1996 reflects nearly three decades
-                    of creativity, evolution, and client partnership.
-                  </p>
-                </div>
-              </article>
-              <article className="about-card tilt-card">
-                <div className="about-card__img">
-                  <Image
-                    src={portfolioItems[2].src}
-                    alt="Bright Communications team at work"
-                    fill
-                    sizes="(max-width: 900px) 100vw, 280px"
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <div className="about-card__body">
-                  <h3 className="about-card__title">Our Journey Since 1996</h3>
-                  <p className="body-md">
-                    From traditional advertising to fully integrated
-                    communications — evolving with every industry shift.
-                  </p>
-                </div>
-              </article>
-            </div>
+            <AboutVideoPlayer />
           </div>
 
-          <div className="values-grid" data-stagger="0.12">
-            {aboutValues.map((item) => (
-              <article key={item.title} className="values-card tilt-card">
-                <h3 className="values-card__title">{item.title}</h3>
-                <p className="body-md">{item.desc}</p>
-              </article>
-            ))}
-          </div>
+        
         </div>
       </section>
 
       {/* What We Do */}
-      <section className="section section--gray" id="services">
+      <section className="section section--dark services" id="services">
         <div className="container">
-          <div className="services-grid-header">
-            <p className="section-eyebrow fade-up">What We Do</p>
-            <h2 className="heading-display heading-lg reveal-heading">
-              Solutions Designed For <HighlightWord>Modern</HighlightWord> Brands
+          <div className="services-header">
+            <h2 className="services-heading heading-display fade-up">
+              What we
+              <br />
+              do best.
             </h2>
+            <p className="services-sub fade-up">
+              From brand foundations to full-scale campaigns — we cover every
+              dimension of communications that helps your brand grow.
+            </p>
           </div>
 
-          <div className="services-list" data-stagger="0.12">
-            {services.map((service, i) => {
-              const img = portfolioItems[i % portfolioItems.length];
-              const isPeach = i % 2 === 0;
-              return (
-                <article
-                  key={service.num}
-                  className={`service-card service-card--${isPeach ? "peach" : "gray"} tilt-card`}
-                >
-                  <div className="service-card__img">
-                    <Image
-                      src={img.src}
-                      alt={service.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      style={{ objectFit: "cover" }}
-                    />
-                  </div>
-                  <div className="service-card__body">
-                    <span className="service-card__num">{service.num}</span>
-                    <h3 className="service-card__title">{service.name}</h3>
-                    <p className="service-card__desc body-md">{service.desc}</p>
-                    <div className="mosaic-card__tags">
-                      {service.tags.map((tag) => (
-                        <span key={tag} className="mosaic-tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+          <div className="services-list" data-stagger="0.08">
+            {services.map((service) => (
+              <article key={service.num} className="service-item">
+                <span className="service-num">{service.num}</span>
+                <span className="service-name">{service.name}</span>
+                <div className="service-tags">
+                  {service.tags.map((tag) => (
+                    <span key={tag} className="service-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className="service-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </article>
+            ))}
           </div>
 
           <div className="section-cta-row fade-up">
-            <a href="#contact" className="btn-outline magnetic-btn">
+            <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
               Explore All Services →
             </a>
           </div>
@@ -233,7 +168,7 @@ export function LandingPage() {
       </section>
 
       {/* Work That Creates Impact */}
-      <section className="section" id="work">
+      {/* <section className="section" id="work">
         <div className="container">
           <div className="work-header">
             <div>
@@ -262,7 +197,7 @@ export function LandingPage() {
             </a>
           </div>
 
-          <div className="work-categories fade-up" data-stagger="0.06">
+          <div className="work-categories" data-stagger="0.06">
             {workCategories.map((cat) => (
               <span key={cat} className="pill">
                 {cat}
@@ -272,6 +207,48 @@ export function LandingPage() {
 
           <div className="work-grid" data-stagger="0.1">
             <WorkPortfolioGrid />
+          </div>
+        </div>
+      </section> */}
+
+            {/* Our Clients */}
+            <section className="section section--gray" id="clients">
+        <div className="container">
+          <div className="about-grid" style={{ marginBottom: 48 }}>
+            <div>
+              <p className="section-eyebrow fade-up">Our Clients</p>
+              <h2 className="heading-display heading-lg reveal-heading">
+                Trusted By Leading <HighlightWord>Brands</HighlightWord>
+              </h2>
+            </div>
+            <p className="body-lg fade-up">
+              For nearly three decades, Bright Communications has partnered with
+              organisations across industries, helping them build visibility,
+              strengthen engagement, and achieve sustainable growth. Our client
+              relationships are built on trust, creativity, consistency, and
+              results.
+            </p>
+          </div>
+
+          {/* TODO: Replace logo slots with real client logos */}
+          <div className="logo-wall" data-stagger="0.05">
+            {Array.from({ length: clientLogoSlots }).map((_, i) => (
+              <PlaceholderSlot key={i} label="Logo" className="logo-wall__slot" />
+            ))}
+          </div>
+
+          <div className="client-tags" data-stagger="0.05">
+            {clientIndustryTags.map((tag) => (
+              <span key={tag} className="pill">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="section-cta-row fade-up">
+            {/* <a href="#clients" className="btn-outline magnetic-btn">
+              View All Clients →
+            </a> */}
           </div>
         </div>
       </section>
@@ -300,24 +277,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Our Process */}
-      <section className="section section--peach" id="process">
-        <div className="container">
-          <p className="section-eyebrow fade-up">Our Process</p>
-          <h2 className="heading-display heading-lg reveal-heading" style={{ marginBottom: 48 }}>
-            How We Create <HighlightWord>Impact</HighlightWord>
-          </h2>
-          <div className="process-grid process-grid--five" data-stagger="0.14">
-            {processSteps.map((step) => (
-              <article key={step.num} className="process-card">
-                <p className="process-card__num">{step.num}</p>
-                <h3 className="process-card__title">{step.title}</h3>
-                <p className="process-card__desc">{step.desc}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Industries */}
       <section className="section" id="industries">
@@ -338,7 +298,7 @@ export function LandingPage() {
               return (
                 <article
                   key={industry.name}
-                  className="industry-card tilt-card cursor-pointer"
+                  className="industry-card cursor-pointer"
                   onClick={() => setSelectedIndustryName(industry.name)}
                 >
                   <h3 className="industry-card__title">{industry.name}</h3>
@@ -353,50 +313,8 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Our Clients */}
-      <section className="section section--gray" id="clients">
-        <div className="container">
-          <div className="about-grid" style={{ marginBottom: 48 }}>
-            <div>
-              <p className="section-eyebrow fade-up">Our Clients</p>
-              <h2 className="heading-display heading-lg reveal-heading">
-                Trusted By Leading <HighlightWord>Brands</HighlightWord>
-              </h2>
-            </div>
-            <p className="body-lg fade-up">
-              For nearly three decades, Bright Communications has partnered with
-              organisations across industries, helping them build visibility,
-              strengthen engagement, and achieve sustainable growth. Our client
-              relationships are built on trust, creativity, consistency, and
-              results.
-            </p>
-          </div>
-
-          {/* TODO: Replace logo slots with real client logos */}
-          <div className="logo-wall" data-stagger="0.05">
-            {Array.from({ length: clientLogoSlots }).map((_, i) => (
-              <PlaceholderSlot key={i} label="Logo" className="logo-wall__slot" />
-            ))}
-          </div>
-
-          <div className="client-tags fade-up" data-stagger="0.05">
-            {clientIndustryTags.map((tag) => (
-              <span key={tag} className="pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="section-cta-row fade-up">
-            <a href="#clients" className="btn-outline magnetic-btn">
-              View All Clients →
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Brightsyde */}
-      <section className="section section--dark" id="brightsyde">
+      {/* <section className="section section--dark" id="brightsyde">
         <div className="container">
           <div className="brightsyde-layout">
             <div>
@@ -439,7 +357,7 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* The Minds Behind Bright */}
       <section className="section" id="team">
@@ -519,81 +437,6 @@ export function LandingPage() {
               <PlaceholderSlot key={award} label={award} className="awards-grid__slot" />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Careers */}
-      <section className="section section--peach" id="careers">
-        <div className="container">
-          <div className="careers-layout">
-            <div>
-              <p className="section-eyebrow fade-up">Careers</p>
-              <h2 className="heading-display heading-lg reveal-heading">
-                Life at <HighlightWord>Bright</HighlightWord>
-              </h2>
-              <p className="body-lg fade-up" style={{ marginTop: 16 }}>
-                Join a team of passionate thinkers, creators, and strategists
-                building brands that endure. We nurture talent, encourage
-                innovation, and invest in continuous learning through Brightsyde.
-              </p>
-            </div>
-            <div className="careers-openings" data-stagger="0.1">
-              <p className="careers-openings__title">Current Openings</p>
-              {/* TODO: Replace with real job listings */}
-              {careerOpenings.map((job) => (
-                <article key={job.title} className="careers-opening tilt-card">
-                  <div>
-                    <h3 className="careers-opening__role">{job.title}</h3>
-                    <p className="careers-opening__dept">{job.dept}</p>
-                  </div>
-                  <a href="#contact" className="link-arrow">
-                    Apply Now →
-                  </a>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Insights */}
-      <section className="section section--gray" id="insights">
-        <div className="container">
-          <div className="work-header">
-            <div>
-              <p className="section-eyebrow fade-up">Insights & Thought Leadership</p>
-              <h2 className="heading-display heading-lg reveal-heading">
-                Perspectives That Shape <HighlightWord>Modern</HighlightWord> Brands
-              </h2>
-            </div>
-            <a href="#insights" className="btn-outline fade-up magnetic-btn">
-              Read More →
-            </a>
-          </div>
-          <div className="blog-grid" data-stagger="0.12">
-            {/* TODO: Replace with real insight articles */}
-            {insightCategories.map((category) => (
-              <article key={category} className="blog-card blog-card--slot tilt-card">
-                <PlaceholderSlot label="Article" className="blog-card__thumb asset-slot--blog" />
-                <div className="blog-card__body">
-                  <p className="blog-card__meta">{category}</p>
-                  <h3 className="blog-card__title">Insight coming soon</h3>
-                  <span className="blog-card__read">Read Article →</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="section" id="faq">
-        <div className="container">
-          <p className="section-eyebrow fade-up">FAQ</p>
-          <h2 className="heading-display heading-lg reveal-heading" style={{ marginBottom: 48 }}>
-            Frequently Asked <HighlightWord>Questions</HighlightWord>
-          </h2>
-          <FaqAccordion />
         </div>
       </section>
 
@@ -724,9 +567,6 @@ export function LandingPage() {
                 <li><a href="#work">Our Work</a></li>
                 <li><a href="#industries">Industries</a></li>
                 <li><a href="#clients">Clients</a></li>
-                <li><a href="#brightsyde">Brightsyde</a></li>
-                <li><a href="#careers">Careers</a></li>
-                <li><a href="#insights">Insights</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div>

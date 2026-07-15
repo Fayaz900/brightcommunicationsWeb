@@ -676,6 +676,40 @@ a {
   gap: 20px 28px;
 }
 
+.hero__stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(32px, 8vw, 60px);
+  margin-top: 48px;
+  width: 100%;
+}
+
+.hero-stat {
+  text-align: center;
+  min-width: 80px;
+}
+
+.hero-stat-num {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  display: block;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 8px;
+}
+
 .hero__link {
   font-size: 15px;
   font-weight: 600;
@@ -842,6 +876,11 @@ body.is-loading .hero__filmstrip-wrap {
     margin-top: 0;
   }
 
+  .hero__stats {
+    gap: 28px;
+    margin-top: 36px;
+  }
+
   .hero__scroll-hint {
     display: none;
   }
@@ -858,50 +897,121 @@ body.is-loading .hero__filmstrip-wrap {
   .about-grid {
     grid-template-columns: 1fr 1fr;
     gap: 64px;
+    align-items: center;
   }
 }
 
-.about-cards {
-  display: grid;
+.about-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.about-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 20px;
 }
 
-@media (min-width: 600px) {
-  .about-cards {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.about-card {
-  background: var(--white);
-  border-radius: var(--radius-md);
+.about-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  background: var(--black);
   box-shadow: var(--shadow-card);
 }
 
-.about-card__img {
-  aspect-ratio: 4/3;
-  position: relative;
-  background: var(--gray-200);
+.about-video__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.about-card__body {
-  padding: 24px;
+.about-video__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: var(--black);
 }
 
-.about-card__title {
-  font-family: var(--font-display), serif;
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
+.about-video__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.about-video__poster:hover .about-video__thumb {
+  transform: scale(1.03);
+}
+
+.about-video__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.15) 0%,
+    rgba(10, 10, 10, 0.55) 100%
+  );
+  transition: background 0.3s ease;
+}
+
+.about-video__poster:hover .about-video__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.1) 0%,
+    rgba(10, 10, 10, 0.45) 100%
+  );
+}
+
+.about-video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--cream);
   color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-video__play svg {
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.about-video__poster:hover .about-video__play {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 .about-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 24px 0 32px;
+  margin-top: 24px;
 }
 
 .pill {
@@ -914,83 +1024,128 @@ body.is-loading .hero__filmstrip-wrap {
   color: var(--gray-800);
 }
 
-/* ========== SERVICES GRID ========== */
-.services-grid-header {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 56px;
+/* ========== SERVICES LIST ========== */
+.services {
+  border-top: 1px solid var(--line);
+}
+
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 80px;
+  align-items: end;
+}
+
+.services-heading {
+  font-size: clamp(2.5rem, 4.5vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--white);
+}
+
+.services-sub {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  align-self: end;
 }
 
 .services-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-item {
+  border-top: 1px solid var(--line);
   display: grid;
-  gap: 20px;
+  grid-template-columns: 60px 1fr 260px 60px;
+  align-items: center;
+  gap: 40px;
+  padding: 32px 0;
+  cursor: pointer;
+  transition: padding-left 0.3s;
 }
 
-@media (min-width: 600px) {
-  .services-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.service-item:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
-@media (min-width: 1024px) {
-  .services-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.service-item:hover {
+  padding-left: 20px;
 }
 
-.service-card {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-card);
+.service-num {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.1em;
 }
 
-.service-card--peach {
-  background: var(--peach);
-}
-
-.service-card--gray {
-  background: var(--gray-100);
-}
-
-.service-card__img {
-  position: relative;
-  aspect-ratio: 16/10;
-  background: var(--gray-200);
-}
-
-.service-card__body {
-  padding: 28px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.service-card__num {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--gray-600);
-  margin-bottom: 10px;
-}
-
-.service-card__title {
+.service-name {
   font-family: var(--font-display), serif;
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  line-height: 1.25;
+  font-size: clamp(1.375rem, 2.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: color 0.3s;
+}
+
+.service-item:hover .service-name {
+  color: var(--cream);
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.service-tag {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.service-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s;
+  justify-self: end;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.service-item:hover .service-arrow {
+  background: var(--white);
   color: var(--black);
+  transform: rotate(45deg);
 }
 
-.service-card__desc {
-  margin-bottom: 16px;
+@media (max-width: 1024px) {
+  .services-header {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
-.service-card .link-arrow {
-  margin-top: auto;
-  padding-top: 16px;
+@media (max-width: 768px) {
+  .service-item {
+    grid-template-columns: 40px 1fr 40px;
+    gap: 16px;
+  }
+
+  .service-tags {
+    display: none;
+  }
 }
 
 .mosaic-card {
@@ -1945,7 +2100,15 @@ body.is-loading .hero__filmstrip-wrap {
   will-change: transform, opacity, clip-path;
 }
 
-/* GSAP controls visibility — do NOT hard-hide in CSS (causes stuck invisible text) */
+/* Pre-hide scroll targets on first paint — GSAP reveals on enter (prevents visible→hidden flicker) */
+.fade-up,
+.reveal-heading,
+[data-stagger] > * {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 24px, 0);
+}
+
 body.animations-ready .fade-up,
 body.animations-ready .reveal-heading {
   will-change: transform, opacity;
@@ -1958,8 +2121,10 @@ body.animations-ready .reveal-heading {
   .hero__cta,
   .hero__film-item,
   .fade-up,
-  .reveal-heading {
+  .reveal-heading,
+  [data-stagger] > * {
     opacity: 1 !important;
+    visibility: visible !important;
     transform: none !important;
     filter: none !important;
     clip-path: none !important;
@@ -2141,6 +2306,7 @@ body.animations-ready .reveal-heading {
 .industries-grid {
   display: grid;
   gap: 16px;
+  align-items: stretch;
 }
 
 @media (min-width: 600px) {
@@ -2159,7 +2325,10 @@ body.animations-ready .reveal-heading {
   background: var(--gray-100);
   border-radius: var(--radius-md);
   padding: 28px 24px;
-  transition: background var(--transition), transform var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: background var(--transition);
 }
 
 .industry-card:hover {
@@ -2184,6 +2353,7 @@ body.animations-ready .reveal-heading {
   font-size: 13px;
   font-weight: 600;
   color: var(--gray-800);
+  margin-top: auto;
 }
 
 /* ========== LOGO WALL ========== */

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
+import { HeroStatNumbers } from "@/components/HeroStatNumbers";
 import { portfolioItems } from "@/app/assets/portfolio/data";
 
 const HERO_INTRO_FLAG = "data-hero-intro-fired";
@@ -228,6 +229,10 @@ export function HeroSection() {
             <a href="#work" className="hero__link">
               Explore Our Work →
             </a>
+          </div>
+
+          <div className="hero__stats">
+            <HeroStatNumbers startDelay={1000} />
           </div>
         </div>
       </div>
