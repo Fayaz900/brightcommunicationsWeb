@@ -7,6 +7,7 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroSection } from "@/components/HeroSection";
 import { HighlightWord } from "@/components/HighlightWord";
 import { SiteNav } from "@/components/SiteNav";
+import { TestimonialVideoSlider } from "@/components/TestimonialVideoSlider";
 import { WorkPortfolioGrid } from "@/components/WorkPortfolioGrid";
 import { IndustryGalleryModal } from "@/components/IndustryGalleryModal";
 import { industryImagesMap } from "@/lib/industry-images";
@@ -26,7 +27,6 @@ import {
   processSteps,
   services,
   teamRoles,
-  testimonialSlots,
   whyChooseBright,
   workCategories,
 } from "@/lib/site-content";
@@ -405,40 +405,19 @@ export function LandingPage() {
       {/* Client Testimonials */}
       <section className="section section--gray" id="testimonials">
         <div className="container">
-          <div className="testimonials-layout">
-            <div>
+          <div className="testimonials-layout testimonials-layout--stacked">
+            <div className="testimonials-layout__header">
               <p className="section-eyebrow fade-up">Client Testimonials</p>
               <h2 className="heading-display heading-lg reveal-heading">
                 What Our <HighlightWord>Clients</HighlightWord> Say
               </h2>
             </div>
-            <div className="testimonial-cards" data-stagger="0.12">
-              {/* TODO: Replace with real client testimonials */}
-              {Array.from({ length: testimonialSlots }).map((_, i) => (
-                <article key={i} className="testimonial-card testimonial-card--slot">
-                  <PlaceholderSlot label="Testimonial" className="asset-slot--testimonial" />
-                </article>
-              ))}
-            </div>
+
+            <TestimonialVideoSlider />
           </div>
         </div>
       </section>
 
-      {/* Awards & Recognition */}
-      <section className="section" id="awards">
-        <div className="container">
-          <p className="section-eyebrow fade-up">Awards & Recognition</p>
-          <h2 className="heading-display heading-lg reveal-heading" style={{ marginBottom: 48 }}>
-            Recognition That Reflects <HighlightWord>Excellence</HighlightWord>
-          </h2>
-          {/* TODO: Replace with real award badges and certifications */}
-          <div className="awards-grid" data-stagger="0.08">
-            {awards.map((award) => (
-              <PlaceholderSlot key={award} label={award} className="awards-grid__slot" />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* SEO Section */}
       <section className="seo-band">

@@ -252,8 +252,44 @@ export const teamRoles = [
   { role: "Developers & Technology", name: "Technology", featured: false },
 ] as const;
 
-/** TODO: Replace with real testimonials when provided */
-export const testimonialSlots = 4;
+export const TESTIMONIAL_VIDEO_EMBED =
+  "https://www.youtube-nocookie.com/embed/oW9NIapHaFU?autoplay=1&controls=0&modestbranding=1&rel=0&iv_load_policy=3";
+
+export const TESTIMONIAL_VIDEO_THUMB =
+  "https://img.youtube.com/vi/oW9NIapHaFU/maxresdefault.jpg";
+
+export const clientTestimonials = [
+  {
+    name: "Arsh Navas",
+    role: "Chief Brand Officer",
+    company: "Gatezone Transport",
+  },
+  {
+    name: "Ashik",
+    role: "Marketing Director",
+    company: "Mr Alfred UAE",
+  },
+  {
+    name: "Salman Thorop",
+    role: "Founder & CEO",
+    company: "Duvolka",
+  },
+  {
+    name: "Jasim SM",
+    role: "CEO",
+    company: "Bosq Ergonomic Living",
+  },
+  {
+    name: "Priya Menon",
+    role: "Brand Manager",
+    company: "Kanchana Foods",
+  },
+  {
+    name: "Dr. Ramesh Kumar",
+    role: "Director",
+    company: "Renai Medicity",
+  },
+] as const;
 
 export const awards = [
   "Industry Awards",
