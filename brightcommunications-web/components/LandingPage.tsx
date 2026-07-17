@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 import { AboutVideoPlayer } from "@/components/AboutVideoPlayer";
@@ -17,7 +18,6 @@ import {
   brightsydePillars,
   careerOpenings,
   clientIndustryTags,
-  clientLogoSlots,
   contactInfo,
   industries,
   insightCategories,
@@ -30,6 +30,11 @@ import {
   whyChooseBright,
   workCategories,
 } from "@/lib/site-content";
+
+const clientLogos = Array.from(
+  { length: 19 },
+  (_, index) => `/clientlogos/logo_${index + 1}.png`,
+);
 
 function PlaceholderSlot({
   label,
@@ -214,41 +219,37 @@ export function LandingPage() {
             {/* Our Clients */}
             <section className="section section--gray" id="clients">
         <div className="container">
-          <div className="about-grid" style={{ marginBottom: 48 }}>
+          <div className="about-grid clients-intro" style={{ marginBottom: 48 }}>
             <div>
               <p className="section-eyebrow fade-up">Our Clients</p>
               <h2 className="heading-display heading-lg reveal-heading">
                 Trusted By Leading <HighlightWord>Brands</HighlightWord>
               </h2>
             </div>
-            <p className="body-lg fade-up">
-              For nearly three decades, Bright Communications has partnered with
-              organisations across industries, helping them build visibility,
-              strengthen engagement, and achieve sustainable growth. Our client
-              relationships are built on trust, creativity, consistency, and
-              results.
-            </p>
           </div>
 
-          {/* TODO: Replace logo slots with real client logos */}
-          <div className="logo-wall" data-stagger="0.05">
-            {Array.from({ length: clientLogoSlots }).map((_, i) => (
-              <PlaceholderSlot key={i} label="Logo" className="logo-wall__slot" />
-            ))}
-          </div>
-
-          <div className="client-tags" data-stagger="0.05">
-            {clientIndustryTags.map((tag) => (
-              <span key={tag} className="pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="section-cta-row fade-up">
-            {/* <a href="#clients" className="btn-outline magnetic-btn">
-              View All Clients →
-            </a> */}
+          <div className="logo-wall">
+            <div className="logo-wall__track">
+              {[false, true].map((isDuplicate) => (
+                <div
+                  className="logo-wall__group"
+                  key={isDuplicate ? "duplicate" : "original"}
+                  aria-hidden={isDuplicate || undefined}
+                >
+                  {clientLogos.map((logo, index) => (
+                    <div className="logo-wall__slot" key={logo}>
+                      <Image
+                        src={logo}
+                        alt={isDuplicate ? "" : `Client logo ${index + 1}`}
+                        width={260}
+                        height={160}
+                        sizes="(min-width: 900px) 260px, 210px"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
