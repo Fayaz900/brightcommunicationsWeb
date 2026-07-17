@@ -474,6 +474,42 @@ a {
   pointer-events: none;
 }
 
+.hero__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #080808;
+}
+
+.hero__video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-width: 177.78vh;
+  min-height: 100vh;
+  border: 0;
+  transform: translate(-50%, -50%) scale(1.15);
+  pointer-events: none;
+}
+
+.hero__video-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 8, 0.58), rgba(8, 8, 8, 0.72)),
+    linear-gradient(90deg, rgba(8, 8, 8, 0.28), transparent 50%, rgba(8, 8, 8, 0.28));
+}
+
+.hero__glow,
+.hero__orb,
+.hero__grain {
+  z-index: 2;
+}
+
 .hero__glow {
   position: absolute;
   width: min(680px, 90vw);

@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 import { HeroStatNumbers } from "@/components/HeroStatNumbers";
-import { portfolioItems } from "@/app/assets/portfolio/data";
 
 const HERO_INTRO_FLAG = "data-hero-intro-fired";
 
@@ -192,11 +190,18 @@ export function HeroSection() {
     };
   }, []);
 
-  const stripItems = [...portfolioItems, ...portfolioItems];
-
   return (
     <section className="hero hero--pending" id="home" ref={rootRef}>
       <div className="hero__bg" aria-hidden="true">
+        <div className="hero__video">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/fQfBar1egPA?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=fQfBar1egPA&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
+            title="Bright Communications hero background video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            tabIndex={-1}
+          />
+        </div>
+        <span className="hero__video-overlay" />
         <span className="hero__glow" />
         <span className="hero__orb hero__orb--1" />
         <span className="hero__orb hero__orb--2" />

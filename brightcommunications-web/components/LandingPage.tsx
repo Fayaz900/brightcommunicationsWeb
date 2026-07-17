@@ -123,7 +123,7 @@ export function LandingPage() {
               </div>
             </div>
 
-            <AboutVideoPlayer />
+            {/* <AboutVideoPlayer /> */}
           </div>
 
         
