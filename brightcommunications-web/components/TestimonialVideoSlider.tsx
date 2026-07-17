@@ -35,8 +35,7 @@ export function TestimonialVideoSlider() {
     const updateVisible = () => {
       if (window.innerWidth < 640) setVisibleCount(1);
       else if (window.innerWidth < 900) setVisibleCount(2);
-      else if (window.innerWidth < 1200) setVisibleCount(3);
-      else setVisibleCount(4);
+      else setVisibleCount(3);
     };
 
     updateVisible();

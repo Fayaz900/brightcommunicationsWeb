@@ -32,7 +32,7 @@ import {
 } from "@/lib/site-content";
 
 const clientLogos = Array.from(
-  { length: 19 },
+  { length: 24 },
   (_, index) => `/clientlogos/logo_${index + 1}.png`,
 );
 
@@ -281,7 +281,7 @@ export function LandingPage() {
 
 
       {/* Industries */}
-      <section className="section" id="industries">
+      {/* <section className="section" id="industries">
         <div className="container">
           <p className="section-eyebrow fade-up">Industries We Serve</p>
           <h2 className="heading-display heading-lg reveal-heading">
@@ -312,7 +312,7 @@ export function LandingPage() {
             })}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Brightsyde */}
       {/* <section className="section section--dark" id="brightsyde">
@@ -361,7 +361,7 @@ export function LandingPage() {
       </section> */}
 
       {/* The Minds Behind Bright */}
-      <section className="section" id="team">
+      {/* <section className="section" id="team">
         <div className="container">
           <div className="about-grid" style={{ marginBottom: 48 }}>
             <h2 className="heading-display heading-lg reveal-heading">
@@ -379,7 +379,6 @@ export function LandingPage() {
                 key={member.role}
                 className={`team-card team-card--slot tilt-card${member.featured ? " team-card--featured" : ""}`}
               >
-                {/* TODO: Replace with real team photos */}
                 <PlaceholderSlot
                   label="Photo"
                   className="team-card__photo asset-slot--fill"
@@ -401,13 +400,13 @@ export function LandingPage() {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Client Testimonials */}
       <section className="section section--gray" id="testimonials">
         <div className="container">
           <div className="testimonials-layout testimonials-layout--stacked">
-            <div className="testimonials-layout__header">
+            <div className="testimonials-layout__header testimonials-heading">
               <p className="section-eyebrow fade-up">Client Testimonials</p>
               <h2 className="heading-display heading-lg reveal-heading">
                 What Our <HighlightWord>Clients</HighlightWord> Say
