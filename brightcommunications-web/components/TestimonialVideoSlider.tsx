@@ -2,25 +2,29 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  TESTIMONIAL_VIDEO_EMBED,
-  TESTIMONIAL_VIDEO_THUMB,
-  clientTestimonials,
-} from "@/lib/site-content";
+import type { TestimonialPublic } from "@/lib/testimonials";
+import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 const AUTO_ADVANCE_MS = 3500;
 
-export function TestimonialVideoSlider() {
+type TestimonialVideoSliderProps = {
+  testimonials: TestimonialPublic[];
+};
+
+export function TestimonialVideoSlider({
+  testimonials,
+}: TestimonialVideoSliderProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [slideOffset, setSlideOffset] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] =
+    useState<TestimonialPublic | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [inView, setInView] = useState(false);
   const [visibleCount, setVisibleCount] = useState(2);
 
-  const maxIndex = Math.max(0, clientTestimonials.length - visibleCount);
+  const maxIndex = Math.max(0, testimonials.length - visibleCount);
   const pageCount = maxIndex + 1;
   const canAutoScroll = pageCount > 1;
 
@@ -59,7 +63,7 @@ export function TestimonialVideoSlider() {
 
     const io = new IntersectionObserver(
       ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.35 }
+      { threshold: 0.35 },
     );
 
     io.observe(el);
@@ -67,7 +71,7 @@ export function TestimonialVideoSlider() {
   }, []);
 
   useEffect(() => {
-    if (!inView || isPaused || isPlaying || !canAutoScroll) return;
+    if (!inView || isPaused || activeTestimonial || !canAutoScroll) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -76,13 +80,13 @@ export function TestimonialVideoSlider() {
     }, AUTO_ADVANCE_MS);
 
     return () => window.clearInterval(timer);
-  }, [inView, isPaused, isPlaying, canAutoScroll, maxIndex]);
+  }, [inView, isPaused, activeTestimonial, canAutoScroll, maxIndex]);
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!activeTestimonial) return;
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsPlaying(false);
+      if (e.key === "Escape") setActiveTestimonial(null);
     };
 
     document.body.style.overflow = "hidden";
@@ -91,14 +95,18 @@ export function TestimonialVideoSlider() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isPlaying]);
+  }, [activeTestimonial]);
 
   const goTo = useCallback(
     (index: number) => {
       setActiveIndex(Math.max(0, Math.min(index, maxIndex)));
     },
-    [maxIndex]
+    [maxIndex],
   );
+
+  if (testimonials.length === 0) {
+    return null;
+  }
 
   const cardBasis = `${100 / visibleCount}%`;
 
@@ -115,22 +123,22 @@ export function TestimonialVideoSlider() {
             className="testimonial-slider__track"
             style={{ transform: `translateX(-${slideOffset}px)` }}
           >
-            {clientTestimonials.map((client) => (
+            {testimonials.map((client) => (
               <article
-                key={client.name}
+                key={client.id}
                 className="testimonial-video-card"
                 style={{ flex: `0 0 ${cardBasis}` }}
               >
                 <button
                   type="button"
                   className="testimonial-video-card__btn"
-                  onClick={() => setIsPlaying(true)}
+                  onClick={() => setActiveTestimonial(client)}
                   aria-label={`Play testimonial from ${client.name}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className="testimonial-video-card__img"
-                    src={TESTIMONIAL_VIDEO_THUMB}
+                    src={client.thumbnailUrl}
                     alt=""
                     loading="lazy"
                   />
@@ -172,10 +180,10 @@ export function TestimonialVideoSlider() {
         </div>
       </div>
 
-      {isPlaying && (
+      {activeTestimonial ? (
         <div
           className="testimonial-video-modal"
-          onClick={() => setIsPlaying(false)}
+          onClick={() => setActiveTestimonial(null)}
           role="presentation"
         >
           <div
@@ -183,27 +191,27 @@ export function TestimonialVideoSlider() {
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-label="Client testimonial video"
+            aria-label={`Client testimonial video from ${activeTestimonial.name}`}
           >
             <button
               type="button"
               className="testimonial-video-modal__close"
-              onClick={() => setIsPlaying(false)}
+              onClick={() => setActiveTestimonial(null)}
               aria-label="Close video"
             >
               ×
             </button>
             <div className="testimonial-video-modal__player">
               <iframe
-                src={TESTIMONIAL_VIDEO_EMBED}
-                title="Client testimonial video"
+                src={getYouTubeEmbedUrl(activeTestimonial.videoUrl)}
+                title={`Client testimonial video from ${activeTestimonial.name}`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

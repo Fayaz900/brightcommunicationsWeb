@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { AboutVideoPlayer } from "@/components/AboutVideoPlayer";
+import { BlogSection } from "@/components/BlogSection";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroSection } from "@/components/HeroSection";
 import { HighlightWord } from "@/components/HighlightWord";
@@ -12,6 +13,8 @@ import { TestimonialVideoSlider } from "@/components/TestimonialVideoSlider";
 import { WorkPortfolioGrid } from "@/components/WorkPortfolioGrid";
 import { IndustryGalleryModal } from "@/components/IndustryGalleryModal";
 import { industryImagesMap } from "@/lib/industry-images";
+import type { BlogPostSummary } from "@/lib/blog";
+import type { TestimonialPublic } from "@/lib/testimonials";
 import {
   aboutValues,
   awards,
@@ -50,7 +53,13 @@ function PlaceholderSlot({
   );
 }
 
-export function LandingPage() {
+export function LandingPage({
+  latestPosts,
+  testimonials,
+}: {
+  latestPosts: BlogPostSummary[];
+  testimonials: TestimonialPublic[];
+}) {
   const [selectedIndustryName, setSelectedIndustryName] = useState<string | null>(null);
 
   const selectedIndustry = industries.find(
@@ -413,11 +422,12 @@ export function LandingPage() {
               </h2>
             </div>
 
-            <TestimonialVideoSlider />
+            <TestimonialVideoSlider testimonials={testimonials} />
           </div>
         </div>
       </section>
 
+      <BlogSection posts={latestPosts} />
 
       {/* SEO Section */}
       <section className="seo-band">
@@ -546,6 +556,7 @@ export function LandingPage() {
                 <li><a href="#work">Our Work</a></li>
                 <li><a href="#industries">Industries</a></li>
                 <li><a href="#clients">Clients</a></li>
+                <li><a href="/blog">Insights</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </div>
