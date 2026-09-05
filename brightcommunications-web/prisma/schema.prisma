@@ -42,3 +42,27 @@ model Testimonial {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  service   String?
+  message   String   @db.Text
+  status    String   @default("UNREAD") // "UNREAD" | "READ" | "RESPONDED"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id           String   @id @default("default")
+  email        String   @default("hello@brightcommunications.com")
+  phone        String   @default("+91 XXXXX XXXXX")
+  whatsapp     String   @default("+91 XXXXX XXXXX")
+  location     String   @default("Kochi, Kerala")
+  linkedinUrl  String   @default("")
+  instagramUrl String   @default("")
+  facebookUrl  String   @default("")
+  updatedAt    DateTime @updatedAt
+}

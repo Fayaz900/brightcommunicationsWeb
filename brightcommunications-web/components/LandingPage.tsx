@@ -13,6 +13,9 @@ import { TestimonialVideoSlider } from "@/components/TestimonialVideoSlider";
 import { WorkPortfolioGrid } from "@/components/WorkPortfolioGrid";
 import { IndustryGalleryModal } from "@/components/IndustryGalleryModal";
 import { industryImagesMap } from "@/lib/industry-images";
+import { ContactForm } from "@/components/ContactForm";
+import { SiteFooter } from "@/components/SiteFooter";
+import type { SiteSettingsData } from "@/lib/site-settings";
 import type { BlogPostSummary } from "@/lib/blog";
 import type { TestimonialPublic } from "@/lib/testimonials";
 import {
@@ -56,10 +59,19 @@ function PlaceholderSlot({
 export function LandingPage({
   latestPosts,
   testimonials,
+  settings,
 }: {
   latestPosts: BlogPostSummary[];
   testimonials: TestimonialPublic[];
+  settings?: SiteSettingsData;
 }) {
+  const activeContact = {
+    email: settings?.email || contactInfo.email,
+    phone: settings?.phone || contactInfo.phone,
+    whatsapp: settings?.whatsapp || contactInfo.whatsapp,
+    location: settings?.location || contactInfo.location,
+  };
+
   const [selectedIndustryName, setSelectedIndustryName] = useState<string | null>(null);
 
   const selectedIndustry = industries.find(
@@ -469,131 +481,27 @@ export function LandingPage({
                 of growth, we&apos;re ready to help.
               </p>
               <div className="cta-contact-info fade-up">
-                <span>Bright Communications — {contactInfo.location}</span>
-                <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-                <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>
-                  {contactInfo.phone}
+                <span>Bright Communications — {activeContact.location}</span>
+                <a href={`mailto:${activeContact.email}`}>{activeContact.email}</a>
+                <a href={`tel:${activeContact.phone.replace(/\s/g, "")}`}>
+                  {activeContact.phone}
                 </a>
-                <a href={`https://wa.me/${contactInfo.whatsapp.replace(/\D/g, "")}`}>
+                <a
+                  href={`https://wa.me/${activeContact.whatsapp.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   WhatsApp
                 </a>
               </div>
             </div>
 
-            <form className="cta-form">
-              <p className="cta-form__label">Business Enquiry Form</p>
-              <div className="form-row">
-                <input id="name" name="name" type="text" placeholder="Your Name" />
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Email Address"
-                />
-              </div>
-              <input
-                id="company"
-                name="company"
-                type="text"
-                placeholder="Company"
-              />
-              <select id="service" name="service" defaultValue="">
-                <option value="">Service interested in</option>
-                {services.map((s) => (
-                  <option key={s.num} value={s.name}>
-                    {s.name}
-                  </option>
-                ))}
-              </select>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                placeholder="Tell us about your project..."
-              />
-              <button type="submit" className="btn-dark magnetic-btn">
-                Start Your Project →
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="site-footer">
-        <div className="container">
-          <div className="footer-top">
-            <a href="#home" className="footer-logo">
-              Bright Communications
-            </a>
-            <ul className="footer-nav footer-nav--wide">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href}>{item.label}</a>
-                </li>
-              ))}
-            </ul>
-            <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
-              Start Your Project
-            </a>
-          </div>
-
-          <div className="footer-columns">
-            <div>
-              <p className="footer-col-title">Services</p>
-              <ul className="footer-links">
-                {services.map((s) => (
-                  <li key={s.num}>
-                    <a href="#services">{s.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="footer-col-title">Company</p>
-              <ul className="footer-links">
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#work">Our Work</a></li>
-                <li><a href="#industries">Industries</a></li>
-                <li><a href="#clients">Clients</a></li>
-                <li><a href="/blog">Insights</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <p className="footer-col-title">Contact</p>
-              <ul className="footer-links">
-                <li>
-                  <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-                </li>
-                <li>
-                  <a href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}>
-                    {contactInfo.phone}
-                  </a>
-                </li>
-                <li>
-                  <a href="#contact">{contactInfo.location}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <p className="footer-copy">
-              © {new Date().getFullYear()} Bright Communications. All rights reserved.
-            </p>
-            <div className="footer-social">
-              <a href="#" className="social-icon" aria-label="LinkedIn">in</a>
-              <a href="#" className="social-icon" aria-label="Instagram">ig</a>
-              <a href="#" className="social-icon" aria-label="Facebook">fb</a>
-            </div>
-            <div className="footer-legal">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter settings={settings} />
 
       <IndustryGalleryModal
         industryName={selectedIndustryName}

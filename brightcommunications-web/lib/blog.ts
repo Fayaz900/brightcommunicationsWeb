@@ -4,6 +4,7 @@ export type BlogPostSummary = {
   id: string;
   title: string;
   slug: string;
+  body?: string;
   featuredImage: string | null;
   category: string;
   tags: string[];
@@ -18,6 +19,13 @@ export type BlogPostDetail = BlogPostSummary & {
   createdAt: Date;
 };
 
+export function extractExcerpt(body?: string | null, maxLength = 130): string {
+  if (!body) return "";
+  const clean = body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  if (clean.length <= maxLength) return clean;
+  return clean.slice(0, maxLength).trim() + "…";
+}
+
 export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
   return prisma.blogPost.findMany({
     where: { published: true },
@@ -26,6 +34,7 @@ export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
       id: true,
       title: true,
       slug: true,
+      body: true,
       featuredImage: true,
       category: true,
       tags: true,
@@ -45,6 +54,7 @@ export async function getLatestPosts(limit: number): Promise<BlogPostSummary[]> 
       id: true,
       title: true,
       slug: true,
+      body: true,
       featuredImage: true,
       category: true,
       tags: true,

@@ -11,8 +11,20 @@ export function AdminHeader({ title }: { title: string }) {
         <Link className="admin-btn admin-btn--secondary" href="/admin">
           Dashboard
         </Link>
-        <Link className="admin-btn admin-btn--secondary" href="/">
-          View site
+        <Link className="admin-btn admin-btn--secondary" href="/admin/enquiries">
+          Enquiries
+        </Link>
+        <Link className="admin-btn admin-btn--secondary" href="/admin/settings">
+          Settings
+        </Link>
+        <Link className="admin-btn admin-btn--secondary" href="/admin/blog">
+          Blog
+        </Link>
+        <Link className="admin-btn admin-btn--secondary" href="/admin/testimonials">
+          Testimonials
+        </Link>
+        <Link className="admin-btn admin-btn--secondary" href="/" target="_blank">
+          View site ↗
         </Link>
         <form
           action={async () => {
