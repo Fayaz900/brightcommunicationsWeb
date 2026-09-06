@@ -10,9 +10,9 @@ import { getSiteSettings } from "@/lib/site-settings";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Insights & Ideas | Bright Communications",
+  title: "Blog | Bright Communications",
   description:
-    "Explore perspectives on branding, creative advertising, digital transformation, and performance marketing from Bright Communications.",
+    "Read blog posts on branding, creative advertising, digital transformation, and performance marketing from Bright Communications.",
 };
 
 export default async function BlogPage() {
@@ -29,31 +29,24 @@ export default async function BlogPage() {
         <section className="blog-page-hero">
           <div className="blog-page-hero__bg" aria-hidden="true" />
           <div className="container" style={{ position: "relative", zIndex: 2 }}>
-            <p className="section-eyebrow">Thought Leadership &amp; Journal</p>
-            <h1 className="heading-display heading-xl">Insights &amp; Ideas</h1>
+            <p className="section-eyebrow">Bright Communications Blog</p>
+            <h1 className="heading-display heading-xl">Bright Blog</h1>
             <p className="body-lg">
-              Explore our latest perspectives on brand strategy, creative campaigns, digital
-              growth, and communication evolution from our multidisciplinary agency team.
+              Read the latest blog posts on brand strategy, creative campaigns, digital
+              growth, and communication from our multidisciplinary agency team.
             </p>
           </div>
         </section>
 
         {/* Content Section with Interactive Client Filtering */}
-        <section className="section" style={{ paddingTop: 40, paddingBottom: 80 }}>
+        <section className="blog-posts-section">
           <div className="container">
             <BlogListClient posts={posts} />
           </div>
         </section>
 
         {/* Consult / Contact CTA Band */}
-        <section
-          style={{
-            background: "var(--black)",
-            color: "var(--cream)",
-            padding: "80px 0",
-            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-          }}
-        >
+        <section className="blog-cta-section">
           <div className="container" style={{ textAlign: "center", maxWidth: 720 }}>
             <p className="section-eyebrow" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
               Collaborate With Bright

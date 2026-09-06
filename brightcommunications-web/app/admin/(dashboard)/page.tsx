@@ -15,29 +15,11 @@ export default async function AdminDashboardPage() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h2>Contact Enquiries</h2>
           {unreadCount > 0 ? (
-            <span
-              style={{
-                background: "#dc2626",
-                color: "#fff",
-                fontSize: "11px",
-                fontWeight: "700",
-                padding: "2px 8px",
-                borderRadius: "999px",
-              }}
-            >
+            <span style={{ background: "#dc2626", color: "#fff", fontSize: "11px", fontWeight: "700", padding: "2px 8px", borderRadius: "999px" }}>
               {unreadCount} new
             </span>
           ) : (
-            <span
-              style={{
-                background: "#f4f4f5",
-                color: "#71717a",
-                fontSize: "11px",
-                fontWeight: "600",
-                padding: "2px 8px",
-                borderRadius: "999px",
-              }}
-            >
+            <span style={{ background: "#f4f4f5", color: "#71717a", fontSize: "11px", fontWeight: "600", padding: "2px 8px", borderRadius: "999px" }}>
               {allEnquiries.length} total
             </span>
           )}
@@ -52,7 +34,12 @@ export default async function AdminDashboardPage() {
 
       <Link className="admin-link-card" href="/admin/blog">
         <h2>Blog Posts</h2>
-        <p>Create, edit, and publish insights articles.</p>
+        <p>Create, edit, and publish blog posts.</p>
+      </Link>
+
+      <Link className="admin-link-card" href="/admin/service-projects">
+        <h2>Service Projects</h2>
+        <p>Manage clickable service rows, project briefs, galleries, and YouTube videos.</p>
       </Link>
 
       <Link className="admin-link-card" href="/admin/testimonials">

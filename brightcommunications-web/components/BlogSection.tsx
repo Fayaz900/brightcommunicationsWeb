@@ -11,18 +11,14 @@ export function BlogSection({ posts }: { posts: BlogPostSummary[] }) {
         <div className="blog-section-header">
           <div className="blog-section-header__text">
             <p className="section-eyebrow fade-up">Thought Leadership</p>
-            <h2 className="heading-display">
-              Insights &amp;
-              <br />
-              Ideas.
-            </h2>
+            <h2 className="heading-display">Bright Blog</h2>
             <p className="body-md fade-up">
               Perspectives on branding, marketing, strategy, and digital evolution from our creative team.
             </p>
           </div>
           <div>
             <Link className="btn-outline fade-up magnetic-btn" href="/blog">
-              Explore All Articles →
+              Explore All Blog Posts →
             </Link>
           </div>
         </div>
@@ -60,7 +56,7 @@ export function BlogSection({ posts }: { posts: BlogPostSummary[] }) {
                     <span>•</span>
                     <span>By {posts[0].author || "Bright Team"}</span>
                     <span className="blog-featured-card__cta">
-                      Read Full Article →
+                      Read Full Blog Post →
                     </span>
                   </div>
                 </div>

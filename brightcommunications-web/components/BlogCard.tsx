@@ -47,7 +47,7 @@ export function BlogCard({
           <div className="blog-card__footer">
             <span className="blog-card__author">By {post.author || "Bright Team"}</span>
             <span className="blog-card__read">
-              Read Article <span>→</span>
+              Read Blog Post <span>→</span>
             </span>
           </div>
         </div>

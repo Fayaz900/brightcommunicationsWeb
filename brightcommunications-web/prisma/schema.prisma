@@ -66,3 +66,25 @@ model SiteSettings {
   facebookUrl  String   @default("")
   updatedAt    DateTime @updatedAt
 }
+
+model ServiceProject {
+  id              String   @id @default(cuid())
+  serviceNum      String   @unique
+  serviceName     String   @default("")
+  serviceDesc     String   @default("") @db.Text
+  serviceTags     String[]
+  serviceImage    String?
+  sortOrder       Int      @default(0)
+  slug            String   @unique
+  title           String
+  client          String
+  year            String
+  industry        String
+  backgroundImage String?
+  projectBrief    String   @db.Text
+  galleryImages   String[]
+  youtubeUrl      String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

@@ -6,10 +6,11 @@ import { AdminField } from "@/components/admin/AdminField";
 
 type ImageUploadProps = {
   name: string;
-  folder: "blog" | "testimonials";
+  folder: "blog" | "testimonials" | "projects";
   defaultValue?: string;
   label: string;
   error?: string;
+  hint?: string;
   onChange?: () => void;
 };
 
@@ -19,6 +20,7 @@ export function ImageUpload({
   defaultValue = "",
   label,
   error,
+  hint,
   onChange,
 }: ImageUploadProps) {
   const [value, setValue] = useState(defaultValue);
@@ -59,7 +61,7 @@ export function ImageUpload({
   const displayError = error || uploadError;
 
   return (
-    <AdminField label={label} error={displayError}>
+    <AdminField label={label} error={displayError} hint={hint}>
       <input type="hidden" name={name} value={value} />
       <input
         type="file"

@@ -17,7 +17,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) return { title: "Article not found" };
+  if (!post) return { title: "Blog post not found" };
 
   return {
     title: `${post.title} | Bright Communications`,
@@ -87,7 +87,7 @@ export default async function BlogPostPage({
 
           <div style={{ marginTop: 48, paddingTop: 24, borderTop: "1px solid #e7e5e4" }}>
             <Link href="/blog" className="btn-outline">
-              ← Back to all insights
+              ← Back to all blog posts
             </Link>
           </div>
         </article>

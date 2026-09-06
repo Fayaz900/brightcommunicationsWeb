@@ -44,7 +44,7 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
             <ul className="footer-links">
               <li><a href="/#about">About Us</a></li>
               <li><a href="/#clients">Clients</a></li>
-              <li><Link href="/blog">Insights</Link></li>
+              <li><Link href="/blog">Blog</Link></li>
               <li><a href="/#contact">Contact</a></li>
             </ul>
           </div>

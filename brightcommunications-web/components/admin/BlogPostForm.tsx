@@ -135,6 +135,7 @@ export function BlogPostForm({ post }: { post?: BlogPostRecord }) {
         folder="blog"
         defaultValue={post?.featuredImage ?? ""}
         label="Featured image"
+        hint="Recommended size: 1200 x 675 px (16:9) for a full-width blog featured image."
         error={fieldErrors.featuredImage}
         onChange={() => {
           if (fieldErrors.featuredImage) {

@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "File too large" }, { status: 400 });
   }
 
-  const safeFolder = folder === "testimonials" ? "testimonials" : "blog";
+  const safeFolder = folder === "testimonials" || folder === "projects" ? folder : "blog";
   const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
   const filename = `${randomUUID()}.${extension}`;
   const uploadDir = path.join(process.cwd(), "public", "uploads", safeFolder);

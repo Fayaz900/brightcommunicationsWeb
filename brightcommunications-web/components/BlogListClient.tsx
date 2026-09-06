@@ -40,7 +40,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
     return (
       <div style={{ padding: "80px 0", textAlign: "center" }}>
         <p style={{ fontSize: "18px", color: "#78716c", marginBottom: "16px" }}>
-          No articles published yet.
+          No blog posts published yet.
         </p>
         <Link href="/" className="btn-outline">
           ← Return to Home
@@ -74,7 +74,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
           <input
             type="search"
             className="blog-search-input"
-            placeholder="Search articles or topics..."
+            placeholder="Search blog posts or topics..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -93,7 +93,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
         }}
       >
         <span>
-          Showing <strong>{filteredPosts.length}</strong> {filteredPosts.length === 1 ? "article" : "articles"}
+          Showing <strong>{filteredPosts.length}</strong> {filteredPosts.length === 1 ? "blog post" : "blog posts"}
           {selectedCategory !== "All" && ` in "${selectedCategory}"`}
           {searchQuery && ` matching "${searchQuery}"`}
         </span>
@@ -130,10 +130,10 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
           }}
         >
           <p style={{ fontSize: "18px", fontWeight: "600", marginBottom: "8px" }}>
-            No articles found
+            No blog posts found
           </p>
           <p style={{ color: "#78716c", fontSize: "14px", marginBottom: "20px" }}>
-            We couldn&apos;t find any articles matching your search criteria.
+            We couldn&apos;t find any blog posts matching your search criteria.
           </p>
           <button
             type="button"
@@ -143,7 +143,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
               setSearchQuery("");
             }}
           >
-            View All Articles
+            View All Blog Posts
           </button>
         </div>
       ) : (
@@ -180,7 +180,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
                     <span>•</span>
                     <span>By {featuredPost.author || "Bright Team"}</span>
                     <span className="blog-featured-card__cta">
-                      Read Article →
+                      Read Blog Post →
                     </span>
                   </div>
                 </div>
@@ -200,7 +200,7 @@ export function BlogListClient({ posts }: { posts: BlogPostSummary[] }) {
                   color: "#18181b",
                 }}
               >
-                More Articles
+                More Blog Posts
               </h3>
               <div className="blog-grid">
                 {otherPosts.map((post, idx) => (

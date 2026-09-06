@@ -15,8 +15,10 @@ import { IndustryGalleryModal } from "@/components/IndustryGalleryModal";
 import { industryImagesMap } from "@/lib/industry-images";
 import { ContactForm } from "@/components/ContactForm";
 import { SiteFooter } from "@/components/SiteFooter";
+import { slugify } from "@/lib/slug";
 import type { SiteSettingsData } from "@/lib/site-settings";
 import type { BlogPostSummary } from "@/lib/blog";
+import type { ServiceProjectPublic } from "@/lib/service-projects";
 import type { TestimonialPublic } from "@/lib/testimonials";
 import {
   aboutValues,
@@ -60,10 +62,12 @@ export function LandingPage({
   latestPosts,
   testimonials,
   settings,
+  serviceProjects = [],
 }: {
   latestPosts: BlogPostSummary[];
   testimonials: TestimonialPublic[];
   settings?: SiteSettingsData;
+  serviceProjects?: ServiceProjectPublic[];
 }) {
   const activeContact = {
     email: settings?.email || contactInfo.email,
@@ -73,6 +77,21 @@ export function LandingPage({
   };
 
   const [selectedIndustryName, setSelectedIndustryName] = useState<string | null>(null);
+
+  const serviceRows = serviceProjects.length > 0
+    ? serviceProjects.map((project) => ({
+        num: project.serviceNum,
+        name: project.serviceName,
+        desc: project.serviceDesc,
+        tags: project.serviceTags,
+        href: `/services/${project.slug}`,
+        image: project.serviceImage,
+      }))
+    : services.map((service) => ({
+        ...service,
+        href: `/services/${slugify(service.name)}`,
+        image: null,
+      }));
 
   const selectedIndustry = industries.find(
     (ind) => ind.name === selectedIndustryName
@@ -161,27 +180,23 @@ export function LandingPage({
               do best.
             </h2>
             <p className="services-sub fade-up">
-              From brand foundations to full-scale campaigns — we cover every
+              From brand foundations to full-scale campaigns - we cover every
               dimension of communications that helps your brand grow.
             </p>
           </div>
 
           <div className="services-list" data-stagger="0.08">
-            {services.map((service) => (
-              <article key={service.num} className="service-item">
+            {serviceRows.map((service) => (
+              <a key={service.num} href={service.href} className="service-item service-item--link">
                 <span className="service-num">{service.num}</span>
                 <span className="service-name">{service.name}</span>
                 <div className="service-tags">
                   {service.tags.map((tag) => (
-                    <span key={tag} className="service-tag">
-                      {tag}
-                    </span>
+                    <span key={tag} className="service-tag">{tag}</span>
                   ))}
                 </div>
-                <span className="service-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </article>
+                <span className="service-arrow" aria-hidden="true">&rarr;</span>
+              </a>
             ))}
           </div>
 
@@ -194,7 +209,7 @@ export function LandingPage({
       </section>
 
       {/* Work That Creates Impact */}
-      {/* <section className="section" id="work">
+      <section className="section" id="work">
         <div className="container">
           <div className="work-header">
             <div>
@@ -235,7 +250,7 @@ export function LandingPage({
             <WorkPortfolioGrid />
           </div>
         </div>
-      </section> */}
+      </section>
 
             {/* Our Clients */}
             <section className="section section--gray" id="clients">
@@ -302,7 +317,7 @@ export function LandingPage({
 
 
       {/* Industries */}
-      {/* <section className="section" id="industries">
+      <section className="section" id="industries">
         <div className="container">
           <p className="section-eyebrow fade-up">Industries We Serve</p>
           <h2 className="heading-display heading-lg reveal-heading">
@@ -333,7 +348,7 @@ export function LandingPage({
             })}
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Brightsyde */}
       {/* <section className="section section--dark" id="brightsyde">

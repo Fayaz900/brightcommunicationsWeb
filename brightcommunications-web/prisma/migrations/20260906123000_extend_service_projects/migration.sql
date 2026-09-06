@@ -1,0 +1,6 @@
+ALTER TABLE "ServiceProject"
+ADD COLUMN "serviceName" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "serviceDesc" TEXT NOT NULL DEFAULT '',
+ADD COLUMN "serviceTags" TEXT[],
+ADD COLUMN "serviceImage" TEXT,
+ADD COLUMN "sortOrder" INTEGER NOT NULL DEFAULT 0;

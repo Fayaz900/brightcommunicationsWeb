@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import logo from "@/app/assets/logo.png";
@@ -8,8 +9,17 @@ import logo from "@/app/assets/logo.png";
 import { navItems } from "@/lib/site-content";
 
 export function SiteNav() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const closeMenu = useCallback(() => setOpen(false), []);
+
+  const getHref = useCallback(
+    (href: string) => {
+      if (!href.startsWith("#")) return href;
+      return pathname === "/" ? href : `/${href}`;
+    },
+    [pathname],
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -28,7 +38,7 @@ export function SiteNav() {
     <>
       <header className="site-nav" id="navbar">
         <div className="site-nav__inner">
-          <a href="#home" className="site-nav__logo" onClick={closeMenu}>
+          <a href={getHref("#home")} className="site-nav__logo" onClick={closeMenu}>
             <Image
               src={logo}
               alt="BrightCommunications"
@@ -42,13 +52,13 @@ export function SiteNav() {
           <ul className="site-nav__links">
             {navItems.map(({ href, label }) => (
               <li key={href}>
-                <a href={href}>{label}</a>
+                <a href={getHref(href)}>{label}</a>
               </li>
             ))}
           </ul>
 
           <div className="site-nav__actions">
-            <a href="#contact" className="site-nav__cta" onClick={closeMenu}>
+            <a href={getHref("#contact")} className="site-nav__cta" onClick={closeMenu}>
               Start Your Project
             </a>
             <button
@@ -78,12 +88,12 @@ export function SiteNav() {
           onClick={closeMenu}
           aria-label="Close menu"
         >
-          ×
+          &times;
         </button>
         <ul className="nav-overlay__links">
           {navItems.map(({ href, label }) => (
             <li key={href}>
-              <a href={href} onClick={closeMenu}>
+              <a href={getHref(href)} onClick={closeMenu}>
                 {label}
               </a>
             </li>
@@ -93,3 +103,4 @@ export function SiteNav() {
     </>
   );
 }
+

@@ -301,26 +301,72 @@
 
 .rich-editor__toolbar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 8px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
   border-bottom: 1px solid #e4e4e7;
-  background: #fafafa;
+  background: #eef2f6;
+}
+
+.rich-editor__toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 2px;
+}
+
+.rich-editor__group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 8px;
+  margin-right: 6px;
+  border-right: 1px solid #d5dbe3;
+}
+
+.rich-editor__group:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
 }
 
 .rich-editor__toolbar button {
-  border: 1px solid #d4d4d8;
-  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
   border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 13px;
+  color: #3f3f46;
   cursor: pointer;
 }
 
+.rich-editor__toolbar button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.rich-editor__toolbar button:hover {
+  background: #e2e8f0;
+}
+
 .rich-editor__toolbar button.is-active {
-  background: #18181b;
-  color: #fff;
-  border-color: #18181b;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.rich-editor__toolbar button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.rich-editor__heading-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .rich-editor__content {
@@ -331,15 +377,118 @@
 .rich-editor__content .ProseMirror {
   outline: none;
   min-height: 240px;
+  color: #27272a;
+  line-height: 1.7;
 }
 
 .rich-editor__content .ProseMirror p {
   margin: 0 0 12px;
 }
 
+.rich-editor__content .ProseMirror h1,
 .rich-editor__content .ProseMirror h2,
 .rich-editor__content .ProseMirror h3 {
   margin: 16px 0 8px;
+  line-height: 1.25;
+  color: #18181b;
+}
+
+.rich-editor__content .ProseMirror h1 {
+  font-size: 28px;
+}
+
+.rich-editor__content .ProseMirror h2 {
+  font-size: 22px;
+}
+
+.rich-editor__content .ProseMirror h3 {
+  font-size: 18px;
+}
+
+.rich-editor__content .ProseMirror ul,
+.rich-editor__content .ProseMirror ol {
+  margin: 0 0 12px 22px;
+}
+
+.rich-editor__content .ProseMirror blockquote {
+  margin: 12px 0;
+  padding: 8px 14px;
+  border-left: 3px solid #18181b;
+  background: #f8f8f7;
+  font-style: italic;
+}
+
+.rich-editor__content .ProseMirror code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: #f4f4f5;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.rich-editor__content .ProseMirror img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.rich-editor__content [data-resize-container] {
+  max-width: 100%;
+}
+
+.rich-editor__content [data-resize-wrapper] {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.rich-editor__content [data-resize-wrapper]:hover,
+.rich-editor__content .ProseMirror-selectednode [data-resize-wrapper],
+.rich-editor__content [data-resize-container][data-resize-state="true"] [data-resize-wrapper] {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.rich-editor__content [data-resize-handle] {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 2px;
+  z-index: 2;
+  opacity: 0;
+  box-sizing: border-box;
+}
+
+.rich-editor__content [data-resize-wrapper]:hover [data-resize-handle],
+.rich-editor__content .ProseMirror-selectednode [data-resize-handle],
+.rich-editor__content [data-resize-container][data-resize-state="true"] [data-resize-handle] {
+  opacity: 1;
+}
+
+.rich-editor__content [data-resize-handle="top-left"] {
+  transform: translate(-50%, -50%);
+  cursor: nwse-resize;
+}
+
+.rich-editor__content [data-resize-handle="top-right"] {
+  transform: translate(50%, -50%);
+  cursor: nesw-resize;
+}
+
+.rich-editor__content [data-resize-handle="bottom-left"] {
+  transform: translate(-50%, 50%);
+  cursor: nesw-resize;
+}
+
+.rich-editor__content [data-resize-handle="bottom-right"] {
+  transform: translate(50%, 50%);
+  cursor: nwse-resize;
+}
+
+.rich-editor__content .ProseMirror a {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .image-upload-preview {
@@ -441,4 +590,19 @@
   display: block;
   color: inherit;
   text-decoration: none;
+}
+
+.multi-image-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.multi-image-preview img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e4e4e7;
 }
