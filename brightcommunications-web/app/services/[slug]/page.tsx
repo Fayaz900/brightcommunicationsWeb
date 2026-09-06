@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/SiteFooter";
+import { LazyYouTubeEmbed } from "@/components/LazyYouTubeEmbed";
 import { SiteNav } from "@/components/SiteNav";
 import { getServiceProjectBySlug } from "@/lib/service-projects";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -114,14 +115,7 @@ export default async function ServiceProjectPage({ params }: { params: Promise<{
                 <p className="section-eyebrow">Campaign Film</p>
                 <h2 className="heading-display">Watch The Project Video</h2>
               </div>
-              <div className="work-detail-video__frame">
-                <iframe
-                  src={videoEmbedUrl}
-                  title={`${title} video`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
+              <LazyYouTubeEmbed src={videoEmbedUrl} title={`${title} video`} />
             </div>
           </section>
         ) : null}

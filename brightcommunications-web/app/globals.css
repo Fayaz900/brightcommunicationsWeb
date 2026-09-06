@@ -4281,3 +4281,12 @@ body.animations-ready .reveal-heading {
 .service-project-gallery__item:first-child img {
   aspect-ratio: 16 / 9;
 }
+.work-detail-video__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(245, 240, 232, 0.7);
+  font-size: 14px;
+  background: #101010;
+}

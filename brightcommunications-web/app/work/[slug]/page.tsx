@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SiteFooter } from "@/components/SiteFooter";
+import { LazyYouTubeEmbed } from "@/components/LazyYouTubeEmbed";
 import { SiteNav } from "@/components/SiteNav";
 import { getPortfolioItemBySlug, portfolioItems } from "@/app/assets/portfolio/data";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -120,14 +121,7 @@ export default async function WorkDetailPage({
                 <p className="section-eyebrow">Campaign Film</p>
                 <h2 className="heading-display">Watch The Project Video</h2>
               </div>
-              <div className="work-detail-video__frame">
-                <iframe
-                  src={videoEmbedUrl}
-                  title={`${project.title} video`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
+              <LazyYouTubeEmbed src={videoEmbedUrl} title={`${project.title} video`} />
             </div>
           </section>
         ) : null}
