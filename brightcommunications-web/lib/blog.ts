@@ -27,48 +27,63 @@ export function extractExcerpt(body?: string | null, maxLength = 130): string {
 }
 
 export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
-  return prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      body: true,
-      featuredImage: true,
-      category: true,
-      tags: true,
-      author: true,
-      publishedAt: true,
-      updatedAt: true,
-    },
-  });
+  try {
+    return await prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        body: true,
+        featuredImage: true,
+        category: true,
+        tags: true,
+        author: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch published posts, returning empty list:", error);
+    return [];
+  }
 }
 
 export async function getLatestPosts(limit: number): Promise<BlogPostSummary[]> {
-  return prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    take: limit,
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      body: true,
-      featuredImage: true,
-      category: true,
-      tags: true,
-      author: true,
-      publishedAt: true,
-      updatedAt: true,
-    },
-  });
+  try {
+    return await prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      take: limit,
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        body: true,
+        featuredImage: true,
+        category: true,
+        tags: true,
+        author: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to fetch latest posts, returning empty list:", error);
+    return [];
+  }
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPostDetail | null> {
-  return prisma.blogPost.findFirst({
-    where: { slug, published: true },
-  });
+  try {
+    return await prisma.blogPost.findFirst({
+      where: { slug, published: true },
+    });
+  } catch (error) {
+    console.error("Failed to fetch post by slug, returning null:", error);
+    return null;
+  }
 }
 
 export async function getAllPosts() {

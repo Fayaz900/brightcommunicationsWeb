@@ -12,20 +12,25 @@ export type TestimonialPublic = {
 };
 
 export async function getActiveTestimonials(): Promise<TestimonialPublic[]> {
-  const rows = await prisma.testimonial.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-  });
+  try {
+    const rows = await prisma.testimonial.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+    });
 
-  return rows.map((row) => ({
-    id: row.id,
-    name: row.name,
-    role: row.role,
-    company: row.company,
-    videoUrl: row.videoUrl,
-    thumbnailUrl: row.thumbnailUrl || getYouTubeThumbnailUrl(row.videoUrl),
-    sortOrder: row.sortOrder,
-  }));
+    return rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      role: row.role,
+      company: row.company,
+      videoUrl: row.videoUrl,
+      thumbnailUrl: row.thumbnailUrl || getYouTubeThumbnailUrl(row.videoUrl),
+      sortOrder: row.sortOrder,
+    }));
+  } catch (error) {
+    console.error("Failed to fetch active testimonials, returning empty list:", error);
+    return [];
+  }
 }
 
 export async function getAllTestimonials() {

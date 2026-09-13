@@ -24,12 +24,17 @@ export type ServiceProjectPublic = {
 const fields = `id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "serviceImage", "sortOrder", slug, title, client, year, industry, "backgroundImage", "projectBrief", "galleryImages", "youtubeUrl", "isActive", "updatedAt"`;
 
 export async function getActiveServiceProjects(): Promise<ServiceProjectPublic[]> {
-  return prisma.$queryRawUnsafe<ServiceProjectPublic[]>(`
-    SELECT ${fields}
-    FROM "ServiceProject"
-    WHERE "isActive" = true
-    ORDER BY "sortOrder" ASC, "serviceNum" ASC
-  `);
+  try {
+    return await prisma.$queryRawUnsafe<ServiceProjectPublic[]>(`
+      SELECT ${fields}
+      FROM "ServiceProject"
+      WHERE "isActive" = true
+      ORDER BY "sortOrder" ASC, "serviceNum" ASC
+    `);
+  } catch (error) {
+    console.error("Failed to fetch active service projects, returning empty list:", error);
+    return [];
+  }
 }
 
 export async function getAllServiceProjects(): Promise<ServiceProjectPublic[]> {
@@ -41,13 +46,18 @@ export async function getAllServiceProjects(): Promise<ServiceProjectPublic[]> {
 }
 
 export async function getServiceProjectBySlug(slug: string): Promise<ServiceProjectPublic | null> {
-  const rows = await prisma.$queryRawUnsafe<ServiceProjectPublic[]>(`
-    SELECT ${fields}
-    FROM "ServiceProject"
-    WHERE slug = $1 AND "isActive" = true
-    LIMIT 1
-  `, slug);
-  return rows[0] ?? null;
+  try {
+    const rows = await prisma.$queryRawUnsafe<ServiceProjectPublic[]>(`
+      SELECT ${fields}
+      FROM "ServiceProject"
+      WHERE slug = $1 AND "isActive" = true
+      LIMIT 1
+    `, slug);
+    return rows[0] ?? null;
+  } catch (error) {
+    console.error("Failed to fetch service project by slug, returning null:", error);
+    return null;
+  }
 }
 
 export async function getServiceProjectById(id: string): Promise<ServiceProjectPublic | null> {
