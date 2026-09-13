@@ -1,6 +1,8 @@
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import "@/app/admin/admin.css";
 
+export const dynamic = "force-dynamic";
+
 export default function AdminDashboardLayout({
   children,
 }: {
