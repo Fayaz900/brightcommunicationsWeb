@@ -526,12 +526,6 @@
   margin-bottom: 16px;
 }
 
-.blog-article__image {
-  width: 100%;
-  border-radius: var(--radius-md);
-  margin: 24px 0;
-}
-
 .blog-article__body {
   font-size: 18px;
   line-height: 1.7;
