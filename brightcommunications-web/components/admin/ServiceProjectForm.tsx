@@ -5,9 +5,11 @@ import { useActionState, useState } from "react";
 import { AdminField, useFieldErrorsFromState } from "@/components/admin/AdminField";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { MultiImageUpload } from "@/components/admin/MultiImageUpload";
+import { FaqEditor } from "@/components/admin/FaqEditor";
 import { createServiceProject, type ServiceProjectFormState, updateServiceProject } from "@/lib/actions/service-projects";
 import { validateServiceProjectFormData } from "@/lib/admin-validation";
 import { slugify } from "@/lib/slug";
+import type { FaqItem } from "@/lib/faq-types";
 
 export type ServiceProjectRecord = {
   id: string;
@@ -24,6 +26,7 @@ export type ServiceProjectRecord = {
   industry: string;
   backgroundImage: string | null;
   projectBrief: string;
+  faqs: FaqItem[];
   galleryImages: string[];
   youtubeUrl: string | null;
   isActive: boolean;
@@ -103,6 +106,8 @@ export function ServiceProjectForm({ project }: { project?: ServiceProjectRecord
       <AdminField label="Project brief" htmlFor="projectBrief" error={fieldErrors.projectBrief}>
         <textarea id="projectBrief" name="projectBrief" defaultValue={project?.projectBrief ?? ""} onChange={() => clearError("projectBrief")} />
       </AdminField>
+
+      <FaqEditor defaultValue={project?.faqs ?? []} error={fieldErrors.faqs} />
 
       <MultiImageUpload name="galleryImages" folder="projects" defaultValue={project?.galleryImages ?? []} label="Gallery images" hint="Upload multiple images or paste one URL/path per line." error={fieldErrors.galleryImages} onChange={() => clearError("galleryImages")} />
 

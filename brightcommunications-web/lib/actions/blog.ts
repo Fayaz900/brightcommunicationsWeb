@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Prisma } from "@prisma/client";
 
 import { validateBlogFormData } from "@/lib/admin-validation";
 import { prisma } from "@/lib/prisma";
@@ -26,7 +27,13 @@ export async function createBlogPost(
 
   try {
     await requireAdmin();
-    await prisma.blogPost.create({ data: validation.data });
+    const { faqs, ...postData } = validation.data;
+    await prisma.blogPost.create({
+      data: {
+        ...postData,
+        faqs: faqs.length ? (faqs as Prisma.InputJsonValue) : Prisma.DbNull,
+      },
+    });
     revalidatePath("/blog");
     revalidatePath("/");
     revalidatePath("/admin/blog");
@@ -54,7 +61,14 @@ export async function updateBlogPost(
 
   try {
     await requireAdmin();
-    await prisma.blogPost.update({ where: { id }, data: validation.data });
+    const { faqs, ...postData } = validation.data;
+    await prisma.blogPost.update({
+      where: { id },
+      data: {
+        ...postData,
+        faqs: faqs.length ? (faqs as Prisma.InputJsonValue) : Prisma.DbNull,
+      },
+    });
     revalidatePath("/blog");
     revalidatePath(`/blog/${validation.data.slug}`);
     revalidatePath("/");

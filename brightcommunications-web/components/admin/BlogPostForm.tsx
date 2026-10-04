@@ -4,9 +4,11 @@ import { useActionState, useState } from "react";
 
 import { AdminField, useFieldErrorsFromState } from "@/components/admin/AdminField";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { FaqEditor } from "@/components/admin/FaqEditor";
 import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { validateBlogFormData } from "@/lib/admin-validation";
 import { slugify } from "@/lib/slug";
+import type { FaqItem } from "@/lib/faq-types";
 import {
   createBlogPost,
   type BlogFormState,
@@ -22,6 +24,7 @@ type BlogPostRecord = {
   category: string;
   tags: string[];
   author: string;
+  faqs: FaqItem[];
   published: boolean;
   publishedAt: Date | null;
 };
@@ -154,6 +157,8 @@ export function BlogPostForm({ post }: { post?: BlogPostRecord }) {
           }
         }}
       />
+
+      <FaqEditor defaultValue={post?.faqs ?? []} error={fieldErrors.faqs} />
 
       <AdminField
         label="Publish date"

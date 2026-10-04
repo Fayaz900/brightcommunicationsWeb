@@ -3,16 +3,31 @@
 import { useState } from "react";
 
 import { faqItems } from "@/lib/site-content";
+import type { FaqItem } from "@/lib/faq-types";
 
-export function FaqAccordion() {
+export function FaqAccordion({
+  items = faqItems,
+  title = "Frequently Asked Questions",
+}: {
+  items?: readonly FaqItem[];
+  title?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
+  if (items.length === 0) return null;
+
   return (
-    <div className="faq-list" data-stagger="0.08">
-      {faqItems.map((item, i) => {
+    <section className="faq-section">
+      <div className="container faq-section__inner">
+        <header className="faq-section__header">
+          <p className="section-eyebrow">Have questions?</p>
+          <h2 className="heading-display heading-lg">{title}</h2>
+        </header>
+        <div className="faq-list">
+      {items.map((item, i) => {
         const isOpen = openIndex === i;
         return (
-          <article key={item.question} className="faq-item">
+          <article key={`${item.question}-${i}`} className="faq-item">
             <button
               type="button"
               className={`faq-item__trigger${isOpen ? " is-open" : ""}`}
@@ -34,6 +49,8 @@ export function FaqAccordion() {
           </article>
         );
       })}
-    </div>
+        </div>
+      </div>
+    </section>
   );
 }

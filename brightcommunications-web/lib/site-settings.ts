@@ -44,7 +44,9 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
       facebookUrl: settings.facebookUrl || "",
     };
   } catch (error) {
-    console.error("Failed to fetch site settings, returning defaults:", error);
+    // This lookup is optional on the public site. Next.js shows console.error
+    // calls as a dev overlay even though we handle the failure below.
+    console.warn("Failed to fetch site settings, returning defaults:", error);
     return defaultSiteSettings;
   }
 }

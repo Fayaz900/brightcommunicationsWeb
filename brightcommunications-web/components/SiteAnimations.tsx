@@ -262,17 +262,6 @@ export function SiteAnimations() {
         }
       });
 
-      gsap.set(".stats-bar .stat-item", { autoAlpha: 0, y: 28, scale: 0.92 });
-      gsap.to(".stats-bar .stat-item", {
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.75,
-        stagger: 0.12,
-        ease: "back.out(1.6)",
-        scrollTrigger: { trigger: ".stats-bar", ...revealOnce },
-      });
-
       gsap.set(".cta-form > *", { autoAlpha: 0, y: 24 });
       gsap.to(".cta-form > *", {
         autoAlpha: 1,

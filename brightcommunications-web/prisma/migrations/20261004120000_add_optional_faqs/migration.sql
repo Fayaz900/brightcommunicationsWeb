@@ -1,0 +1,2 @@
+ALTER TABLE "BlogPost" ADD COLUMN "faqs" JSONB;
+ALTER TABLE "ServiceProject" ADD COLUMN "faqs" JSONB;

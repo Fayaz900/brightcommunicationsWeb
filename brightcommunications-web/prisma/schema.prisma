@@ -20,6 +20,7 @@ model BlogPost {
   title         String
   slug          String    @unique
   body          String    @db.Text
+  faqs          Json?
   featuredImage String?
   category      String
   tags          String[]
@@ -82,6 +83,7 @@ model ServiceProject {
   industry        String
   backgroundImage String?
   projectBrief    String   @db.Text
+  faqs           Json?
   galleryImages   String[]
   youtubeUrl      String?
   isActive        Boolean  @default(true)

@@ -10,6 +10,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { services } from "@/lib/site-content";
 import { slugify } from "@/lib/slug";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
+import { FaqAccordion } from "@/components/FaqAccordion";
 
 function getFallbackService(slug: string) {
   return services.find((item) => slugify(item.name) === slug) ?? null;
@@ -119,6 +120,8 @@ export default async function ServiceProjectPage({ params }: { params: Promise<{
             </div>
           </section>
         ) : null}
+
+        {project?.faqs.length ? <FaqAccordion items={project.faqs} /> : null}
       </main>
       <SiteFooter settings={settings} />
     </>

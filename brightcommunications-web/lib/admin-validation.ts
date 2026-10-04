@@ -1,5 +1,6 @@
 import { extractYouTubeId } from "@/lib/youtube";
 import { slugify } from "@/lib/slug";
+import { parseFaqItems } from "@/lib/faq-types";
 
 export type ValidationResult<T> =
   | { success: true; data: T }
@@ -37,6 +38,7 @@ export function validateBlogFormData(formData: FormData): ValidationResult<{
   category: string;
   tags: string[];
   author: string;
+  faqs: { question: string; answer: string }[];
   published: boolean;
   publishedAt: Date | null;
 }> {
@@ -48,6 +50,7 @@ export function validateBlogFormData(formData: FormData): ValidationResult<{
   const category = String(formData.get("category") ?? "").trim();
   const tags = parseTags(String(formData.get("tags") ?? ""));
   const author = String(formData.get("author") ?? "").trim();
+  const faqsResult = parseFaqItems(String(formData.get("faqs") ?? ""));
   const published = formData.get("published") === "on";
   const publishedAtRaw = String(formData.get("publishedAt") ?? "").trim();
 
@@ -61,6 +64,7 @@ export function validateBlogFormData(formData: FormData): ValidationResult<{
   if (isBodyEmpty(body)) fieldErrors.body = "Body content is required.";
   if (!category) fieldErrors.category = "Category is required.";
   if (!author) fieldErrors.author = "Author is required.";
+  if (faqsResult.error) fieldErrors.faqs = faqsResult.error;
   if (tags.some((tag) => tag.length > 40)) fieldErrors.tags = "Each tag must be 40 characters or fewer.";
   if (featuredImage && !isValidHttpUrl(featuredImage) && !featuredImage.startsWith("/")) fieldErrors.featuredImage = "Featured image must be a valid URL or uploaded file.";
 
@@ -74,7 +78,7 @@ export function validateBlogFormData(formData: FormData): ValidationResult<{
   }
 
   if (Object.keys(fieldErrors).length > 0) return { success: false, fieldErrors, error: "Please fix the highlighted fields." };
-  return { success: true, data: { title, slug: slugInput || slug, body, featuredImage: featuredImage || null, category, tags, author, published, publishedAt } };
+  return { success: true, data: { title, slug: slugInput || slug, body, featuredImage: featuredImage || null, category, tags, author, faqs: faqsResult.items, published, publishedAt } };
 }
 
 export function validateTestimonialFormData(formData: FormData): ValidationResult<{
@@ -124,6 +128,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   industry: string;
   backgroundImage: string | null;
   projectBrief: string;
+  faqs: { question: string; answer: string }[];
   galleryImages: string[];
   youtubeUrl: string | null;
   isActive: boolean;
@@ -142,6 +147,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   const industry = String(formData.get("industry") ?? "").trim();
   const backgroundImage = String(formData.get("backgroundImage") ?? "").trim();
   const projectBrief = String(formData.get("projectBrief") ?? "").trim();
+  const faqsResult = parseFaqItems(String(formData.get("faqs") ?? ""));
   const galleryImages = parseImageList(String(formData.get("galleryImages") ?? ""));
   const youtubeUrl = String(formData.get("youtubeUrl") ?? "").trim();
   const isActive = formData.get("isActive") === "on";
@@ -160,6 +166,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   if (!year) fieldErrors.year = "Year is required.";
   if (!industry) fieldErrors.industry = "Industry is required.";
   if (!projectBrief) fieldErrors.projectBrief = "Project brief is required.";
+  if (faqsResult.error) fieldErrors.faqs = faqsResult.error;
 
   if (serviceImage && !isValidHttpUrl(serviceImage) && !serviceImage.startsWith("/")) fieldErrors.serviceImage = "Service row image must be a valid URL or uploaded file.";
   if (backgroundImage && !isValidHttpUrl(backgroundImage) && !backgroundImage.startsWith("/")) fieldErrors.backgroundImage = "Background image must be a valid URL or uploaded file.";
@@ -172,7 +179,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   if (Object.keys(fieldErrors).length > 0) return { success: false, fieldErrors, error: "Please fix the highlighted fields." };
   return {
     success: true,
-    data: { serviceNum, serviceName, serviceDesc, serviceTags, serviceImage: serviceImage || null, sortOrder, slug, title, client, year, industry, backgroundImage: backgroundImage || null, projectBrief, galleryImages, youtubeUrl: youtubeUrl || null, isActive },
+    data: { serviceNum, serviceName, serviceDesc, serviceTags, serviceImage: serviceImage || null, sortOrder, slug, title, client, year, industry, backgroundImage: backgroundImage || null, projectBrief, faqs: faqsResult.items, galleryImages, youtubeUrl: youtubeUrl || null, isActive },
   };
 }
 

@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { readFaqItems } from "@/lib/faq-types";
 
 export type BlogPostSummary = {
   id: string;
@@ -15,6 +16,7 @@ export type BlogPostSummary = {
 
 export type BlogPostDetail = BlogPostSummary & {
   body: string;
+  faqs: unknown;
   published: boolean;
   createdAt: Date;
 };
@@ -93,7 +95,8 @@ export async function getAllPosts() {
 }
 
 export async function getPostById(id: string) {
-  return prisma.blogPost.findUnique({ where: { id } });
+  const post = await prisma.blogPost.findUnique({ where: { id } });
+  return post ? { ...post, faqs: readFaqItems(post.faqs) } : null;
 }
 
 export { slugify } from "@/lib/slug";
