@@ -189,3 +189,51 @@ export function validateEditorUrl(value: string, type: "link" | "image"): string
   if (!isValidHttpUrl(trimmed) && !trimmed.startsWith("/")) return "Enter a valid URL (http:// or https://).";
   return null;
 }
+
+export function validateCareerFormData(formData: FormData): ValidationResult<{
+  title: string;
+  department: string;
+  jobType: string;
+  location: string;
+  experience: string;
+  description: string;
+  sortOrder: number;
+  isActive: boolean;
+}> {
+  const fieldErrors: Record<string, string> = {};
+  const title = String(formData.get("title") ?? "").trim();
+  const department = String(formData.get("department") ?? "").trim();
+  const jobType = String(formData.get("jobType") ?? "").trim() || "Full-time";
+  const location = String(formData.get("location") ?? "").trim() || "Kochi, Kerala (On-site)";
+  const experience = String(formData.get("experience") ?? "").trim() || "2-4 Years";
+  const description = String(formData.get("description") ?? "").trim();
+  const sortOrderRaw = String(formData.get("sortOrder") ?? "0").trim();
+  const isActive = formData.get("isActive") === "on";
+  const sortOrder = Number(sortOrderRaw);
+
+  if (!title) fieldErrors.title = "Job title is required.";
+  if (!department) fieldErrors.department = "Department is required.";
+  if (!description) fieldErrors.description = "Job description is required.";
+  if (!Number.isFinite(sortOrder) || sortOrder < 0) {
+    fieldErrors.sortOrder = "Sort order must be 0 or greater.";
+  }
+
+  if (Object.keys(fieldErrors).length > 0) {
+    return { success: false, fieldErrors, error: "Please fix the highlighted fields." };
+  }
+
+  return {
+    success: true,
+    data: {
+      title,
+      department,
+      jobType,
+      location,
+      experience,
+      description,
+      sortOrder,
+      isActive,
+    },
+  };
+}
+

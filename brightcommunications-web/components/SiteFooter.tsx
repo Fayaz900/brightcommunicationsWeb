@@ -42,10 +42,15 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
           <div>
             <p className="footer-col-title">Company</p>
             <ul className="footer-links">
-              <li><a href="/#about">About Us</a></li>
-              <li><a href="/#clients">Clients</a></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/services">Services</Link></li>
+              <li><Link href="/portfolio">Portfolio</Link></li>
+              <li><Link href="/industries">Industries</Link></li>
+              <li><Link href="/clients">Clients</Link></li>
+              <li><Link href="/testimonials">Testimonials</Link></li>
+              <li><Link href="/careers">Careers</Link></li>
               <li><Link href="/blog">Blog</Link></li>
-              <li><a href="/#contact">Contact</a></li>
+              <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
           <div>

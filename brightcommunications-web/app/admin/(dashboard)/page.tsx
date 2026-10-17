@@ -46,6 +46,11 @@ export default async function AdminDashboardPage() {
         <h2>Testimonials</h2>
         <p>Manage client testimonial videos and details.</p>
       </Link>
+
+      <Link className="admin-link-card" href="/admin/careers">
+        <h2>Careers &amp; Job Openings</h2>
+        <p>Post, edit, and manage career openings visible on the website.</p>
+      </Link>
     </div>
   );
 }

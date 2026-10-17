@@ -14,6 +14,7 @@ export function AdminHeader({ title }: { title: string }) {
         <Link className="admin-btn admin-btn--secondary" href="/admin/blog">Blog</Link>
         <Link className="admin-btn admin-btn--secondary" href="/admin/service-projects">Service Projects</Link>
         <Link className="admin-btn admin-btn--secondary" href="/admin/testimonials">Testimonials</Link>
+        <Link className="admin-btn admin-btn--secondary" href="/admin/careers">Careers</Link>
         <Link className="admin-btn admin-btn--secondary" href="/" target="_blank">View site</Link>
         <form
           action={async () => {

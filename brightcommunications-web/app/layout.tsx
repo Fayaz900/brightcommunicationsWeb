@@ -16,9 +16,31 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Bright Communications | Advertising, Branding & Digital Marketing Agency in Kochi",
+  metadataBase: new URL(process.env.SITE_URL || "https://brightcommunications.in"),
+  title: {
+    default: "Bright Communications | Advertising, Branding & Digital Marketing Agency in Kochi",
+    template: "%s | Bright Communications",
+  },
   description:
     "Bright Communications is a leading advertising, branding, digital marketing, website development, content production, and integrated communications company based in Kochi, Kerala. Building brands since 1996.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Bright Communications | Advertising, Branding & Digital Marketing Agency in Kochi",
+    description:
+      "Bright Communications is a leading advertising, branding, digital marketing, website development, content production, and integrated communications company based in Kochi, Kerala. Building brands since 1996.",
+    url: "/",
+    siteName: "Bright Communications",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bright Communications",
+    description:
+      "Bright Communications is a leading advertising, branding, digital marketing, website development, content production, and integrated communications company based in Kochi, Kerala. Building brands since 1996.",
+  },
 };
 
 export default function RootLayout({
