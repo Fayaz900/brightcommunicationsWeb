@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -12,29 +14,7 @@ import {
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Learn about Bright Communications — nearly three decades of creative advertising, brand strategy, content production, and integrated communications in Kochi, Kerala.",
-  alternates: {
-    canonical: "/about",
-  },
-  openGraph: {
-    title: "About Us | Bright Communications",
-    description:
-      "Nearly three decades of creative advertising, brand strategy, content production, and integrated communications in Kochi, Kerala. Founded in 1996.",
-    url: "/about",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About Us | Bright Communications",
-    description:
-      "Nearly three decades of creative advertising, brand strategy, content production, and integrated communications in Kochi, Kerala. Founded in 1996.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/about");
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();
@@ -42,6 +22,7 @@ export default async function AboutPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/about" settings={settings} />
 
       <main>
         {/* Page Hero */}

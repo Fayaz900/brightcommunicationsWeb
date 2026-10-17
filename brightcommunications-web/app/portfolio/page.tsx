@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -8,29 +10,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Portfolio & Case Studies",
-  description:
-    "Explore case studies and creative portfolios by Bright Communications: brand identity, TV commercials, digital marketing, packaging design, and integrated campaigns across FMCG, Healthcare, and Retail.",
-  alternates: {
-    canonical: "/portfolio",
-  },
-  openGraph: {
-    title: "Portfolio & Case Studies | Bright Communications",
-    description:
-      "Explore creative campaigns and brand case studies by Bright Communications across FMCG, Healthcare, Retail, and Digital Media.",
-    url: "/portfolio",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Portfolio & Case Studies | Bright Communications",
-    description:
-      "Explore creative campaigns and brand case studies by Bright Communications across FMCG, Healthcare, Retail, and Digital Media.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/portfolio");
 
 export default async function PortfolioPage() {
   const settings = await getSiteSettings();
@@ -38,6 +18,7 @@ export default async function PortfolioPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/portfolio" settings={settings} />
 
       <main>
         {/* Page Hero */}

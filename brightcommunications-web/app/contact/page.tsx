@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -9,29 +11,7 @@ import { contactInfo } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description:
-    "Get in touch with Bright Communications in Kochi, Kerala. Inquire about brand strategy, advertising campaigns, website development, film production, or digital marketing.",
-  alternates: {
-    canonical: "/contact",
-  },
-  openGraph: {
-    title: "Contact Us | Bright Communications",
-    description:
-      "Connect with our advertising and digital agency team in Kochi, Kerala. Share your brief or schedule a strategy consultation.",
-    url: "/contact",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Contact Us | Bright Communications",
-    description:
-      "Connect with our advertising and digital agency team in Kochi, Kerala. Share your brief or schedule a strategy consultation.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/contact");
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();
@@ -46,6 +26,7 @@ export default async function ContactPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/contact" settings={settings} />
 
       <main>
         {/* Page Hero */}

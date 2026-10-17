@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -9,29 +11,7 @@ import { clientIndustryTags } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Industries We Serve",
-  description:
-    "Specialized communication and branding expertise across Healthcare, Real Estate, Education, Retail, Hospitality, Automotive, FMCG, and Technology by Bright Communications.",
-  alternates: {
-    canonical: "/industries",
-  },
-  openGraph: {
-    title: "Industries We Serve | Bright Communications",
-    description:
-      "Deep industry knowledge and strategic communications across Healthcare, Real Estate, Education, Retail, Hospitality, FMCG, and Technology.",
-    url: "/industries",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Industries We Serve | Bright Communications",
-    description:
-      "Deep industry knowledge and strategic communications across Healthcare, Real Estate, Education, Retail, Hospitality, FMCG, and Technology.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/industries");
 
 export default async function IndustriesPage() {
   const settings = await getSiteSettings();
@@ -39,6 +19,7 @@ export default async function IndustriesPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/industries" settings={settings} />
 
       <main>
         {/* Page Hero */}

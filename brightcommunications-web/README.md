@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+SEO deployment settings, discovery files, schema templates and validation commands are documented in [docs/seo.md](docs/seo.md).
+
 ## Getting Started
 
 First, run the development server:

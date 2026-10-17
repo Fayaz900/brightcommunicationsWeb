@@ -37,7 +37,7 @@ export async function getSiteSettings(): Promise<SiteSettingsData> {
       id: settings.id,
       email: settings.email || defaultSiteSettings.email,
       phone: settings.phone || defaultSiteSettings.phone,
-      whatsapp: settings.whatsapp || defaultSiteSettings.whatsapp,
+      whatsapp: settings.whatsapp || settings.phone || defaultSiteSettings.whatsapp,
       location: settings.location || defaultSiteSettings.location,
       linkedinUrl: settings.linkedinUrl || "",
       instagramUrl: settings.instagramUrl || "",

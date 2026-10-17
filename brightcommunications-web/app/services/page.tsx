@@ -1,3 +1,6 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
+import { serviceSchema } from "@/lib/schema";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -11,29 +14,7 @@ import { slugify } from "@/lib/slug";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Our Services",
-  description:
-    "Explore 360° integrated communications services from Bright Communications: brand strategy, advertising campaigns, digital marketing, website development, video production, and performance marketing.",
-  alternates: {
-    canonical: "/services",
-  },
-  openGraph: {
-    title: "Our Services | Bright Communications",
-    description:
-      "Comprehensive communications solutions: brand strategy, creative campaigns, digital marketing, web engineering, video production, and performance marketing.",
-    url: "/services",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Our Services | Bright Communications",
-    description:
-      "Comprehensive communications solutions: brand strategy, creative campaigns, digital marketing, web engineering, video production, and performance marketing.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/services");
 
 export default async function ServicesPage() {
   const [settings, serviceProjects] = await Promise.all([
@@ -57,6 +38,7 @@ export default async function ServicesPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/services" settings={settings} schema={serviceRows.map((service) => serviceSchema({ path: service.href, name: service.name, description: service.desc }))} />
 
       <main>
         {/* Page Hero */}

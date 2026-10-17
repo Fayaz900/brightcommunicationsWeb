@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { FloatingContact } from "@/components/FloatingContact";
 import { navItems, services, contactInfo } from "@/lib/site-content";
 import type { SiteSettingsData } from "@/lib/site-settings";
+import { slugify } from "@/lib/slug";
 
 export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
   const activeContact = {
@@ -8,24 +10,30 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
     phone: settings?.phone || contactInfo.phone,
     location: settings?.location || contactInfo.location,
   };
+  const socialLinks = [
+    { label: "LinkedIn", text: "in", url: settings?.linkedinUrl },
+    { label: "Instagram", text: "ig", url: settings?.instagramUrl },
+    { label: "Facebook", text: "fb", url: settings?.facebookUrl },
+  ].filter((social) => social.url && /^https?:\/\//i.test(social.url));
 
   return (
     <footer className="site-footer">
+      <FloatingContact phone={settings?.phone} whatsapp={settings?.whatsapp} />
       <div className="container">
         <div className="footer-top">
-          <Link href="/#home" className="footer-logo">
+          <Link href="/" className="footer-logo">
             Bright Communications
           </Link>
           <ul className="footer-nav footer-nav--wide">
             {navItems.map((item) => (
               <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
+                <Link href={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>
-          <a href="/#contact" className="btn-outline btn-outline--light magnetic-btn">
+          <Link href="/contact" className="btn-outline btn-outline--light magnetic-btn">
             Start Your Project
-          </a>
+          </Link>
         </div>
 
         <div className="footer-columns">
@@ -34,7 +42,7 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
             <ul className="footer-links">
               {services.map((s) => (
                 <li key={s.num}>
-                  <a href="/#services">{s.name}</a>
+                  <Link href={`/services/${slugify(s.name)}`}>{s.name}</Link>
                 </li>
               ))}
             </ul>
@@ -65,7 +73,7 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
                 </a>
               </li>
               <li>
-                <a href="/#contact">{activeContact.location}</a>
+                <Link href="/contact">{activeContact.location}</Link>
               </li>
             </ul>
           </div>
@@ -75,36 +83,13 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
           <p className="footer-copy">
             © {new Date().getFullYear()} Bright Communications. All rights reserved.
           </p>
-          <div className="footer-social">
-            <a
-              href={settings?.linkedinUrl ? settings.linkedinUrl : "#"}
-              className="social-icon"
-              aria-label="LinkedIn"
-              {...(settings?.linkedinUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              in
-            </a>
-            <a
-              href={settings?.instagramUrl ? settings.instagramUrl : "#"}
-              className="social-icon"
-              aria-label="Instagram"
-              {...(settings?.instagramUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              ig
-            </a>
-            <a
-              href={settings?.facebookUrl ? settings.facebookUrl : "#"}
-              className="social-icon"
-              aria-label="Facebook"
-              {...(settings?.facebookUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              fb
-            </a>
-          </div>
-          <div className="footer-legal">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-          </div>
+          {socialLinks.length > 0 && <div className="footer-social">
+            {socialLinks.map((social) => (
+              <a key={social.label} href={social.url} className="social-icon" aria-label={social.label} target="_blank" rel="noopener noreferrer">
+                {social.text}
+              </a>
+            ))}
+          </div>}
         </div>
       </div>
     </footer>

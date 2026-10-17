@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { readFaqItems } from "@/lib/faq-types";
+import { cache } from "react";
+
+const publishedWhere = () => ({ published: true, OR: [{ publishedAt: null }, { publishedAt: { lte: new Date() } }] });
 
 export type BlogPostSummary = {
   id: string;
@@ -31,7 +34,7 @@ export function extractExcerpt(body?: string | null, maxLength = 130): string {
 export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
   try {
     return await prisma.blogPost.findMany({
-      where: { published: true },
+      where: publishedWhere(),
       orderBy: { publishedAt: "desc" },
       select: {
         id: true,
@@ -55,7 +58,7 @@ export async function getPublishedPosts(): Promise<BlogPostSummary[]> {
 export async function getLatestPosts(limit: number): Promise<BlogPostSummary[]> {
   try {
     return await prisma.blogPost.findMany({
-      where: { published: true },
+      where: publishedWhere(),
       orderBy: { publishedAt: "desc" },
       take: limit,
       select: {
@@ -77,16 +80,16 @@ export async function getLatestPosts(limit: number): Promise<BlogPostSummary[]> 
   }
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPostDetail | null> {
+export const getPostBySlug = cache(async (slug: string): Promise<BlogPostDetail | null> => {
   try {
     return await prisma.blogPost.findFirst({
-      where: { slug, published: true },
+      where: { slug, ...publishedWhere() },
     });
   } catch (error) {
     console.error("Failed to fetch post by slug, returning null:", error);
     return null;
   }
-}
+});
 
 export async function getAllPosts() {
   return prisma.blogPost.findMany({

@@ -1,3 +1,4 @@
+import { PageSeo } from "@/components/PageSeo";
 import { LandingPage } from "@/components/LandingPage";
 import { PageLoader } from "@/components/PageLoader";
 import { SiteAnimations } from "@/components/SiteAnimations";
@@ -18,6 +19,7 @@ export default async function Home() {
 
   return (
     <>
+      <PageSeo path="/" settings={settings} />
       <PageLoader />
       <SiteAnimations />
       <LandingPage

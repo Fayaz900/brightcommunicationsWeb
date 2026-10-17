@@ -10,6 +10,8 @@ export type CareerOpeningPublic = {
   description: string;
   sortOrder: number;
   isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export const fallbackCareers: CareerOpeningPublic[] = [
@@ -65,11 +67,7 @@ export const fallbackCareers: CareerOpeningPublic[] = [
 
 export async function getActiveCareers(): Promise<CareerOpeningPublic[]> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rows = await (prisma as any).careerOpening.findMany({
-      where: { isActive: true },
-      orderBy: { sortOrder: "asc" },
-    });
+    const rows = await prisma.$queryRaw<CareerOpeningPublic[]>`SELECT * FROM "CareerOpening" WHERE "isActive" = true ORDER BY "sortOrder" ASC`;
 
     if (!rows || rows.length === 0) {
       return fallbackCareers;
@@ -85,6 +83,8 @@ export async function getActiveCareers(): Promise<CareerOpeningPublic[]> {
       description: row.description,
       sortOrder: row.sortOrder,
       isActive: row.isActive,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
     }));
   } catch (error) {
     console.error("Failed to fetch active careers, returning fallback list:", error);
@@ -94,10 +94,7 @@ export async function getActiveCareers(): Promise<CareerOpeningPublic[]> {
 
 export async function getAllCareers(): Promise<CareerOpeningPublic[]> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return await (prisma as any).careerOpening.findMany({
-      orderBy: { sortOrder: "asc" },
-    });
+    return await prisma.$queryRaw<CareerOpeningPublic[]>`SELECT * FROM "CareerOpening" ORDER BY "sortOrder" ASC`;
   } catch (error) {
     console.error("Failed to fetch all careers:", error);
     return [];
@@ -106,8 +103,8 @@ export async function getAllCareers(): Promise<CareerOpeningPublic[]> {
 
 export async function getCareerById(id: string): Promise<CareerOpeningPublic | null> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return await (prisma as any).careerOpening.findUnique({ where: { id } });
+    const rows = await prisma.$queryRaw<CareerOpeningPublic[]>`SELECT * FROM "CareerOpening" WHERE id = ${id} LIMIT 1`;
+    return rows[0] ?? null;
   } catch (error) {
     console.error("Failed to fetch career by id:", error);
     return null;

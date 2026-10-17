@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { faqItems } from "@/lib/site-content";
 import type { FaqItem } from "@/lib/faq-types";
+import { JsonLd } from "@/components/JsonLd";
 
 export function FaqAccordion({
   items = faqItems,
@@ -18,6 +19,7 @@ export function FaqAccordion({
 
   return (
     <section className="faq-section">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: items.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) }} />
       <div className="container faq-section__inner">
         <header className="faq-section__header">
           <p className="section-eyebrow">Have questions?</p>

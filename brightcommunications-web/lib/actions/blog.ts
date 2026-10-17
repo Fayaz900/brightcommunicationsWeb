@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateDiscovery } from "@/lib/actions/discovery";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 
@@ -34,7 +35,8 @@ export async function createBlogPost(
         faqs: faqs.length ? (faqs as Prisma.InputJsonValue) : Prisma.DbNull,
       },
     });
-    revalidatePath("/blog");
+    revalidatePath("/blog", "layout");
+    revalidateDiscovery();
     revalidatePath("/");
     revalidatePath("/admin/blog");
   } catch (error) {
@@ -69,7 +71,8 @@ export async function updateBlogPost(
         faqs: faqs.length ? (faqs as Prisma.InputJsonValue) : Prisma.DbNull,
       },
     });
-    revalidatePath("/blog");
+    revalidatePath("/blog", "layout");
+    revalidateDiscovery();
     revalidatePath(`/blog/${validation.data.slug}`);
     revalidatePath("/");
     revalidatePath("/admin/blog");
@@ -85,7 +88,8 @@ export async function updateBlogPost(
 export async function deleteBlogPost(id: string) {
   await requireAdmin();
   const post = await prisma.blogPost.delete({ where: { id } });
-  revalidatePath("/blog");
+  revalidatePath("/blog", "layout");
+  revalidateDiscovery();
   revalidatePath(`/blog/${post.slug}`);
   revalidatePath("/");
   revalidatePath("/admin/blog");

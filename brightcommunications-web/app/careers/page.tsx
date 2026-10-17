@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -9,29 +11,7 @@ import { brightsydePillars, contactInfo } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Careers at Bright",
-  description:
-    "Explore career openings at Bright Communications in Kochi, Kerala. Opportunities for creative designers, copywriters, digital strategists, filmmakers, and web developers.",
-  alternates: {
-    canonical: "/careers",
-  },
-  openGraph: {
-    title: "Careers at Bright | Join Our Creative Agency in Kochi",
-    description:
-      "Work alongside veteran strategists, filmmakers, and digital specialists. Build iconic brands with Bright Communications.",
-    url: "/careers",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Careers at Bright | Join Our Creative Agency in Kochi",
-    description:
-      "Work alongside veteran strategists, filmmakers, and digital specialists. Build iconic brands with Bright Communications.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/careers");
 
 export default async function CareersPage() {
   const [settings, careers] = await Promise.all([
@@ -43,6 +23,7 @@ export default async function CareersPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/careers" settings={settings} />
 
       <main>
         {/* Page Hero */}
@@ -141,7 +122,7 @@ export default async function CareersPage() {
                         Exp: {job.experience}
                       </span>
                     </div>
-                    <h3 className="career-card__title">{job.title}</h3>
+                    <h3 className="career-card__title">{job.createdAt ? <Link href={`/careers/${job.id}`}>{job.title}</Link> : job.title}</h3>
                     <p className="career-card__desc">{job.description}</p>
                   </div>
                   <div>

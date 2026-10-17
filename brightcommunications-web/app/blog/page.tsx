@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -9,11 +11,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Blog | Bright Communications",
-  description:
-    "Read blog posts on branding, creative advertising, digital transformation, and performance marketing from Bright Communications.",
-};
+export const metadata: Metadata = staticPageMetadata("/blog");
 
 export default async function BlogPage() {
   const [posts, settings] = await Promise.all([
@@ -24,6 +22,7 @@ export default async function BlogPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/blog" settings={settings} />
       <main className="blog-list-page">
         {/* Editorial Hero Header */}
         <section className="blog-page-hero">

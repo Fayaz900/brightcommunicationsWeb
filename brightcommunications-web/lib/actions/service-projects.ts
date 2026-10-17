@@ -2,6 +2,7 @@
 
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
+import { revalidateDiscovery } from "@/lib/actions/discovery";
 import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/auth-utils";
@@ -29,6 +30,9 @@ export async function createServiceProject(
       VALUES (${id}, ${data.serviceNum}, ${data.serviceName}, ${data.serviceDesc}, ${data.serviceTags}, ${data.serviceImage}, ${data.sortOrder}, ${data.slug}, ${data.title}, ${data.client}, ${data.year}, ${data.industry}, ${data.backgroundImage}, ${data.projectBrief}, ${data.faqs.length ? JSON.stringify(data.faqs) : null}::jsonb, ${data.galleryImages}, ${data.youtubeUrl}, ${data.isActive}, NOW())
     `;
     revalidatePath("/");
+    revalidateDiscovery();
+    revalidatePath("/services");
+    revalidatePath("/services/[slug]", "page");
     revalidatePath("/admin/service-projects");
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Failed to create service project." };
@@ -54,6 +58,9 @@ export async function updateServiceProject(
       WHERE id = ${id}
     `;
     revalidatePath("/");
+    revalidateDiscovery();
+    revalidatePath("/services");
+    revalidatePath("/services/[slug]", "page");
     revalidatePath(`/services/${data.slug}`);
     revalidatePath("/admin/service-projects");
   } catch (error) {
@@ -67,6 +74,9 @@ export async function deleteServiceProject(id: string) {
   await requireAdmin();
   await prisma.$executeRaw`DELETE FROM "ServiceProject" WHERE id = ${id}`;
   revalidatePath("/");
+  revalidateDiscovery();
+  revalidatePath("/services");
+  revalidatePath("/services/[slug]", "page");
   revalidatePath("/admin/service-projects");
   redirect("/admin/service-projects?status=deleted");
 }

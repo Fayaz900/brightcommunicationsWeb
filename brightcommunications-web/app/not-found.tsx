@@ -2,6 +2,9 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Sparkles } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import styles from "./not-found.module.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Page Not Found", robots: { index: false, follow: false }, alternates: { canonical: null }, openGraph: null, twitter: null };
 
 export default function NotFound() {
   return (

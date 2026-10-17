@@ -80,7 +80,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: SiteSetting
               disabled={isPending}
             />
             <p className="admin-field__hint">
-              Displayed as phone contact and creates a tel: click-to-call link.
+              Used for phone contact links and the floating mobile call button. Include the country code.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ export function SettingsForm({ initialSettings }: { initialSettings: SiteSetting
               disabled={isPending}
             />
             <p className="admin-field__hint">
-              Used for direct WhatsApp chat links (wa.me) in the contact section.
+              Used for WhatsApp chat links. Leave empty to use the phone number above. Include the country code (e.g. +91).
             </p>
           </div>
 

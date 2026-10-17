@@ -1,40 +1,19 @@
+import { PageSeo } from "@/components/PageSeo";
+import { pageMetadata, plainText } from "@/lib/seo";
+import { blogPostSchema } from "@/lib/schema";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
-import { extractExcerpt, formatBlogDate, getPostBySlug } from "@/lib/blog";
+import { formatBlogDate, getPostBySlug } from "@/lib/blog";
 import { getSiteSettings } from "@/lib/site-settings";
 import { sanitizeBlogHtml } from "@/lib/sanitize";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { readFaqItems } from "@/lib/faq-types";
 
 export const dynamic = "force-dynamic";
-
-async function getSiteOrigin(): Promise<string | null> {
-  const configuredUrl = process.env.SITE_URL?.trim();
-  if (configuredUrl) return new URL(configuredUrl).origin;
-
-  const requestHeaders = await headers();
-  const host = (requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host"))
-    ?.split(",")[0].trim();
-  if (!host) return null;
-
-  const protocol = requestHeaders.get("x-forwarded-proto")?.split(",")[0].trim()
-    ?? (host.startsWith("localhost") ? "http" : "https");
-  return new URL(`${protocol}://${host}`).origin;
-}
-
-function absoluteHttpUrl(value: string, origin: string | null): string | undefined {
-  try {
-    const url = new URL(value, origin ?? undefined);
-    return url.protocol === "http:" || url.protocol === "https:" ? url.href : undefined;
-  } catch {
-    return undefined;
-  }
-}
 
 export async function generateMetadata({
   params,
@@ -43,12 +22,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  if (!post) return { title: "Blog post not found" };
+  if (!post) notFound();
 
-  return {
-    title: `${post.title} | Bright Communications`,
-    description: post.body.replace(/<[^>]+>/g, "").slice(0, 160),
-  };
+  return pageMetadata({
+    path: `/blog/${post.slug}`, title: post.title, description: post.body, image: post.featuredImage,
+    article: { author: post.author, publishedTime: (post.publishedAt || post.createdAt).toISOString(), modifiedTime: post.updatedAt.toISOString(), tags: post.tags },
+  });
 }
 
 export default async function BlogPostPage({
@@ -66,41 +45,12 @@ export default async function BlogPostPage({
 
   const bodyHtml = sanitizeBlogHtml(post.body);
   const faqs = readFaqItems(post.faqs);
-  const origin = await getSiteOrigin();
-  const articleUrl = origin
-    ? new URL(`/blog/${encodeURIComponent(post.slug)}`, origin).href
-    : undefined;
-  const authorName = post.author.trim() || "Bright Team";
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: extractExcerpt(post.body, 160),
-    ...(articleUrl && { mainEntityOfPage: articleUrl }),
-    author: {
-      "@type": ["Bright Communications", "Bright Team"].includes(authorName)
-        ? "Organization"
-        : "Person",
-      name: authorName,
-    },
-    publisher: { "@type": "Organization", name: "Bright Communications" },
-    ...(post.publishedAt && { datePublished: post.publishedAt.toISOString() }),
-    dateModified: post.updatedAt.toISOString(),
-    ...(post.featuredImage && {
-      image: absoluteHttpUrl(post.featuredImage, origin),
-    }),
-  };
 
   return (
     <>
       <SiteNav />
+      <PageSeo path={`/blog/${post.slug}`} title={post.title} description={plainText(post.body)} settings={settings} schema={blogPostSchema(post)} />
       <main className="blog-article-page">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
-          }}
-        />
         <article className="blog-article">
           <header className="blog-article__hero">
             {post.category && (

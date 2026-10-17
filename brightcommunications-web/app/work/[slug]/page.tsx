@@ -9,6 +9,11 @@ import { SiteNav } from "@/components/SiteNav";
 import { getPortfolioItemBySlug, portfolioItems } from "@/app/assets/portfolio/data";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
+import { PageSeo } from "@/components/PageSeo";
+import { pageMetadata } from "@/lib/seo";
+import { creativeWorkSchema } from "@/lib/schema";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return portfolioItems.map((item) => ({ slug: item.slug }));
@@ -22,12 +27,9 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = getPortfolioItemBySlug(slug);
 
-  if (!project) return { title: "Project not found" };
+  if (!project) notFound();
 
-  return {
-    title: `${project.title} | Bright Communications`,
-    description: project.projectBrief,
-  };
+  return pageMetadata({ path: `/work/${slug}`, title: project.title, description: project.projectBrief, image: project.backgroundImage.src });
 }
 
 export default async function WorkDetailPage({
@@ -48,6 +50,7 @@ export default async function WorkDetailPage({
   return (
     <>
       <SiteNav />
+      <PageSeo path={`/work/${slug}`} title={project.title} description={project.projectBrief} settings={settings} schema={[creativeWorkSchema({ path: `/work/${slug}`, title: project.title, description: project.projectBrief, image: project.backgroundImage.src, client: project.client, year: project.year })]} />
       <main className="work-detail-page">
         <section className="work-detail-hero">
           <Image

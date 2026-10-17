@@ -4705,3 +4705,7 @@ body.animations-ready .reveal-heading {
   text-decoration: underline;
 }
 
+
+.career-detail-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+.career-detail-facts dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-600); margin-bottom: 6px; }
+.career-detail-facts dd { font-size: 15px; color: var(--black); }

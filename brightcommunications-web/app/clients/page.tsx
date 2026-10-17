@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,29 +11,7 @@ import { clientIndustryTags } from "@/lib/site-content";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Our Clients & Partners",
-  description:
-    "Trusted by leading enterprises, hospitals, educational institutions, FMCG brands, and retailers across India and GCC since 1996.",
-  alternates: {
-    canonical: "/clients",
-  },
-  openGraph: {
-    title: "Our Clients & Partners | Bright Communications",
-    description:
-      "Trusted by leading enterprises, healthcare networks, retail leaders, and educational institutions across India and the GCC region.",
-    url: "/clients",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Our Clients & Partners | Bright Communications",
-    description:
-      "Trusted by leading enterprises, healthcare networks, retail leaders, and educational institutions across India and the GCC region.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/clients");
 
 const clientLogos = Array.from(
   { length: 24 },
@@ -44,6 +24,7 @@ export default async function ClientsPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/clients" settings={settings} />
 
       <main>
         {/* Page Hero */}

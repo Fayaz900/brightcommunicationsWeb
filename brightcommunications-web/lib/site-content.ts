@@ -1,11 +1,11 @@
 export const navItems = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#industries", label: "Industries" },
-  { href: "#clients", label: "Clients" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/industries", label: "Industries" },
+  { href: "/clients", label: "Clients" },
   { href: "/blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const marqueeServices = [

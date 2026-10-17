@@ -11,6 +11,11 @@ import { services } from "@/lib/site-content";
 import { slugify } from "@/lib/slug";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { PageSeo } from "@/components/PageSeo";
+import { pageMetadata, plainText } from "@/lib/seo";
+import { creativeWorkSchema, serviceSchema } from "@/lib/schema";
+
+export const dynamic = "force-dynamic";
 
 function getFallbackService(slug: string) {
   return services.find((item) => slugify(item.name) === slug) ?? null;
@@ -21,12 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = await getServiceProjectBySlug(slug);
   const service = getFallbackService(slug);
 
-  if (!project && !service) return { title: "Service project not found" };
+  if (!project && !service) notFound();
 
-  return {
-    title: `${project?.title ?? service?.name} | Bright Communications`,
-    description: project?.projectBrief ?? service?.desc,
-  };
+  return pageMetadata({ path: `/services/${slug}`, title: project?.title ?? service!.name, description: project?.projectBrief ?? service!.desc, image: project?.backgroundImage || project?.serviceImage || project?.galleryImages[0] });
 }
 
 export default async function ServiceProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -51,6 +53,10 @@ export default async function ServiceProjectPage({ params }: { params: Promise<{
   return (
     <>
       <SiteNav />
+      <PageSeo path={`/services/${slug}`} title={title} description={plainText(projectBrief)} settings={settings} schema={[
+        serviceSchema({ path: `/services/${slug}`, name: project?.serviceName || service?.name || title, description: project?.serviceDesc || service?.desc || projectBrief, image: heroImage }),
+        ...(project ? [creativeWorkSchema({ path: `/services/${slug}`, title, description: projectBrief, image: heroImage, client, year })] : []),
+      ]} />
       <main className="service-project-page">
         <section className="service-project-hero">
           {heroImage ? (

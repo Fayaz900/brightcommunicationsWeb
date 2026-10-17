@@ -1,3 +1,5 @@
+import { staticPageMetadata } from "@/lib/seo";
+import { PageSeo } from "@/components/PageSeo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/SiteNav";
@@ -9,29 +11,7 @@ import { getActiveTestimonials } from "@/lib/testimonials";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Client Testimonials & Reviews",
-  description:
-    "Hear directly from founders, managing directors, and marketing leaders on their experience partnering with Bright Communications for advertising, branding, and digital growth.",
-  alternates: {
-    canonical: "/testimonials",
-  },
-  openGraph: {
-    title: "Client Testimonials & Reviews | Bright Communications",
-    description:
-      "Hear directly from founders and business leaders on their experience partnering with Bright Communications for branding, film, and media campaigns.",
-    url: "/testimonials",
-    siteName: "Bright Communications",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Client Testimonials & Reviews | Bright Communications",
-    description:
-      "Hear directly from founders and business leaders on their experience partnering with Bright Communications for branding, film, and media campaigns.",
-  },
-};
+export const metadata: Metadata = staticPageMetadata("/testimonials");
 
 const writtenTestimonials = [
   {
@@ -73,6 +53,7 @@ export default async function TestimonialsPage() {
   return (
     <>
       <SiteNav />
+      <PageSeo path="/testimonials" settings={settings} />
 
       <main>
         {/* Page Hero */}

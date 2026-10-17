@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import logo from "@/app/assets/logo.png";
@@ -9,17 +9,8 @@ import logo from "@/app/assets/logo.png";
 import { navItems } from "@/lib/site-content";
 
 export function SiteNav() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const closeMenu = useCallback(() => setOpen(false), []);
-
-  const getHref = useCallback(
-    (href: string) => {
-      if (!href.startsWith("#")) return href;
-      return pathname === "/" ? href : `/${href}`;
-    },
-    [pathname],
-  );
 
   useEffect(() => {
     if (!open) return;
@@ -38,7 +29,7 @@ export function SiteNav() {
     <>
       <header className="site-nav" id="navbar">
         <div className="site-nav__inner">
-          <a href={getHref("#home")} className="site-nav__logo" onClick={closeMenu}>
+          <Link href="/" className="site-nav__logo" onClick={closeMenu}>
             <Image
               src={logo}
               alt="BrightCommunications"
@@ -47,20 +38,20 @@ export function SiteNav() {
               className="site-nav__logo-img"
               priority
             />
-          </a>
+          </Link>
 
           <ul className="site-nav__links">
             {navItems.map(({ href, label }) => (
               <li key={href}>
-                <a href={getHref(href)}>{label}</a>
+                <Link href={href}>{label}</Link>
               </li>
             ))}
           </ul>
 
           <div className="site-nav__actions">
-            <a href={getHref("#contact")} className="site-nav__cta" onClick={closeMenu}>
+            <Link href="/contact" className="site-nav__cta" onClick={closeMenu}>
               Start Your Project
-            </a>
+            </Link>
             <button
               type="button"
               className={`site-nav__toggle${open ? " is-open" : ""}`}
@@ -93,9 +84,9 @@ export function SiteNav() {
         <ul className="nav-overlay__links">
           {navItems.map(({ href, label }) => (
             <li key={href}>
-              <a href={getHref(href)} onClick={closeMenu}>
+              <Link href={href} onClick={closeMenu}>
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

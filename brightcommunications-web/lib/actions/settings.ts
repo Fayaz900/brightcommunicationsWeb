@@ -63,7 +63,7 @@ export async function updateSiteSettings(
       },
     });
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     revalidatePath("/admin/settings");
     revalidatePath("/admin");
 
