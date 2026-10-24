@@ -46,6 +46,10 @@ export function HeroSection() {
       markHeroIntroFired();
       root.classList.remove("hero--pending");
 
+      // Hide video initially so text loads first
+      const videoEl = root.querySelector(".hero__video") as HTMLElement | null;
+      if (videoEl) gsap.set(videoEl, { opacity: 0 });
+
       ctx = gsap.context(() => {
         const copy = root.querySelector(".hero__copy");
         if (!copy) return;
@@ -115,6 +119,11 @@ export function HeroSection() {
           "-=0.15"
         );
 
+        // Fade video in — starts alongside scroll-hint so there's no gap
+        if (videoEl) {
+          tl.to(videoEl, { opacity: 1, duration: 0.6, ease: "power2.inOut" }, "-=0.35");
+        }
+
         gsap.to(".hero__decor--1", {
           y: -14,
           duration: 3,
@@ -176,6 +185,7 @@ export function HeroSection() {
     const onIntro = () => runHeroIntro();
     window.addEventListener("hero-intro-start", onIntro);
 
+    // If the PageLoader already fired the event (e.g. fast navigation), run now
     if (wasHeroIntroFired()) {
       runHeroIntro();
     }
@@ -193,9 +203,10 @@ export function HeroSection() {
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__video">
           <iframe
-            src="https://www.youtube-nocookie.com/embed/fQfBar1egPA?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&loop=1&playlist=fQfBar1egPA&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3"
+            src="https://streamable.com/e/3b35or?autoplay=1&muted=1&controls=0&loop=1"
             title="Bright Communications hero background video"
-            allow="autoplay; encrypted-media; picture-in-picture"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
             tabIndex={-1}
           />
         </div>

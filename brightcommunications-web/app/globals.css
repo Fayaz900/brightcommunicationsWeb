@@ -491,8 +491,30 @@ a {
   min-width: 177.78vh;
   min-height: 100vh;
   border: 0;
-  transform: translate(-50%, -50%) scale(1.15);
+  transform: translate(-50%, -50%) scale(1.08);
   pointer-events: none;
+}
+
+/* Mobile portrait — prevent extreme stretch, use centre-crop approach */
+@media (max-width: 768px) and (orientation: portrait) {
+  .hero__video iframe {
+    width: 300vw;
+    height: 168.75vw;
+    min-width: unset;
+    min-height: unset;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Mobile landscape — clean vh-based fill */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero__video iframe {
+    width: 177.78vh;
+    height: 100vh;
+    min-width: unset;
+    min-height: unset;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
 }
 
 .hero__video-overlay {
