@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
-import { AboutVideoPlayer } from "@/components/AboutVideoPlayer";
 import { BlogSection } from "@/components/BlogSection";
-import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroSection } from "@/components/HeroSection";
 import { HighlightWord } from "@/components/HighlightWord";
 import { SiteNav } from "@/components/SiteNav";
@@ -21,20 +20,10 @@ import type { BlogPostSummary } from "@/lib/blog";
 import type { ServiceProjectPublic } from "@/lib/service-projects";
 import type { TestimonialPublic } from "@/lib/testimonials";
 import {
-  aboutValues,
-  awards,
-  brightsydePillars,
-  careerOpenings,
-  clientIndustryTags,
   contactInfo,
   industries,
-  insightCategories,
-  legacyHighlights,
   marqueeServices,
-  navItems,
-  processSteps,
   services,
-  teamRoles,
   whyChooseBright,
   workCategories,
 } from "@/lib/site-content";
@@ -43,20 +32,6 @@ const clientLogos = Array.from(
   { length: 24 },
   (_, index) => `/clientlogos/logo_${index + 1}.png`,
 );
-
-function PlaceholderSlot({
-  label,
-  className = "",
-}: {
-  label: string;
-  className?: string;
-}) {
-  return (
-    <div className={`asset-slot${className ? ` ${className}` : ""}`}>
-      <span className="asset-slot__label">{label}</span>
-    </div>
-  );
-}
 
 export function LandingPage({
   latestPosts,
@@ -114,53 +89,40 @@ export function LandingPage({
         </div>
       </div>
 
-      {/* A Legacy of Creativity */}
-      <section className="legacy-band">
-        <div className="container">
-          <div className="legacy-band__header fade-up">
-            <p className="section-eyebrow">A Legacy of Creativity</p>
-            <h2 className="heading-display heading-md">
-              Nearly Three Decades Of Building Brands
-            </h2>
-            <p className="body-md legacy-band__tagline">
-              Built On Advertising. Evolved Through Innovation.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Who We Are */}
+      {/* About Bright */}
       <section className="section" id="about">
         <div className="container">
           <div className="about-intro">
-            <p className="section-eyebrow fade-up">Who We Are</p>
+            <p className="section-eyebrow fade-up">A Little About Us</p>
 
             <div className="about-copy">
               <h2 className="heading-display heading-lg reveal-heading">
-                A Creative Force Since <HighlightWord>1996</HighlightWord>
+                Not Our First Campaign. Never Our Last Big Idea.
               </h2>
               <p className="body-lg fade-up" style={{ marginTop: 24 }}>
-                Bright Communications was founded on a simple belief: great
-                communication has the power to shape perceptions, influence
-                decisions, and build enduring brands.
+                A lot has changed in advertising since 1996. The platforms are
+                new, audiences are pickier, and everyone is shouting. What
+                hasn&apos;t changed is that a really good idea can still make
+                someone stop, think, feel something, and act on it.
               </p>
               <p className="body-md fade-up" style={{ marginTop: 16 }}>
-                What began as a creative advertising agency has grown into a
-                multidisciplinary communications company that brings together
-                strategy, creativity, technology, content, production, and
-                performance under one roof.
+                That&apos;s what we believe at Bright Communications, an
+                advertising agency in Kochi that puts strategy and creativity
+                in the same room to help brands find their voice, tell better
+                stories, and connect with real people.
               </p>
               <p className="body-md fade-up" style={{ marginTop: 16 }}>
-                Today, our team of strategists, designers, marketers,
-                filmmakers, writers, developers, and creative thinkers
-                collaborate to create communication that not only captures
-                attention but also delivers meaningful business outcomes.
+                Maybe you&apos;re launching something new. Maybe you&apos;re
+                taking an established brand somewhere bigger. Either way,
+                we&apos;ll help you work out what comes next.
               </p>
-              <div className="about-pills fade-up">
-                <span className="pill">Brands need relevance.</span>
-                <span className="pill">Brands need trust.</span>
-                <span className="pill">Brands need growth.</span>
-              </div>
+              <p className="body-md fade-up" style={{ marginTop: 16 }}>
+                Three decades on, we&apos;re still curious and still making
+                things. We&apos;re still looking for a brighter way to do it.
+              </p>
+              <Link href="/about" className="btn-outline fade-up magnetic-btn" style={{ marginTop: 28 }}>
+                Get To Know Us →
+              </Link>
             </div>
 
             {/* <AboutVideoPlayer /> */}
@@ -174,14 +136,19 @@ export function LandingPage({
       <section className="section section--dark services" id="services">
         <div className="container">
           <div className="services-header">
-            <h2 className="services-heading heading-display fade-up">
-              What we
-              <br />
-              do best.
-            </h2>
+            <div>
+              <p className="section-eyebrow fade-up" style={{ color: "rgba(255,255,255,0.5)" }}>
+                Our World Of Work
+              </p>
+              <h2 className="services-heading heading-display fade-up">
+                Good Ideas Do Not Exist In A Vacuum.
+              </h2>
+            </div>
             <p className="services-sub fade-up">
-              From brand foundations to full-scale campaigns - we cover every
-              dimension of communications that helps your brand grow.
+              The best work happens when it all comes together: a clear
+              strategy, a fresh idea, the right message, and a way to put it in
+              front of the people who matter. That&apos;s how we approach every
+              brief, and here&apos;s what we can do for you.
             </p>
           </div>
 
@@ -190,10 +157,13 @@ export function LandingPage({
               <a key={service.num} href={service.href} className="service-item service-item--link">
                 <span className="service-num">{service.num}</span>
                 <span className="service-name">{service.name}</span>
-                <div className="service-tags">
+                <div className="service-copy">
+                  <p className="service-desc">{service.desc}</p>
+                  <div className="service-tags">
                   {service.tags.map((tag) => (
                     <span key={tag} className="service-tag">{tag}</span>
                   ))}
+                  </div>
                 </div>
                 <span className="service-arrow" aria-hidden="true">&rarr;</span>
               </a>
@@ -201,9 +171,9 @@ export function LandingPage({
           </div>
 
           <div className="section-cta-row fade-up">
-            <a href="#contact" className="btn-outline btn-outline--light magnetic-btn">
-              Explore All Services →
-            </a>
+            <Link href="/services" className="btn-outline btn-outline--light magnetic-btn">
+              Explore All Our Services →
+            </Link>
           </div>
         </div>
       </section>
@@ -213,29 +183,19 @@ export function LandingPage({
         <div className="container">
           <div className="work-header">
             <div>
-              <p className="section-eyebrow fade-up">Work That Creates Impact</p>
+              <p className="section-eyebrow fade-up">A Few Things We&apos;ve Made</p>
               <h2 className="heading-display heading-lg reveal-heading">
-                Creating <HighlightWord>Measurable</HighlightWord> Impact
+                Enough Talk. Let The Work Do Some Talking.
               </h2>
               <p className="body-lg fade-up" style={{ marginTop: 16 }}>
-                Every brand has a story. Every challenge has an opportunity.
-                Every campaign has a purpose.
-              </p>
-              <p className="body-md fade-up" style={{ marginTop: 16 }}>
-                For nearly three decades, Bright Communications has partnered
-                with businesses across healthcare, education, real estate,
-                retail, hospitality, manufacturing, technology, and financial
-                services to create communication that delivers results.
-              </p>
-              <p className="body-md fade-up" style={{ marginTop: 16 }}>
-                From brand launches and integrated campaigns to digital
-                transformation and content production, our work is driven by one
-                objective: Creating Measurable Impact.
+                Every brief is different, and so is every brand&apos;s
+                challenge. Each project is a chance to find the idea that fits.
+                Here&apos;s where the thinking turns into doing.
               </p>
             </div>
-            <a href="#work" className="btn-outline fade-up magnetic-btn">
-              View Portfolio →
-            </a>
+            <Link href="/portfolio" className="btn-outline fade-up magnetic-btn">
+              Take A Look Around Our Portfolio →
+            </Link>
           </div>
 
           <div className="work-categories" data-stagger="0.06">
@@ -294,14 +254,19 @@ export function LandingPage({
       <section className="section section--dark" id="why-bright">
         <div className="container">
           <p className="section-eyebrow fade-up" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Why Choose Bright
+            Why Bright
           </p>
           <h2
             className="heading-display heading-lg reveal-heading"
             style={{ color: "#fff", marginBottom: 48 }}
           >
-            Experience Meets <HighlightWord>Evolution</HighlightWord>
+            We Take The Work Seriously. Ourselves? Not So Much.
           </h2>
+          <p className="body-lg fade-up why-intro">
+            We care a lot about getting the work right. We also think the best
+            partnerships have room for honest questions, unexpected ideas, and
+            the occasional laugh. Here&apos;s what working with us looks like.
+          </p>
 
           <div className="why-grid" data-stagger="0.1">
             {whyChooseBright.map((item) => (
@@ -310,6 +275,33 @@ export function LandingPage({
                 <p className="why-card__desc">{item.desc}</p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience */}
+      <section className="legacy-band experience-band">
+        <div className="container">
+          <div className="experience-band__grid">
+            <div>
+              <p className="section-eyebrow fade-up">Experience That Keeps Evolving</p>
+              <h2 className="heading-display heading-md reveal-heading">
+                We&apos;ve Been At This Since 1996. And We&apos;re Still Just Getting Started.
+              </h2>
+            </div>
+            <div>
+              <p className="body-lg fade-up">
+                Three decades of shifting markets, media, and brands have
+                taught us one thing: there&apos;s always a better question to ask
+                and a better idea to find.
+              </p>
+              <p className="body-md fade-up" style={{ marginTop: 16 }}>
+                We&apos;re proud of what we&apos;ve built. We&apos;re more excited
+                about what&apos;s next.
+              </p>
+              <p className="experience-band__since fade-up">Since 1996</p>
+              <p className="body-md fade-up">Independent thinking, evolving with every new challenge.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -456,45 +448,25 @@ export function LandingPage({
 
       <BlogSection posts={latestPosts} />
 
-      {/* SEO Section */}
-      <section className="seo-band">
-        <div className="container">
-          <h2 className="heading-display heading-md reveal-heading seo-band__title">
-            Leading Advertising, Branding &amp; Digital Marketing Agency In Kochi
-          </h2>
-          <p className="body-lg fade-up" style={{ marginTop: 16 }}>
-            Bright Communications is a leading advertising, branding, digital
-            marketing, website development, content production, and integrated
-            communications company based in Kochi, Kerala.
-          </p>
-          <p className="body-md fade-up" style={{ marginTop: 16 }}>
-            Since 1996, we have helped businesses strengthen their market
-            presence through strategic branding, advertising campaigns, digital
-            marketing, performance marketing, social media management, website
-            development, and creative communication solutions.
-          </p>
-          <p className="body-md fade-up" style={{ marginTop: 16 }}>
-            By combining creativity, technology, and strategic thinking, we help
-            brands build visibility, strengthen customer relationships, and
-            achieve sustainable growth in an increasingly competitive
-            marketplace.
-          </p>
-        </div>
-      </section>
-
       {/* Final CTA / Contact */}
       <section className="cta-section" id="contact">
         <div className="container">
           <div className="cta-grid">
             <div>
+              <p className="section-eyebrow fade-up">Got Something In Mind?</p>
               <h2 className="heading-display heading-lg reveal-heading">
-                Let&apos;s Build Something Remarkable Together
+                Let&apos;s Build Something Bright.
               </h2>
               <p className="body-lg fade-up" style={{ marginTop: 16 }}>
-                Whether you&apos;re building a new brand, launching a campaign,
-                strengthening your digital presence, or planning your next phase
-                of growth, we&apos;re ready to help.
+                A big idea. A new business. A brand that needs a fresh start. Or
+                just a nagging feeling you could be doing more.
               </p>
+              <p className="body-md fade-up" style={{ marginTop: 16 }}>
+                Whatever it is, we&apos;d love to hear about it. Tell us what
+                you&apos;re working on, what you&apos;re stuck on, or where you
+                want to go, and we&apos;ll figure out the rest together.
+              </p>
+              <p className="cta-note fade-up">No complicated brief needed. Just start a conversation.</p>
               <div className="cta-contact-info fade-up">
                 <span>Bright Communications — {activeContact.location}</span>
                 <a href={`mailto:${activeContact.email}`}>{activeContact.email}</a>
@@ -511,7 +483,7 @@ export function LandingPage({
               </div>
             </div>
 
-            <ContactForm />
+            <ContactForm submitLabel="Tell Us What You Have In Mind" />
           </div>
         </div>
       </section>

@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { FloatingContact } from "@/components/FloatingContact";
-import { navItems, services, contactInfo } from "@/lib/site-content";
+import { contactInfo } from "@/lib/site-content";
 import type { SiteSettingsData } from "@/lib/site-settings";
-import { slugify } from "@/lib/slug";
 
 export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
   const activeContact = {
@@ -21,49 +20,39 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
       <FloatingContact phone={settings?.phone} whatsapp={settings?.whatsapp} />
       <div className="container">
         <div className="footer-top">
-          <Link href="/" className="footer-logo">
-            Bright Communications
-          </Link>
-          <ul className="footer-nav footer-nav--wide">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <Link href="/" className="footer-logo">
+              Bright Communications
+            </Link>
+            <p className="footer-tagline">Good thinking. Bright ideas. Better connections.</p>
+          </div>
           <Link href="/contact" className="btn-outline btn-outline--light magnetic-btn">
-            Start Your Project
+            Tell Us What You Have In Mind
           </Link>
         </div>
 
         <div className="footer-columns">
-          <div>
-            <p className="footer-col-title">Services</p>
-            <ul className="footer-links">
-              {services.map((s) => (
-                <li key={s.num}>
-                  <Link href={`/services/${slugify(s.name)}`}>{s.name}</Link>
-                </li>
-              ))}
-            </ul>
+          <div className="footer-about">
+            <p>
+              An integrated communications agency in Kochi, Kerala, helping
+              brands find their voice and make their mark since 1996.
+            </p>
           </div>
           <div>
-            <p className="footer-col-title">Company</p>
+            <p className="footer-col-title">Explore</p>
             <ul className="footer-links">
               <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/services">Services</Link></li>
-              <li><Link href="/portfolio">Portfolio</Link></li>
-              <li><Link href="/industries">Industries</Link></li>
-              <li><Link href="/clients">Clients</Link></li>
-              <li><Link href="/testimonials">Testimonials</Link></li>
-              <li><Link href="/careers">Careers</Link></li>
+              <li><Link href="/services">Our Services</Link></li>
+              <li><Link href="/portfolio">Our Work</Link></li>
               <li><Link href="/blog">Blog</Link></li>
+              <li><Link href="/portfolio">Case Studies</Link></li>
               <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
           <div>
-            <p className="footer-col-title">Contact</p>
+            <p className="footer-col-title">Say hello.</p>
             <ul className="footer-links">
+              <li>{activeContact.location}, India</li>
               <li>
                 <a href={`mailto:${activeContact.email}`}>{activeContact.email}</a>
               </li>
@@ -71,9 +60,6 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
                 <a href={`tel:${activeContact.phone.replace(/\s/g, "")}`}>
                   {activeContact.phone}
                 </a>
-              </li>
-              <li>
-                <Link href="/contact">{activeContact.location}</Link>
               </li>
             </ul>
           </div>

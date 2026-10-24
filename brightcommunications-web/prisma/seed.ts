@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { services } from "../lib/service-content";
+import { slugify } from "../lib/slug";
 
 const prisma = new PrismaClient();
 
@@ -34,6 +36,45 @@ async function main() {
         sortOrder: index,
         isActive: true,
       })),
+    });
+  }
+
+  await prisma.serviceProject.deleteMany({
+    where: {
+      OR: [
+        { slug: "test", serviceName: "Test Service" },
+        { slug: "test-service", serviceName: "Test Service" },
+      ],
+    },
+  });
+
+  for (const [sortOrder, service] of services.entries()) {
+    const slug = slugify(service.name);
+    await prisma.serviceProject.upsert({
+      where: { serviceNum: service.num },
+      update: {
+        serviceName: service.name,
+        serviceDesc: service.desc,
+        serviceTags: [...service.tags],
+        sortOrder,
+        slug,
+        isActive: true,
+      },
+      create: {
+        serviceNum: service.num,
+        serviceName: service.name,
+        serviceDesc: service.desc,
+        serviceTags: [...service.tags],
+        sortOrder,
+        slug,
+        title: service.name,
+        client: "Bright Communications",
+        year: "Since 1996",
+        industry: "Integrated Communications",
+        projectBrief: service.desc,
+        galleryImages: [],
+        isActive: true,
+      },
     });
   }
 

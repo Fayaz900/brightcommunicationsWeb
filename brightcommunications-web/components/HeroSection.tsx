@@ -3,8 +3,6 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
-import { HeroStatNumbers } from "@/components/HeroStatNumbers";
-
 const HERO_INTRO_FLAG = "data-hero-intro-fired";
 
 function markHeroIntroFired() {
@@ -214,31 +212,35 @@ export function HeroSection() {
 
       <div className="container hero__inner">
         <div className="hero__copy">
-          <p className="hero__tag">Building Brands Since 1996</p>
+          <p className="hero__tag">Bright Communications · Since 1996</p>
 
           <h1 className="hero__title hero__title--long">
-            Ideas That Inspire.
+            Good Brands Get Noticed.
             <br />
-            Strategies That Deliver.
-            <br />
-            <em>Brands That Endure.</em>
+            <em>Great Brands Get Talked About.</em>
           </h1>
+
+          <p className="hero__desc hero__desc--lead">
+            We make brands harder to ignore and easier to remember.
+          </p>
+          <p className="hero__desc hero__desc--secondary">
+            Every brand has a story. We help you find the words for it, the idea
+            behind it, and the best way to get it out into the world. From the
+            first rough idea to the finished campaign, we&apos;re with you.
+            Looking for the best advertising agency in Kochi? We&apos;ll let the
+            work make the case.
+          </p>
 
           <div className="hero__cta-row">
             <a
               href="#contact"
               className="btn-outline btn-outline--light hero__cta magnetic-btn"
             >
-              Start Your Project
-            </a>
-            <a href="#work" className="hero__link">
-              Explore Our Work →
+              Let&apos;s Build Something Bright
             </a>
           </div>
 
-          <div className="hero__stats">
-            <HeroStatNumbers startDelay={1000} />
-          </div>
+          <p className="hero__strapline">Strategy · Creativity · Communication</p>
         </div>
       </div>
 

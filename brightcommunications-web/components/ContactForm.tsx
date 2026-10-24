@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { services } from "@/lib/site-content";
 
-export function ContactForm() {
+export function ContactForm({ submitLabel = "Start Your Project →" }: { submitLabel?: string }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -329,7 +329,7 @@ export function ContactForm() {
               zIndex: 5,
             }}
           >
-            {isSubmitting ? "Sending Your Enquiry..." : "Start Your Project →"}
+            {isSubmitting ? "Sending Your Enquiry..." : submitLabel}
           </button>
         </>
       )}

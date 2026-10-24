@@ -1,3 +1,5 @@
+export { services } from "@/lib/service-content";
+
 export const navItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -46,57 +48,6 @@ export const aboutValues = [
   },
 ] as const;
 
-export const services = [
-  {
-    num: "01",
-    name: "Brand Strategy & Identity",
-    desc: "Creating strong foundations for memorable brands through positioning, identity development, and brand systems.",
-    tags: ["Positioning", "Identity", "Brand Systems"],
-  },
-  {
-    num: "02",
-    name: "Advertising & Creative Communication",
-    desc: "Transforming ideas into campaigns that engage audiences and strengthen brand presence.",
-    tags: ["Campaigns", "Creative", "Brand Presence"],
-  },
-  {
-    num: "03",
-    name: "360° Integrated Campaigns",
-    desc: "Building seamless brand experiences across every customer touchpoint.",
-    tags: ["Integrated", "Multi-channel", "Experiences"],
-  },
-  {
-    num: "04",
-    name: "Digital Marketing",
-    desc: "Helping brands improve visibility, engagement, and online growth.",
-    tags: ["SEO", "Engagement", "Growth"],
-  },
-  {
-    num: "05",
-    name: "Performance Marketing",
-    desc: "Driving measurable results through data-led campaigns and strategic optimisation.",
-    tags: ["Data-led", "ROI", "Optimisation"],
-  },
-  {
-    num: "06",
-    name: "Website Design & Development",
-    desc: "Creating digital experiences that combine creativity, functionality, and performance.",
-    tags: ["UI/UX", "Development", "Performance"],
-  },
-  {
-    num: "07",
-    name: "Video Production & Ad Films",
-    desc: "Bringing stories to life through compelling visual communication.",
-    tags: ["Ad Films", "Production", "Storytelling"],
-  },
-  {
-    num: "08",
-    name: "Social Media Management",
-    desc: "Building communities through meaningful conversations and consistent brand engagement.",
-    tags: ["Community", "Content", "Engagement"],
-  },
-] as const;
-
 export const workCategories = [
   "Case Studies",
   "Campaigns",
@@ -107,36 +58,20 @@ export const workCategories = [
 
 export const whyChooseBright = [
   {
-    title: "Established In 1996",
-    desc: "Nearly three decades of communication excellence and brand-building expertise.",
+    title: "Curiosity comes first.",
+    desc: "We ask questions, push back on assumptions, and go looking for the idea everyone else missed.",
   },
   {
-    title: "Full-Service In-House Team",
-    desc: "Strategy, creative, content, digital, production, and technology under one roof.",
+    title: "People before projects.",
+    desc: "We listen, we work with you rather than at you, and we never forget there are real people behind every brand.",
   },
   {
-    title: "Experience Across India & GCC",
-    desc: "Delivering solutions for diverse markets and audiences.",
+    title: "Creativity with a purpose.",
+    desc: "A clever idea is nice. One that solves the right problem is better.",
   },
   {
-    title: "Strategy + Creativity + Technology",
-    desc: "Combining insight, innovation, and execution.",
-  },
-  {
-    title: "In-House Video Production",
-    desc: "End-to-end visual storytelling capabilities.",
-  },
-  {
-    title: "AI-Powered Content Creation",
-    desc: "Leveraging modern tools to enhance creativity and efficiency.",
-  },
-  {
-    title: "Performance-Driven Marketing",
-    desc: "Campaigns focused on measurable business outcomes and ROI.",
-  },
-  {
-    title: "Industry Expertise",
-    desc: "Deep understanding across multiple business sectors.",
+    title: "Always ready to rethink.",
+    desc: "Experience gives us perspective. Curiosity keeps us moving.",
   },
 ] as const;
 
