@@ -71,6 +71,13 @@ async function main() {
         client: "Bright Communications",
         year: "Since 1996",
         industry: "Integrated Communications",
+        clients: [{
+          name: "Bright Communications",
+          year: "Since 1996",
+          industry: "Integrated Communications",
+          summary: "",
+          galleryImages: [],
+        }],
         projectBrief: service.desc,
         galleryImages: [],
         isActive: true,

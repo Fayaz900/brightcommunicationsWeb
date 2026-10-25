@@ -4,12 +4,13 @@ import { useActionState, useState } from "react";
 
 import { AdminField, useFieldErrorsFromState } from "@/components/admin/AdminField";
 import { ImageUpload } from "@/components/admin/ImageUpload";
-import { MultiImageUpload } from "@/components/admin/MultiImageUpload";
 import { FaqEditor } from "@/components/admin/FaqEditor";
+import { ServiceClientsEditor } from "@/components/admin/ServiceClientsEditor";
 import { createServiceProject, type ServiceProjectFormState, updateServiceProject } from "@/lib/actions/service-projects";
 import { validateServiceProjectFormData } from "@/lib/admin-validation";
 import { slugify } from "@/lib/slug";
 import type { FaqItem } from "@/lib/faq-types";
+import type { ServiceClient } from "@/lib/service-clients";
 
 export type ServiceProjectRecord = {
   id: string;
@@ -24,6 +25,7 @@ export type ServiceProjectRecord = {
   client: string;
   year: string;
   industry: string;
+  clients: ServiceClient[];
   backgroundImage: string | null;
   projectBrief: string;
   faqs: FaqItem[];
@@ -89,27 +91,19 @@ export function ServiceProjectForm({ project }: { project?: ServiceProjectRecord
         <input id="slug" name="slug" value={slug} onChange={(event) => { setSlugTouched(true); setSlug(event.target.value); clearError("slug"); }} />
       </AdminField>
 
-      <AdminField label="Client" htmlFor="client" error={fieldErrors.client}>
-        <input id="client" name="client" defaultValue={project?.client ?? ""} onChange={() => clearError("client")} />
-      </AdminField>
-
-      <AdminField label="Year" htmlFor="year" error={fieldErrors.year}>
-        <input id="year" name="year" defaultValue={project?.year ?? ""} placeholder="2026" onChange={() => clearError("year")} />
-      </AdminField>
-
-      <AdminField label="Industry" htmlFor="industry" error={fieldErrors.industry}>
-        <input id="industry" name="industry" defaultValue={project?.industry ?? ""} onChange={() => clearError("industry")} />
-      </AdminField>
-
       <ImageUpload name="backgroundImage" folder="projects" defaultValue={project?.backgroundImage ?? ""} label="Background image" hint="Used as the large project page hero image. Recommended: 1600 x 900 px." error={fieldErrors.backgroundImage} onChange={() => clearError("backgroundImage")} />
 
-      <AdminField label="Project brief" htmlFor="projectBrief" error={fieldErrors.projectBrief}>
+      <AdminField label="Service brief" htmlFor="projectBrief" error={fieldErrors.projectBrief} hint="This introduction appears first on the service page, before the client work.">
         <textarea id="projectBrief" name="projectBrief" defaultValue={project?.projectBrief ?? ""} onChange={() => clearError("projectBrief")} />
       </AdminField>
 
-      <FaqEditor defaultValue={project?.faqs ?? []} error={fieldErrors.faqs} />
+      <ServiceClientsEditor
+        defaultValue={project?.clients ?? (project ? [{ name: project.client, year: project.year, industry: project.industry, summary: "", galleryImages: project.galleryImages }] : [])}
+        error={fieldErrors.clients}
+        onChange={() => clearError("clients")}
+      />
 
-      <MultiImageUpload name="galleryImages" folder="projects" defaultValue={project?.galleryImages ?? []} label="Gallery images" hint="Upload multiple images or paste one URL/path per line." error={fieldErrors.galleryImages} onChange={() => clearError("galleryImages")} />
+      <FaqEditor defaultValue={project?.faqs ?? []} error={fieldErrors.faqs} />
 
       <AdminField label="YouTube video URL" htmlFor="youtubeUrl" error={fieldErrors.youtubeUrl} hint="Optional. Example: https://www.youtube.com/watch?v=...">
         <input id="youtubeUrl" name="youtubeUrl" defaultValue={project?.youtubeUrl ?? ""} onChange={() => clearError("youtubeUrl")} />

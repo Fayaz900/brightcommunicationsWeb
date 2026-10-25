@@ -81,6 +81,7 @@ model ServiceProject {
   client          String
   year            String
   industry        String
+  clients         Json?
   backgroundImage String?
   projectBrief    String   @db.Text
   faqs           Json?

@@ -25,7 +25,7 @@ export default async function AdminServiceProjectsPage() {
             <th>Order</th>
             <th>Service Row</th>
             <th>Project Title</th>
-            <th>Client</th>
+            <th>Clients</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -36,7 +36,7 @@ export default async function AdminServiceProjectsPage() {
               <td>{project.sortOrder}</td>
               <td>{project.serviceNum} - {project.serviceName}</td>
               <td>{project.title}</td>
-              <td>{project.client}</td>
+              <td>{project.clients.map((client) => client.name).join(", ")}</td>
               <td>
                 <span className={`admin-badge ${project.isActive ? "admin-badge--published" : "admin-badge--draft"}`}>
                   {project.isActive ? "Active" : "Hidden"}

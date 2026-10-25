@@ -4391,27 +4391,13 @@ body.animations-ready .reveal-heading {
 
 .service-project-hero {
   position: relative;
-  min-height: 78vh;
+  min-height: 0;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
   background: var(--black);
   color: var(--white);
   padding: 160px 0 72px;
-}
-
-.service-project-hero__image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.service-project-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.86));
 }
 
 .service-project-hero__content {
@@ -4426,38 +4412,194 @@ body.animations-ready .reveal-heading {
   margin-top: 14px;
 }
 
-.service-project-gallery__grid {
+.service-project-brief {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.service-project-brief .work-detail-brief {
+  width: min(100%, 880px);
+}
+
+.service-clients {
+  padding: 96px 0 112px;
+  border-top: 1px solid var(--line);
+  background: #f1f1ef;
+}
+
+.service-clients__heading {
+  max-width: 760px;
+  margin-bottom: 48px;
+}
+
+.service-clients__heading h2 {
+  margin-top: 12px;
+  font-size: clamp(40px, 6vw, 72px);
+}
+
+.service-clients__grid {
   display: grid;
-  gap: 20px;
+  gap: 24px;
 }
 
 @media (min-width: 760px) {
-  .service-project-gallery__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .service-clients__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.service-project-gallery__item {
+.service-client-card {
+  position: relative;
+  display: block;
+  min-height: 230px;
+  padding: clamp(28px, 4vw, 48px);
+  background: #fbfbfa;
+  border: 1px solid #d9d8d4;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.service-client-card:hover {
+  background: var(--black);
+  color: var(--cream);
+  transform: translateY(-3px);
+}
+
+.service-client-card h3 {
+  margin: 0 0 28px;
+  font-family: var(--font-display), serif;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+}
+
+.service-client-card dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 0;
+}
+
+.service-client-card dt {
+  margin-bottom: 5px;
+  color: var(--gray-600);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.service-client-card:hover dt {
+  color: rgba(245, 240, 232, 0.62);
+}
+
+.service-client-card dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.client-project-page {
+  background: #fbfbfa;
+  color: var(--black);
+}
+
+.client-project-hero {
+  padding: 168px 0 80px;
+  background: var(--black);
+  color: var(--cream);
+}
+
+.client-project-hero h1 {
+  max-width: 950px;
+  margin-top: 14px;
+  color: var(--cream);
+}
+
+.client-project-overview {
+  padding: 88px 0;
+}
+
+.client-project-overview__grid {
+  display: grid;
+  gap: 48px;
+}
+
+@media (min-width: 860px) {
+  .client-project-overview__grid {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.client-project-facts {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+}
+
+.client-project-facts div {
+  display: grid;
+  gap: 6px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #e0ded9;
+}
+
+.client-project-facts dt {
+  color: var(--gray-600);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.client-project-facts dd {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.client-project-summary > p:last-child {
+  max-width: 760px;
+  color: #34302b;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.4;
+}
+
+.client-project-gallery {
+  padding: 88px 0 112px;
+  background: #f1f1ef;
+}
+
+.client-project-gallery__grid {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 760px) {
+  .client-project-gallery__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.client-project-gallery__grid figure {
   margin: 0;
   overflow: hidden;
-  border-radius: var(--radius-md);
+  aspect-ratio: 4 / 3;
   background: #e7e5e4;
 }
 
-.service-project-gallery__item:first-child {
+.client-project-gallery__grid figure:first-child {
   grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
 }
 
-.service-project-gallery__item img {
+.client-project-gallery__grid img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 100%;
   object-fit: cover;
 }
 
-.service-project-gallery__item:first-child img {
-  aspect-ratio: 16 / 9;
-}
 .work-detail-video__placeholder {
   position: absolute;
   inset: 0;

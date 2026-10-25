@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { readFaqItems, type FaqItem } from "@/lib/faq-types";
+import { readServiceClients, type ServiceClient } from "@/lib/service-clients";
 
 export type ServiceProjectPublic = {
   id: string;
@@ -14,6 +15,7 @@ export type ServiceProjectPublic = {
   client: string;
   year: string;
   industry: string;
+  clients: ServiceClient[];
   backgroundImage: string | null;
   projectBrief: string;
   faqs: FaqItem[];
@@ -23,12 +25,17 @@ export type ServiceProjectPublic = {
   updatedAt: Date;
 };
 
-const fields = `id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "serviceImage", "sortOrder", slug, title, client, year, industry, "backgroundImage", "projectBrief", faqs, "galleryImages", "youtubeUrl", "isActive", "updatedAt"`;
+const fields = `id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "serviceImage", "sortOrder", slug, title, client, year, industry, clients, "backgroundImage", "projectBrief", faqs, "galleryImages", "youtubeUrl", "isActive", "updatedAt"`;
 
-type ServiceProjectRow = Omit<ServiceProjectPublic, "faqs"> & { faqs: unknown };
+type ServiceProjectRow = Omit<ServiceProjectPublic, "faqs" | "clients"> & { faqs: unknown; clients: unknown };
 
 function withFaqItems(project: ServiceProjectRow): ServiceProjectPublic {
-  return { ...project, faqs: readFaqItems(project.faqs) };
+  const clients = readServiceClients(project.clients);
+  return {
+    ...project,
+    clients: clients.length ? clients : [{ name: project.client, year: project.year, industry: project.industry, summary: "", galleryImages: project.galleryImages }],
+    faqs: readFaqItems(project.faqs),
+  };
 }
 
 export async function getActiveServiceProjects(): Promise<ServiceProjectPublic[]> {

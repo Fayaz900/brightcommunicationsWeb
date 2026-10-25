@@ -1,6 +1,7 @@
 import { extractYouTubeId } from "@/lib/youtube";
 import { slugify } from "@/lib/slug";
 import { parseFaqItems } from "@/lib/faq-types";
+import { parseServiceClients } from "@/lib/service-clients";
 
 export type ValidationResult<T> =
   | { success: true; data: T }
@@ -126,6 +127,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   client: string;
   year: string;
   industry: string;
+  clients: { name: string; year: string; industry: string; summary: string; galleryImages: string[] }[];
   backgroundImage: string | null;
   projectBrief: string;
   faqs: { question: string; answer: string }[];
@@ -142,9 +144,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   const sortOrderRaw = String(formData.get("sortOrder") ?? "0").trim();
   const title = String(formData.get("title") ?? "").trim();
   const slugInput = String(formData.get("slug") ?? "").trim();
-  const client = String(formData.get("client") ?? "").trim();
-  const year = String(formData.get("year") ?? "").trim();
-  const industry = String(formData.get("industry") ?? "").trim();
+  const clientsResult = parseServiceClients(String(formData.get("clients") ?? ""));
   const backgroundImage = String(formData.get("backgroundImage") ?? "").trim();
   const projectBrief = String(formData.get("projectBrief") ?? "").trim();
   const faqsResult = parseFaqItems(String(formData.get("faqs") ?? ""));
@@ -162,9 +162,7 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   if (!title) fieldErrors.title = "Project title is required.";
   if (!slug) fieldErrors.slug = "Slug is required.";
   else if (!SLUG_PATTERN.test(slug)) fieldErrors.slug = "Slug can only contain lowercase letters, numbers, and hyphens.";
-  if (!client) fieldErrors.client = "Client is required.";
-  if (!year) fieldErrors.year = "Year is required.";
-  if (!industry) fieldErrors.industry = "Industry is required.";
+  if (clientsResult.error) fieldErrors.clients = clientsResult.error;
   if (!projectBrief) fieldErrors.projectBrief = "Project brief is required.";
   if (faqsResult.error) fieldErrors.faqs = faqsResult.error;
 
@@ -179,7 +177,14 @@ export function validateServiceProjectFormData(formData: FormData): ValidationRe
   if (Object.keys(fieldErrors).length > 0) return { success: false, fieldErrors, error: "Please fix the highlighted fields." };
   return {
     success: true,
-    data: { serviceNum, serviceName, serviceDesc, serviceTags, serviceImage: serviceImage || null, sortOrder, slug, title, client, year, industry, backgroundImage: backgroundImage || null, projectBrief, faqs: faqsResult.items, galleryImages, youtubeUrl: youtubeUrl || null, isActive },
+    data: {
+      serviceNum, serviceName, serviceDesc, serviceTags, serviceImage: serviceImage || null, sortOrder, slug, title,
+      client: clientsResult.items[0].name,
+      year: clientsResult.items[0].year,
+      industry: clientsResult.items[0].industry,
+      clients: clientsResult.items,
+      backgroundImage: backgroundImage || null, projectBrief, faqs: faqsResult.items, galleryImages, youtubeUrl: youtubeUrl || null, isActive,
+    },
   };
 }
 

@@ -26,8 +26,8 @@ export async function createServiceProject(
   try {
     await requireAdmin();
     await prisma.$executeRaw`
-      INSERT INTO "ServiceProject" (id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "serviceImage", "sortOrder", slug, title, client, year, industry, "backgroundImage", "projectBrief", faqs, "galleryImages", "youtubeUrl", "isActive", "updatedAt")
-      VALUES (${id}, ${data.serviceNum}, ${data.serviceName}, ${data.serviceDesc}, ${data.serviceTags}, ${data.serviceImage}, ${data.sortOrder}, ${data.slug}, ${data.title}, ${data.client}, ${data.year}, ${data.industry}, ${data.backgroundImage}, ${data.projectBrief}, ${data.faqs.length ? JSON.stringify(data.faqs) : null}::jsonb, ${data.galleryImages}, ${data.youtubeUrl}, ${data.isActive}, NOW())
+      INSERT INTO "ServiceProject" (id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "serviceImage", "sortOrder", slug, title, client, year, industry, clients, "backgroundImage", "projectBrief", faqs, "galleryImages", "youtubeUrl", "isActive", "updatedAt")
+      VALUES (${id}, ${data.serviceNum}, ${data.serviceName}, ${data.serviceDesc}, ${data.serviceTags}, ${data.serviceImage}, ${data.sortOrder}, ${data.slug}, ${data.title}, ${data.client}, ${data.year}, ${data.industry}, ${JSON.stringify(data.clients)}::jsonb, ${data.backgroundImage}, ${data.projectBrief}, ${data.faqs.length ? JSON.stringify(data.faqs) : null}::jsonb, ${data.galleryImages}, ${data.youtubeUrl}, ${data.isActive}, NOW())
     `;
     revalidatePath("/");
     revalidateDiscovery();
@@ -54,7 +54,7 @@ export async function updateServiceProject(
     await requireAdmin();
     await prisma.$executeRaw`
       UPDATE "ServiceProject"
-      SET "serviceNum" = ${data.serviceNum}, "serviceName" = ${data.serviceName}, "serviceDesc" = ${data.serviceDesc}, "serviceTags" = ${data.serviceTags}, "serviceImage" = ${data.serviceImage}, "sortOrder" = ${data.sortOrder}, slug = ${data.slug}, title = ${data.title}, client = ${data.client}, year = ${data.year}, industry = ${data.industry}, "backgroundImage" = ${data.backgroundImage}, "projectBrief" = ${data.projectBrief}, faqs = ${data.faqs.length ? JSON.stringify(data.faqs) : null}::jsonb, "galleryImages" = ${data.galleryImages}, "youtubeUrl" = ${data.youtubeUrl}, "isActive" = ${data.isActive}, "updatedAt" = NOW()
+      SET "serviceNum" = ${data.serviceNum}, "serviceName" = ${data.serviceName}, "serviceDesc" = ${data.serviceDesc}, "serviceTags" = ${data.serviceTags}, "serviceImage" = ${data.serviceImage}, "sortOrder" = ${data.sortOrder}, slug = ${data.slug}, title = ${data.title}, client = ${data.client}, year = ${data.year}, industry = ${data.industry}, clients = ${JSON.stringify(data.clients)}::jsonb, "backgroundImage" = ${data.backgroundImage}, "projectBrief" = ${data.projectBrief}, faqs = ${data.faqs.length ? JSON.stringify(data.faqs) : null}::jsonb, "galleryImages" = ${data.galleryImages}, "youtubeUrl" = ${data.youtubeUrl}, "isActive" = ${data.isActive}, "updatedAt" = NOW()
       WHERE id = ${id}
     `;
     revalidatePath("/");
