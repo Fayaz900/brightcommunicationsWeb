@@ -202,13 +202,19 @@ export function HeroSection() {
     <section className="hero hero--pending" id="home" ref={rootRef}>
       <div className="hero__bg" aria-hidden="true">
         <div className="hero__video">
-          <iframe
-            src="https://streamable.com/e/3b35or?autoplay=1&muted=1&controls=0&loop=1"
-            title="Bright Communications hero background video"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            controls={false}
+            disablePictureInPicture
+            aria-hidden="true"
             tabIndex={-1}
-          />
+          >
+            <source src="/videos/hero-background.mp4" type="video/mp4" />
+          </video>
         </div>
         <span className="hero__video-overlay" />
         <span className="hero__glow" />
