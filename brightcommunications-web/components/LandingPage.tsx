@@ -309,7 +309,7 @@ export function LandingPage({
 
 
       {/* Industries */}
-      <section className="section" id="industries">
+      {/* <section className="section" id="industries">
         <div className="container">
           <p className="section-eyebrow fade-up">Industries We Serve</p>
           <h2 className="heading-display heading-lg reveal-heading">
@@ -340,7 +340,7 @@ export function LandingPage({
             })}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Brightsyde */}
       {/* <section className="section section--dark" id="brightsyde">

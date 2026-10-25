@@ -1230,8 +1230,7 @@ body.is-loading .hero__filmstrip-wrap {
   }
 
   .service-copy {
-    grid-column: 2 / -1;
-    padding-right: 16px;
+    display: none;
   }
 
   .service-arrow {
