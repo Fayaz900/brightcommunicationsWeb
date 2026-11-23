@@ -120,7 +120,7 @@ export function LandingPage({
                 Three decades on, we&apos;re still curious and still making
                 things. We&apos;re still looking for a brighter way to do it.
               </p>
-              <Link href="/about" className="btn-outline fade-up magnetic-btn" style={{ marginTop: 28 }}>
+              <Link href="/about" className="btn-outline fade-up magnetic-btn" style={{ marginTop: 28, alignSelf: "flex-start" }}>
                 Get To Know Us →
               </Link>
             </div>
