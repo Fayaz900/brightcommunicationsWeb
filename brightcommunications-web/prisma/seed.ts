@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 import { services } from "../lib/service-content";
 import { slugify } from "../lib/slug";
 
@@ -48,41 +49,52 @@ async function main() {
     },
   });
 
+  // Deactivate any old services beyond the current 6-practice model
+  await prisma.serviceProject.updateMany({
+    where: { serviceNum: { notIn: services.map((s) => s.num) } },
+    data: { isActive: false },
+  });
+
   for (const [sortOrder, service] of services.entries()) {
     const slug = slugify(service.name);
-    await prisma.serviceProject.upsert({
-      where: { serviceNum: service.num },
-      update: {
-        serviceName: service.name,
-        serviceDesc: service.desc,
-        serviceTags: [...service.tags],
-        sortOrder,
-        slug,
-        isActive: true,
-      },
-      create: {
-        serviceNum: service.num,
-        serviceName: service.name,
-        serviceDesc: service.desc,
-        serviceTags: [...service.tags],
-        sortOrder,
-        slug,
-        title: service.name,
-        client: "Bright Communications",
-        year: "Since 1996",
-        industry: "Integrated Communications",
-        clients: [{
-          name: "Bright Communications",
-          year: "Since 1996",
-          industry: "Integrated Communications",
-          summary: "",
-          galleryImages: [],
-        }],
-        projectBrief: service.desc,
-        galleryImages: [],
-        isActive: true,
-      },
-    });
+    const defaultClients = JSON.stringify([{
+      name: "Bright Communications",
+      year: "Since 1996",
+      industry: "Integrated Communications",
+      summary: "",
+      galleryImages: [],
+    }]);
+
+    // Free up slug from any OTHER row that might be using it (old services with different serviceNum)
+    await prisma.$executeRawUnsafe(
+      `UPDATE "ServiceProject" SET slug = slug || '-archived' WHERE slug = $1 AND "serviceNum" != $2`,
+      slug,
+      service.num
+    );
+
+    await prisma.$executeRawUnsafe(`
+      INSERT INTO "ServiceProject"
+        (id, "serviceNum", "serviceName", "serviceDesc", "serviceTags", "sortOrder", slug, title, client, year, industry, clients, "projectBrief", "galleryImages", "isActive", "createdAt", "updatedAt")
+      VALUES
+        ($1, $2, $3, $4, $5::text[], $6, $7, $3, 'Bright Communications', 'Since 1996', 'Integrated Communications', $8::jsonb, $4, '{}', true, NOW(), NOW())
+      ON CONFLICT ("serviceNum") DO UPDATE SET
+        "serviceName"  = EXCLUDED."serviceName",
+        "serviceDesc"  = EXCLUDED."serviceDesc",
+        "serviceTags"  = EXCLUDED."serviceTags",
+        "sortOrder"    = EXCLUDED."sortOrder",
+        slug           = EXCLUDED.slug,
+        "isActive"     = true,
+        "updatedAt"    = NOW()
+    `,
+      randomUUID(),
+      service.num,
+      service.name,
+      service.desc,
+      `{${[...service.tags].map(t => `"${t.replace(/"/g, '\\"')}"`).join(",")}}`,
+      sortOrder,
+      slug,
+      defaultClients
+    );
   }
 
   console.log("Seed complete.");

@@ -50,13 +50,12 @@ export default async function ServicesPage() {
               <span>/</span>
               <span>Services</span>
             </nav>
-            <p className="section-eyebrow">Comprehensive Capabilities</p>
+            <p className="section-eyebrow">Our World Of Work</p>
             <h1 className="heading-display heading-xl inner-hero__title">
-              360° Integrated Communication Solutions
+              One Team. Everything Your Brand Needs To Be <HighlightWord>Noticed</HighlightWord>.
             </h1>
             <p className="inner-hero__desc">
-              From defining sharp brand identities to executing multi-channel advertising campaigns,
-              we deliver end-to-end creative, digital, and media solutions designed for lasting impact.
+              From the first idea to the final campaign, Bright is an advertising, branding, and digital marketing agency in Kochi. Strategy, creative, digital, and video sit under one roof, so your brand sounds like itself everywhere people find it.
             </p>
           </div>
         </section>
@@ -76,13 +75,12 @@ export default async function ServicesPage() {
         <section className="section" id="catalog">
           <div className="container">
             <div style={{ maxWidth: 760, marginBottom: 48 }}>
-              <p className="section-eyebrow">Core Practices</p>
+              <p className="section-eyebrow">What We Do</p>
               <h2 className="heading-display heading-lg">
                 Crafted For Every Stage Of <HighlightWord>Brand</HighlightWord> Growth
               </h2>
               <p className="body-lg" style={{ marginTop: 16 }}>
-                Each service practice is backed by seasoned specialists working synchronously
-                under one roof to ensure brand cohesion across every touchpoint.
+                Six practices, led by people who do it every day, working in the same room. That&apos;s how your brand ends up sounding like one brand, wherever people meet it.
               </p>
             </div>
 
@@ -112,7 +110,7 @@ export default async function ServicesPage() {
                         display: "inline-block",
                       }}
                     >
-                      View Case Study &rarr;
+                      Explore This Service &rarr;
                     </Link>
                   </div>
                 </article>
@@ -127,10 +125,10 @@ export default async function ServicesPage() {
             <div style={{ maxWidth: 720, marginBottom: 48 }}>
               <p className="section-eyebrow">How We Work</p>
               <h2 className="heading-display heading-lg">
-                Our Strategic <HighlightWord>Methodology</HighlightWord>
+                Our <HighlightWord>Way</HighlightWord> Of Working
               </h2>
               <p className="body-lg" style={{ marginTop: 16 }}>
-                A structured, transparent workflow ensuring creative excellence and measurable commercial return.
+                No secret formula. Just five steps that keep the work clear, honest, and moving.
               </p>
             </div>
 
@@ -182,8 +180,11 @@ export default async function ServicesPage() {
             <div style={{ maxWidth: 720, marginBottom: 48 }}>
               <p className="section-eyebrow">Frequently Asked Questions</p>
               <h2 className="heading-display heading-lg">
-                Everything You Need To Know
+                Everything You Need To <HighlightWord>Know</HighlightWord>
               </h2>
+              <p className="body-lg" style={{ marginTop: 16 }}>
+                Short answers to the things people ask us most.
+              </p>
             </div>
             <FaqAccordion items={faqItems} />
           </div>
@@ -193,7 +194,7 @@ export default async function ServicesPage() {
         <section className="blog-cta-section">
           <div className="container" style={{ textAlign: "center", maxWidth: 720 }}>
             <p className="section-eyebrow" style={{ color: "rgba(255, 255, 255, 0.6)" }}>
-              Start Collaboration
+              Your Turn
             </p>
             <h2
               className="heading-display"
@@ -203,7 +204,7 @@ export default async function ServicesPage() {
                 margin: "12px 0 20px",
               }}
             >
-              Have A Specific Brief Or Challenge?
+              Got A Brief? Or Just A <HighlightWord>Hunch</HighlightWord>?
             </h2>
             <p
               style={{
@@ -213,7 +214,7 @@ export default async function ServicesPage() {
                 marginBottom: "32px",
               }}
             >
-              Reach out to our strategy and creative leads to discuss scope, deliverables, and timelines.
+              Bring us the specific brief or the half-formed idea. We&apos;ll help you work out what it needs, what it will take, and how long it should run.
             </p>
             <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
               <Link

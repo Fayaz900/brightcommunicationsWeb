@@ -12,13 +12,11 @@ export const navItems = [
 
 export const marqueeServices = [
   "Brand Strategy & Identity",
-  "Advertising & Creative",
-  "360° Integrated Campaigns",
+  "Advertising & Creative Campaigns",
   "Digital Marketing",
   "Performance Marketing",
   "Website Design & Development",
-  "Video Production & Ad Films",
-  "Social Media Management",
+  "Video Production",
 ] as const;
 
 export const legacyHighlights = [
@@ -79,27 +77,27 @@ export const processSteps = [
   {
     num: "01 / DISCOVER",
     title: "Discover",
-    desc: "Understanding your business, audience, and opportunities.",
+    desc: "We start by listening: your business, your audience, and where the opportunities are.",
   },
   {
     num: "02 / STRATEGISE",
     title: "Strategise",
-    desc: "Developing communication and growth strategies.",
+    desc: "We turn what we've learned into a clear plan for how to communicate and grow.",
   },
   {
     num: "03 / CREATE",
     title: "Create",
-    desc: "Crafting compelling ideas and experiences.",
+    desc: "Ideas, words, and designs that people notice and remember.",
   },
   {
     num: "04 / EXECUTE",
     title: "Execute",
-    desc: "Launching campaigns across the right channels.",
+    desc: "We take the work live on the right channels at the right time.",
   },
   {
     num: "05 / OPTIMISE",
     title: "Optimise",
-    desc: "Tracking performance and continuously improving outcomes.",
+    desc: "We track what's working, learn from what isn't, and keep improving.",
   },
 ] as const;
 
@@ -218,47 +216,57 @@ export const faqItems = [
   {
     question: "What services does Bright Communications offer?",
     answer:
-      "Bright Communications offers brand strategy & identity, advertising & creative communication, 360° integrated campaigns, digital marketing, performance marketing, website design & development, video production & ad films, and social media management — all delivered by our in-house team.",
+      "We offer six services: brand strategy and identity, advertising and creative campaigns, digital marketing, performance marketing, website design and development, and video production. Between them, they cover branding and logo design, print and outdoor ads, SEO, social media, content, AEO, Google, Meta, and YouTube ads, lead generation, websites, e-commerce, and video. One in-house team looks after all of it.",
   },
   {
     question: "How long has Bright Communications been operating?",
     answer:
-      "Bright Communications was founded in 1996 by K.V. Shaji. With nearly three decades of experience, we have evolved from a traditional advertising agency into a fully integrated communications partner.",
+      "Since 1996. That's three decades of watching the industry change, and we're still curious about what comes next.",
   },
   {
     question: "Do you work with businesses outside Kerala?",
     answer:
-      "Yes. While we are based in Kochi, Kerala, we serve clients across India and the GCC region, delivering communication solutions for diverse markets and audiences.",
+      "Yes. We're based in Kochi, Kerala, and we're happy to work with brands wherever they are. Tell us where you want to go, and we'll work out the best way to get there together.",
   },
   {
     question: "Can Bright manage digital marketing campaigns?",
     answer:
-      "Absolutely. Our digital marketing and performance marketing teams manage end-to-end campaigns focused on visibility, engagement, and measurable ROI.",
+      "Yes. Between digital marketing and performance marketing, we plan and run campaigns from start to finish: SEO, social media, content, Google, Meta, and YouTube ads, and lead generation, with tracking so you can see what's working. If you're looking for a digital marketing company in Kerala that treats creativity and data as equals, we'd like to hear from you.",
   },
   {
     question: "Do you provide website development services?",
     answer:
-      "Yes. We design and develop websites that combine creativity, functionality, and performance — from brand-aligned UI/UX to full development and optimisation.",
+      "Yes. We design and build websites that feel like your brand and are easy to use, from full websites and online stores to landing pages for a single campaign.",
   },
   {
     question: "Do you offer video production services?",
     answer:
-      "Yes. We have in-house video production capabilities, including ad films and visual storytelling for campaigns across platforms.",
+      "Yes. We make brand films, product videos, and reels, from the first idea to the final edit.",
   },
   {
     question: "Can Bright execute 360° integrated campaigns?",
     answer:
-      "Yes. We build seamless brand experiences across every customer touchpoint — from strategy and creative to digital, production, and performance.",
+      "Yes. A 360° campaign is one idea running across every channel that matters, such as print, outdoor, digital, social, and video, so people meet the same brand wherever they look. We plan it, create it, and run it.",
   },
   {
     question: "What industries do you serve?",
     answer:
-      "We serve healthcare, education, real estate & construction, retail & lifestyle, hospitality, finance & technology, manufacturing & industrial, automotive, and FMCG sectors.",
+      "We work across nine industries: healthcare, education, real estate and construction, retail and lifestyle, hospitality, finance and technology, manufacturing and industrial, automotive, and FMCG. Whatever the industry, we start the same way, by listening, because a hospital, a hotel, and a car showroom don't talk to the same people in the same way. You'll find more on our Industries page.",
   },
   {
     question: "How can I start a project with Bright?",
     answer:
-      "Reach out via our contact form, email hello@brightcommunications.com, or call us. Share your project brief and our team will connect with you to discuss scope, timeline, and next steps.",
+      "Tell us what you have in mind through the contact page, on WhatsApp, or by email. A rough idea is fine. We'll set up a conversation, ask a lot of questions, and suggest where to start.",
+  },
+  {
+    question: "How do I choose the right advertising agency in Kochi?",
+    answer:
+      "Look for a team that asks about your business before it talks about its own ideas, shows work that solved real problems, and is honest about what will and won't work. The best advertising agency in Kochi for you is the one you'd happily sit across the table from for years. We'd like to be that one.",
+  },
+  {
+    question: "What is AEO, and do I need it?",
+    answer:
+      "AEO stands for Answer Engine Optimisation. It's about making your brand easy for AI tools and answer engines to find, understand, and recommend, alongside traditional SEO. If your customers ask questions online before they buy, it's worth having.",
   },
 ] as const;
 
